@@ -337,18 +337,18 @@ namespace Task.View
         public void EditAndCheckSite()
         {
             listBox1.Items.Add(
-                "===============================Редактирование сайта====================================");
-            LogForClickers.WriteInLog("===============================Редактирование сайта====================================");
-            LogForClickers.WriteInLog(DateTime.Now.ToString());
-            LogTrace.WriteInLog("===============================Редактирование сайта====================================");
-            LogTrace.WriteInLog(DateTime.Now.ToString());
+                "          ===============================Редактирование сайта====================================");
+            LogForClickers.WriteInLog("          ===============================Редактирование сайта====================================");
+            LogForClickers.WriteInLog("          " + DateTime.Now.ToString());
+            LogTrace.WriteInLog("          ===============================Редактирование сайта====================================");
+            LogTrace.WriteInLog("          " + DateTime.Now.ToString());
 
-            listBox1.Items.Add("ID клиента: " + Registry.hashTable["clientId"]);
-            LogForClickers.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
-            LogTrace.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
-            listBox1.Items.Add("ID сайта: " + Registry.hashTable["siteId"]);
-            LogForClickers.WriteInLog("ID сайта: " + Registry.hashTable["siteId"]);
-            LogTrace.WriteInLog("ID сайта: " + Registry.hashTable["siteId"]);
+            listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
+            LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+            LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+            listBox1.Items.Add("          ID сайта: " + Registry.hashTable["siteId"]);
+            LogForClickers.WriteInLog("          ID сайта: " + Registry.hashTable["siteId"]);
+            LogTrace.WriteInLog("          ID сайта: " + Registry.hashTable["siteId"]);
 
             GoodsEditSite_Controller editSiteController = new GoodsEditSite_Controller();
 
@@ -359,13 +359,13 @@ namespace Task.View
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
                 listBox1.Items.Add("");
-                listBox1.Items.Add("     !!! Ошибки !!!");
+                listBox1.Items.Add("               !!! Ошибки !!!");
 
                 LogForClickers.WriteInLog("");
-                LogForClickers.WriteInLog("     !!! Ошибки !!!");
+                LogForClickers.WriteInLog("               !!! Ошибки !!!");
 
                 LogTrace.WriteInLog("");
-                LogTrace.WriteInLog("     !!! Ошибки !!!");
+                LogTrace.WriteInLog("               !!! Ошибки !!!");
 
                 for (int i = 0; i < errors.Count; i++)
                 {
@@ -376,28 +376,34 @@ namespace Task.View
             }
             else
             {
-                listBox1.Items.Add(
-                "===============================Проверка редактирования сайта===========================");
-                LogForClickers.WriteInLog("===============================Проверка редактирования сайта===========================");
-                LogTrace.WriteInLog("===============================Проверка редактирования сайта===========================");
+                listBox1.Items.Add("          Сайт успешно отредактирован");
 
-                listBox1.Items.Add("ID клиента: " + Registry.hashTable["clientId"]);
-                LogForClickers.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
-                LogTrace.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
-                listBox1.Items.Add("ID сайта: " + Registry.hashTable["siteId"]);
-                LogForClickers.WriteInLog("ID сайта: " + Registry.hashTable["siteId"]);
-                LogTrace.WriteInLog("ID сайта: " + Registry.hashTable["siteId"]);
+                listBox1.Items.Add(
+                "          ===============================Проверка редактирования сайта===========================");
+                LogForClickers.WriteInLog("          ===============================Проверка редактирования сайта===========================");
+                LogTrace.WriteInLog("          ===============================Проверка редактирования сайта===========================");
+
+                listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
+                LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+                LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+                listBox1.Items.Add("          ID сайта: " + Registry.hashTable["siteId"]);
+                LogForClickers.WriteInLog("          ID сайта: " + Registry.hashTable["siteId"]);
+                LogTrace.WriteInLog("          ID сайта: " + Registry.hashTable["siteId"]);
 
                 editSiteController.CheckEditingSite();
 
                 if (editSiteController.wasMismatch)
                 {
                     listBox1.Items.Add("");
-                    listBox1.Items.Add("!!!   Обнаружены несовпадения. См. лог");
+                    listBox1.Items.Add("          !!!   Обнаружены несовпадения. См. лог");
                     listBox1.Items.Add("");
                     LogForClickers.WriteInLog("");
-                    LogForClickers.WriteInLog("!!!   Обнаружены несовпадения. См. лог");
+                    LogForClickers.WriteInLog("          !!!   Обнаружены несовпадения. См. лог");
                     LogForClickers.WriteInLog("");
+                }
+                else
+                {
+                    listBox1.Items.Add("          ОК, всё ранее введенное совпадает с текущими значениями");
                 }
             }
 

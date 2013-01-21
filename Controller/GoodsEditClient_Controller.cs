@@ -250,7 +250,7 @@ namespace Task.Controller
                 #region Контакты по направлению
                     LogTrace.WriteInLog("          ...Проверка: Контакты по направлению...");
 
-                    if (emailAdditionalByDirection == clientEditModel.GetContactsByDirectionEmail) { LogTrace.WriteInLog("          Совпадают: содержимое поля E-Mail и введенное при редактировании"); }
+                    if (emailByDirection == clientEditModel.GetContactsByDirectionEmail) { LogTrace.WriteInLog("          Совпадают: содержимое поля E-Mail и введенное при редактировании"); }
                     else
                     {
                         LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля E-Mail и введенное при редактировании");

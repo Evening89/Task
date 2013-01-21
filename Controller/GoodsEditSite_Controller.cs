@@ -35,12 +35,16 @@ namespace Task.Controller
             #region Заполнение
                 siteName = randoms.RandomString(8) + ".ru";
                 siteEditModel.SiteName = siteName;
+                LogTrace.WriteInLog("          Заполняю поле Название. Было введено: " + siteEditModel.SiteName);
 
                 comments = randoms.RandomString(30);
                 siteEditModel.Comments = comments;
+                LogTrace.WriteInLog("          Заполняю поле Комментарии. Было введено: " + siteEditModel.Comments);
 
                 siteEditModel.AddTeasersToSubdomains = true;
+                LogTrace.WriteInLog("          Выбран checkbox 'Добавлять тизеры на поддомены'");
                 siteEditModel.AllowAddSiteOtherClients = true;
+                LogTrace.WriteInLog("          Выбран checkbox 'Разрешить добавлять сайт другим клиентам'");
 
                 string editSiteUrl = driver.Url; //запоминаем url страницы
 
@@ -59,7 +63,8 @@ namespace Task.Controller
                 }
                 else
                 {
-                    LogTrace.WriteInLog("          Сайт успешно отредактирован");
+                    LogTrace.WriteInLog("          Клиент успешно отредактирован");
+                    LogForClickers.WriteInLog("          Клиент успешно отредактирован");
                 }
                 //Registry.hashTable.Add("driver", driver); //записываем в хештаблицу driver и его состояние, чтобы потом извлечь и использовать его при создании сайта/РК
                 Registry.hashTable["driver"] = driver;
@@ -81,28 +86,36 @@ namespace Task.Controller
                 if (siteName == siteEditModel.GetSiteName) { LogTrace.WriteInLog("          Совпадают: содержимое поля Название и введенное при редактировании"); }
                 else
                 {
-                    LogTrace.WriteInLog("              НЕ СОВПАДАЮТ: содержимое поля Название и введенное при редактировании");
+                    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Название и введенное при редактировании");
                     wasMismatch = true;
                 }
                 if (comments == siteEditModel.GetComments) { LogTrace.WriteInLog("          Совпадают: содержимое поля Комментарии и введенное при редактировании"); }
                 else
                 {
-                    LogTrace.WriteInLog("              НЕ СОВПАДАЮТ: содержимое поля Комментарии и введенное при редактировании");
+                    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Комментарии и введенное при редактировании");
                     wasMismatch = true;
                 }
                 if (siteEditModel.GetAddTeasersToSubdomains) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Добавлять тизеры на поддомены' и выбранное при редактировании"); }
                 else
                 {
-                    LogTrace.WriteInLog("               НЕ СОВПАДАЮТ: состояние checkbox 'Добавлять тизеры на поддомены' и выбранное при редактировании");
+                    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Добавлять тизеры на поддомены' и выбранное при редактировании");
                     wasMismatch = true;
                 }
                 if (siteEditModel.GetAllowAddSiteOtherClients) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Разрешить добавлять сайт другим клиентам' и выбранное при редактировании"); }
                 else
                 {
-                    LogTrace.WriteInLog("               НЕ СОВПАДАЮТ: состояние checkbox 'Разрешить добавлять сайт другим клиентам' и выбранное при редактировании");
+                    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Разрешить добавлять сайт другим клиентам' и выбранное при редактировании");
                     wasMismatch = true;
                 }
             #endregion
+
+            LogTrace.WriteInLog("          " + driver.Url);
+            LogTrace.WriteInLog("");
+            if (!wasMismatch)
+            {
+                LogTrace.WriteInLog("          ОК, всё ранее введенное совпадает с текущими значениями");
+                LogForClickers.WriteInLog("          ОК, всё ранее введенное совпадает с текущими значениями");
+            }
         }
     }
 }
