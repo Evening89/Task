@@ -29,7 +29,7 @@ namespace Task.Controller
 
             siteEditModel.driver = driver;
 
-            LogTrace.WriteInLog(driver.Url);
+            LogTrace.WriteInLog("          " + driver.Url);
 
             
             #region Заполнение
@@ -45,8 +45,8 @@ namespace Task.Controller
                 string editSiteUrl = driver.Url; //запоминаем url страницы
 
                 siteEditModel.Submit(); //пытаемся сохранить форму
-                LogTrace.WriteInLog("Нажал кнопку Сохранить");
-                LogTrace.WriteInLog(driver.Url);
+                LogTrace.WriteInLog("          Нажал кнопку Сохранить");
+                LogTrace.WriteInLog("          " + driver.Url);
                 LogTrace.WriteInLog("");
 
                 string isEditedClientUrl = driver.Url; //запоминаем url страницы, открывшейся после нажатия "Завершить"
@@ -54,12 +54,12 @@ namespace Task.Controller
                 //если editSiteUrl и isEditedClientUrl не совпали - клиент отредактировался и ошибки искать не надо
                 if (editSiteUrl == isEditedClientUrl)
                 {
-                    LogTrace.WriteInLog("Не удалось покинуть страницу редактирования сайта");
-                    errors.Add("Не удалось покинуть страницу редактирования сайта");
+                    LogTrace.WriteInLog("          Не удалось покинуть страницу редактирования сайта");
+                    errors.Add("          Не удалось покинуть страницу редактирования сайта");
                 }
                 else
                 {
-                    LogTrace.WriteInLog("Сайт успешно отредактирован");
+                    LogTrace.WriteInLog("          Сайт успешно отредактирован");
                 }
                 //Registry.hashTable.Add("driver", driver); //записываем в хештаблицу driver и его состояние, чтобы потом извлечь и использовать его при создании сайта/РК
                 Registry.hashTable["driver"] = driver;
@@ -73,33 +73,33 @@ namespace Task.Controller
             driver = (IWebDriver) Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
             driver.Navigate().GoToUrl(baseUrl); //заходим по ссылке
             driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
-            LogTrace.WriteInLog(driver.Url);
+            LogTrace.WriteInLog("          " + driver.Url);
 
             #region Проверка заполнения
-                LogTrace.WriteInLog("...Проверка: Название...");
+                LogTrace.WriteInLog("          ...Проверка: Название...");
 
-                if (siteName == siteEditModel.GetSiteName) { LogTrace.WriteInLog("Совпадают: содержимое поля Название и введенное при редактировании"); }
+                if (siteName == siteEditModel.GetSiteName) { LogTrace.WriteInLog("          Совпадают: содержимое поля Название и введенное при редактировании"); }
                 else
                 {
-                    LogTrace.WriteInLog("    НЕ СОВПАДАЮТ: содержимое поля Название и введенное при редактировании");
+                    LogTrace.WriteInLog("              НЕ СОВПАДАЮТ: содержимое поля Название и введенное при редактировании");
                     wasMismatch = true;
                 }
-                if (comments == siteEditModel.GetComments) { LogTrace.WriteInLog("Совпадают: содержимое поля Комментарии и введенное при редактировании"); }
+                if (comments == siteEditModel.GetComments) { LogTrace.WriteInLog("          Совпадают: содержимое поля Комментарии и введенное при редактировании"); }
                 else
                 {
-                    LogTrace.WriteInLog("    НЕ СОВПАДАЮТ: содержимое поля Комментарии и введенное при редактировании");
+                    LogTrace.WriteInLog("              НЕ СОВПАДАЮТ: содержимое поля Комментарии и введенное при редактировании");
                     wasMismatch = true;
                 }
-                if (siteEditModel.GetAddTeasersToSubdomains) { LogTrace.WriteInLog("Совпадают: состояние checkbox 'Добавлять тизеры на поддомены' и выбранное при редактировании"); }
+                if (siteEditModel.GetAddTeasersToSubdomains) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Добавлять тизеры на поддомены' и выбранное при редактировании"); }
                 else
                 {
-                    LogTrace.WriteInLog("     НЕ СОВПАДАЮТ: состояние checkbox 'Добавлять тизеры на поддомены' и выбранное при редактировании");
+                    LogTrace.WriteInLog("               НЕ СОВПАДАЮТ: состояние checkbox 'Добавлять тизеры на поддомены' и выбранное при редактировании");
                     wasMismatch = true;
                 }
-                if (siteEditModel.GetAllowAddSiteOtherClients) { LogTrace.WriteInLog("Совпадают: состояние checkbox 'Разрешить добавлять сайт другим клиентам' и выбранное при редактировании"); }
+                if (siteEditModel.GetAllowAddSiteOtherClients) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Разрешить добавлять сайт другим клиентам' и выбранное при редактировании"); }
                 else
                 {
-                    LogTrace.WriteInLog("     НЕ СОВПАДАЮТ: состояние checkbox 'Разрешить добавлять сайт другим клиентам' и выбранное при редактировании");
+                    LogTrace.WriteInLog("               НЕ СОВПАДАЮТ: состояние checkbox 'Разрешить добавлять сайт другим клиентам' и выбранное при редактировании");
                     wasMismatch = true;
                 }
             #endregion

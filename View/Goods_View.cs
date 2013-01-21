@@ -263,15 +263,15 @@ namespace Task.View
         public void EditAndCheckClient()
         {
             listBox1.Items.Add(
-                "===============================Редактирование клиента====================================");
-            LogForClickers.WriteInLog("===============================Редактирование клиента====================================");
-            LogForClickers.WriteInLog(DateTime.Now.ToString());
-            LogTrace.WriteInLog("===============================Редактирование клиента====================================");
-            LogTrace.WriteInLog(DateTime.Now.ToString());
+                "          ===============================Редактирование клиента====================================");
+            LogForClickers.WriteInLog("          ===============================Редактирование клиента====================================");
+            LogForClickers.WriteInLog("          " + DateTime.Now.ToString());
+            LogTrace.WriteInLog("          ===============================Редактирование клиента====================================");
+            LogTrace.WriteInLog("          " + DateTime.Now.ToString());
 
-            listBox1.Items.Add("ID клиента: " + Registry.hashTable["clientId"]);
-            LogForClickers.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
-            LogTrace.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
+            listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
+            LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+            LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
 
             GoodsEditClient_Controller editClientController = new GoodsEditClient_Controller();
 
@@ -282,13 +282,13 @@ namespace Task.View
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
                 listBox1.Items.Add("");
-                listBox1.Items.Add("     !!! Ошибки !!!");
+                listBox1.Items.Add("               !!! Ошибки !!!");
 
                 LogForClickers.WriteInLog("");
-                LogForClickers.WriteInLog("     !!! Ошибки !!!");
+                LogForClickers.WriteInLog("               !!! Ошибки !!!");
 
                 LogTrace.WriteInLog("");
-                LogTrace.WriteInLog("     !!! Ошибки !!!");
+                LogTrace.WriteInLog("               !!! Ошибки !!!");
 
                 for (int i = 0; i < errors.Count; i++)
                 {
@@ -299,25 +299,34 @@ namespace Task.View
             }
             else
             {
-                listBox1.Items.Add(
-                "===============================Проверка редактирования клиента===========================");
-                LogForClickers.WriteInLog("===============================Проверка редактирования клиента===========================");
-                LogTrace.WriteInLog("===============================Проверка редактирования клиента===========================");
+                listBox1.Items.Add("          Клиент успешно отредактирован");
 
-                listBox1.Items.Add("ID клиента: " + Registry.hashTable["clientId"]);
-                LogForClickers.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
-                LogTrace.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
+                listBox1.Items.Add(
+                "          ===============================Проверка редактирования клиента===========================");
+                LogForClickers.WriteInLog("          ===============================Проверка редактирования клиента===========================");
+                LogTrace.WriteInLog("          ===============================Проверка редактирования клиента===========================");
+
+                listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
+                LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+                LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
 
                 editClientController.CheckEditingClient();
 
                 if (editClientController.wasMismatch)
                 {
                     listBox1.Items.Add("");
-                    listBox1.Items.Add("!!!   Обнаружены несовпадения. См. лог");
+                    listBox1.Items.Add("          !!!   Обнаружены несовпадения. См. лог");
                     listBox1.Items.Add("");
                     LogForClickers.WriteInLog("");
-                    LogForClickers.WriteInLog("!!!   Обнаружены несовпадения. См. лог");
+                    LogForClickers.WriteInLog("          !!!   Обнаружены несовпадения. См. лог");
                     LogForClickers.WriteInLog("");
+                    LogTrace.WriteInLog("");
+                    LogTrace.WriteInLog("          !!!   Обнаружены несовпадения");
+                    LogTrace.WriteInLog("");
+                }
+                else
+                {
+                    listBox1.Items.Add("          ОК, всё ранее введенное совпадает с текущими значениями");
                 }
             }
 

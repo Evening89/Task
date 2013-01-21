@@ -909,7 +909,7 @@ namespace Task.Model
         {
             List<IWebElement> list = driver.FindElements(By.Id("error_image")).ToList(); //проверка, есть ли на странице ошибки заполнения _обязательных_ полей
             List<string> result = new List<string>();
-            if(list.Count != 0) result.Add("Ошибка(-и) заполнения полей в Контактах");
+            if (list.Count != 0) result.Add("               Ошибка(-и) заполнения полей в Контактах");
             return result;
         }
     }
