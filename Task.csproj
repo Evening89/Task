@@ -69,6 +69,7 @@
     <Compile Include="Controller\GoodsCreateSite_Controller.cs" />
     <Compile Include="Controller\GoodsCreateTeaser_Controller.cs" />
     <Compile Include="Controller\GoodsEditClient_Controller.cs" />
+    <Compile Include="Controller\GoodsEditPk_Controller.cs" />
     <Compile Include="Controller\GoodsEditSite_Controller.cs" />
     <Compile Include="Model\Authorization.cs" />
     <Compile Include="Model\GoodsCreateClient_Model.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Model\GoodsCreateSite_Model.cs" />
     <Compile Include="Model\GoodsCreateTeaser_Model.cs" />
     <Compile Include="Model\GoodsEditClient_Model.cs" />
+    <Compile Include="Model\GoodsEditPK_Model.cs" />
     <Compile Include="Model\GoodsEditSite_Model.cs" />
     <Compile Include="Utils\LogTrace.cs" />
     <Compile Include="Utils\FileData.cs" />

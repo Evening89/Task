@@ -63,8 +63,8 @@ namespace Task.Controller
                 }
                 else
                 {
-                    LogTrace.WriteInLog("          Клиент успешно отредактирован");
-                    LogForClickers.WriteInLog("          Клиент успешно отредактирован");
+                    LogTrace.WriteInLog("          Сайт успешно отредактирован");
+                    LogForClickers.WriteInLog("          Сайт успешно отредактирован");
                 }
                 //Registry.hashTable.Add("driver", driver); //записываем в хештаблицу driver и его состояние, чтобы потом извлечь и использовать его при создании сайта/РК
                 Registry.hashTable["driver"] = driver;
