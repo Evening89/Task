@@ -11,9 +11,7 @@ namespace Task.Controller
 {
     public class GoodsEditPk_Controller
     {
-        //берем сохраненный ранее 
-        //(при создании клиента Task.Controller.GoodsCreateClient_Controller) ID клиента
-        //и дописываем в URL
+        IWebDriver driver;
         public string baseUrl = "https://admin.dt00.net/cab/goodhits/campaigns-edit/id/" + Registry.hashTable["pkId"] + "/filters/%252Fclient_id%252F" + Registry.hashTable["clientId"];
         public List<string> errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
         Randoms randoms = new Randoms(); //класс генерации случайных строк
@@ -38,6 +36,1420 @@ namespace Task.Controller
 
         public string commentsForPk;
 
+        GoodsEditPK_Model pkEditModel = new GoodsEditPK_Model();
 
+        public void EditPk()
+        {
+            driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
+            driver.Navigate().GoToUrl(baseUrl); //заходим по ссылке
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+
+            pkEditModel.driver = driver;
+
+            LogTrace.WriteInLog("          " + driver.Url);
+
+            #region Редактирование полей
+
+                if(!pkEditModel.GetViewSensors) //если checkbox не выбран...
+                {
+                    pkEditModel.ViewSensors = true; //...выбираем его
+                    LogTrace.WriteInLog("     Выбран checkbox Просмотр датчиков");
+                }
+
+                if(!pkEditModel.GetViewConversion)
+                {
+                    pkEditModel.ViewConversion = true;
+                    LogTrace.WriteInLog("     Выбран checkbox Просмотр конверсии");
+                }
+
+                namePk = randoms.RandomString(15) + " " + randoms.RandomNumber(5);
+                pkEditModel.Name = namePk;
+                LogTrace.WriteInLog("     Заполняю поле Название РК. Было введено: " + pkEditModel.Name);
+
+                dateStartPk = pkEditModel.GenerateDate();
+                pkEditModel.StartPkDate = dateStartPk;
+                LogTrace.WriteInLog("     Заполняю поле Дата старта РК. Было введено: " + pkEditModel.StartPkDate);
+
+                dateEndPk = pkEditModel.GenerateDate();
+                pkEditModel.EndPkDate = dateEndPk;
+                LogTrace.WriteInLog("     Заполняю поле Дата окончания РК. Было введено: " + pkEditModel.EndPkDate);
+                List<string> instantErrorsDate = pkEditModel.ErrorsInFillFields();
+                if (instantErrorsDate.Count != 0) //если список с ошибками заполнения полей даты непуст
+                    errors = instantErrorsDate; //копируем в нас общий список ошибок errors
+
+                if(!pkEditModel.GetBlockTeasersAfterCreation)
+                {
+                    pkEditModel.BlockTeasersAfterCreation = true;
+                    LogTrace.WriteInLog("     Выбран checkbox Блокировать тизеры после их создания");
+                }
+
+                if(!pkEditModel.GetStoppedByManager)
+                {
+                    pkEditModel.StoppedByManager = true;
+                    LogTrace.WriteInLog("     Выбран checkbox Остановлена менеджером");
+                }
+
+                #region Radiobutton Ограничения рекламной кампании
+                    string variant = needSetRadioButton(3).ToString();
+                    pkEditModel.LimitsOfPk = variant;
+                    switch (variant)
+                    {
+                        case "0":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Ограничения рекламной кампании. Выбрано: не использовать");
+                                break;
+                            }
+                        case "1":
+                            {
+                                int num2;
+                                do
+                                {
+                                    num2 = int.Parse(randoms.RandomNumber(2));
+                                } while (num2 < 5); //суточный лимит должен быть не менее 5
+                                LogTrace.WriteInLog("     Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по бюджету");
+                                pkEditModel.DayLimitByBudget = num2.ToString();//суточный лимит должен быть не менее 5
+                                LogTrace.WriteInLog("        Заполняю поле Суточный лимит РК. Было введено: " + pkEditModel.DayLimitByBudget);
+                                pkEditModel.GeneralLimitByBudget = randoms.RandomNumber(3);
+                                LogTrace.WriteInLog("        Заполняю поле Общий лимит РК. Было введено: " + pkEditModel.GeneralLimitByBudget);
+                                break;
+                            }
+                        case "2":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по количеству кликов");
+                                pkEditModel.DayLimitByClicks = randoms.RandomNumber(3);
+                                LogTrace.WriteInLog("        Заполняю поле Суточный лимит кликов РК. Было введено: " + pkEditModel.DayLimitByClicks);
+                                pkEditModel.GeneralLimitByClicks = randoms.RandomNumber(3);
+                                LogTrace.WriteInLog("        Заполняю поле Общий лимит кликов РК. Было введено: " + pkEditModel.GeneralLimitByClicks);
+                                break;
+                            }
+                    }
+                    #endregion
+
+                #region Checkbox UTM-разметка рекламной кампании для Google Analytics
+                    if (!pkEditModel.GetUtmPkForGoogleAnalytics)
+                    {
+                        pkEditModel.UtmPkForGoogleAnalytics = true;
+                        LogTrace.WriteInLog("     Выбран checkbox UTM-разметка рекламной кампании для Google Analytics");
+                        pkEditModel.UtmMedium = randoms.RandomString(5);
+                        LogTrace.WriteInLog("        Заполняю поле utm_medium (средство кампании). Было введено: " + pkEditModel.UtmMedium);
+                        pkEditModel.UtmSource = randoms.RandomString(5);
+                        LogTrace.WriteInLog("        Заполняю поле utm_source (источник кампании). Было введено: " + pkEditModel.UtmSource);
+                        pkEditModel.UtmCampaign = randoms.RandomString(5);
+                        LogTrace.WriteInLog("        Заполняю поле utm_campaign (название кампании). Было введено: " + pkEditModel.UtmCampaign);
+                    }
+                    #endregion
+
+                #region Checkbox UTM-разметка пользователя
+                if (!pkEditModel.GetUtmUser)
+                {
+                    pkEditModel.UtmUser = true;
+                    LogTrace.WriteInLog("     Выбран checkbox UTM-разметка пользователя");
+                    pkEditModel.UtmUserStr = randoms.RandomString(5);
+                    LogTrace.WriteInLog("        Заполняю поле UTM-разметка пользователя. Было введено: " + pkEditModel.UtmUserStr);
+                }
+                #endregion
+
+                if (!pkEditModel.GetScrewInTovarro)
+                {
+                    LogTrace.WriteInLog("     Выбран checkbox Крутить в сети Товарро");
+                    pkEditModel.ScrewInTovarro = true;
+                }
+
+                #region Checkbox Блокировка по расписанию
+                if (!pkEditModel.GetBlockBySchedule)
+                {
+                    pkEditModel.BlockBySchedule = true;
+                    LogTrace.WriteInLog("     Выбран checkbox Блокировка по расписанию");
+                    if (pkEditModel.GetWeekends) pkEditModel.Weekends = true;
+                    LogTrace.WriteInLog("        Выбран checkbox Выходные");
+                    if (pkEditModel.GetWeekdays) pkEditModel.Weekdays = true;
+                    LogTrace.WriteInLog("        Выбран checkbox Будни");
+                    if (pkEditModel.GetWorkingTime) pkEditModel.WorkingTime = true;
+                    LogTrace.WriteInLog("        Выбран checkbox Рабочее время (9-18 по будням)");
+                }
+                #endregion
+
+                #region Checkbox Передавать id площадки в ссылке
+                if (!pkEditModel.GetIdOfPlatformInLink)
+                {
+                    pkEditModel.IdOfPlatformInLink = true;
+                    LogTrace.WriteInLog("     Выбран checkbox Передавать id площадки в ссылке");
+                    pkEditModel.IdOfPlatformInLinkStr = randoms.RandomString(5);
+                    LogTrace.WriteInLog("        Заполняю поле Передавать id площадки в ссылке. Было введено: " + pkEditModel.IdOfPlatformInLinkStr);
+                }
+                #endregion
+
+                if (!pkEditModel.GetAddIdOfTeaserInLink)
+                {
+                    pkEditModel.AddIdOfTeaserInLink = true;
+                    LogTrace.WriteInLog("     Выбран checkbox Добавлять id тизера в конец ссылки");
+                }
+
+                pkEditModel.CommentsForPk = randoms.RandomString(20) + " " + randoms.RandomString(10);
+                LogTrace.WriteInLog("     Заполняю textarea Комментарий к кампании. Было введено: " + pkEditModel.CommentsForPk);
+
+                #region Checkbox Площадки
+                    if (!pkEditModel.GetPlatforms)
+                    {
+                        pkEditModel.Platforms = true;
+                        LogTrace.WriteInLog("     Выбран checkbox Площадки");
+                        if (!pkEditModel.GetPlatformsNotSpecified)
+                        {
+                            pkEditModel.PlatformsNotSpecified = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Не определено");
+                        }
+                        if (!pkEditModel.GetPlatformsPolitics)
+                        {
+                            pkEditModel.PlatformsPolitics = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Политика, общество, происшествия, религия");
+                        }
+
+                        if (!pkEditModel.GetPlatformsEconomics)
+                        {
+                            pkEditModel.PlatformsEconomics = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Экономика, финансы, недвижимость, работа и карьера");
+                        }
+                        if (!pkEditModel.GetPlatformsCelebrities)
+                        {
+                            pkEditModel.PlatformsCelebrities = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Знаменитости, шоу-бизнес, кино, музыка");
+                        }
+                        if (!pkEditModel.GetPlatformsScience)
+                        {
+                            pkEditModel.PlatformsScience = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Наука и технологии");
+                        }
+                        if (!pkEditModel.GetPlatformsConnection)
+                        {
+                            pkEditModel.PlatformsConnection = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Связь, компьютеры, программы");
+                        }
+                        if (!pkEditModel.GetPlatformsSports)
+                        {
+                            pkEditModel.PlatformsSports = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Спорт");
+                        }
+                        if (!pkEditModel.GetPlatformsAuto)
+                        {
+                            pkEditModel.PlatformsAuto = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Авто-вело-мото");
+                        }
+                        if (!pkEditModel.GetPlatformsFashion)
+                        {
+                            pkEditModel.PlatformsFashion = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Мода и стиль, здоровье и красота, фитнес и диета, кулинария");
+                        }
+                        if (!pkEditModel.GetPlatformsMedicine)
+                        {
+                            pkEditModel.PlatformsMedicine = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Медицина");
+                        }
+                        if (!pkEditModel.GetPlatformsTourism)
+                        {
+                            pkEditModel.PlatformsTourism = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Туризм и отдых (путевки, отели, рестораны)");
+                        }
+                        if (!pkEditModel.GetPlatformsGlobalPortals)
+                        {
+                            pkEditModel.PlatformsGlobalPortals = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Глобальные порталы с множеством подпроектов");
+                        }
+                        if (!pkEditModel.GetPlatformsHumor)
+                        {
+                            pkEditModel.PlatformsHumor = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Юмор (приколы, картинки, обои), каталог фотографий, блоги");
+                        }
+                        if (!pkEditModel.GetPlatformsFileshares)
+                        {
+                            pkEditModel.PlatformsFileshares = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Файлообменники, файлокачалки (кино, музыка, игры, программы)");
+                        }
+                        if (!pkEditModel.PlatformsSocialNetworks)
+                        {
+                            pkEditModel.PlatformsSocialNetworks = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Социальные сети, сайты знакомства, личные дневники");
+                        }
+                        if (!pkEditModel.GetPlatformsAnimals)
+                        {
+                            pkEditModel.PlatformsAnimals = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Животный и растительный мир");
+                        }
+                        if (!pkEditModel.GetPlatformsReligion)
+                        {
+                            pkEditModel.PlatformsReligion = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Религия");
+                        }
+                        if (!pkEditModel.GetPlatformsChildren)
+                        {
+                            pkEditModel.PlatformsChildren = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Дети и родители");
+                        }
+                        if (!pkEditModel.GetPlatformsBuilding)
+                        {
+                            pkEditModel.PlatformsBuilding = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Строительство, ремонт, дача, огород");
+                        }
+                        if (!pkEditModel.GetPlatformsCookery)
+                        {
+                            pkEditModel.PlatformsCookery = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Кулинария");
+                        }
+                        if (!pkEditModel.GetPlatformsJob)
+                        {
+                            pkEditModel.PlatformsJob = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Работа и карьера. Поиск работы, поиск персонала");
+                        }
+                        if (!pkEditModel.GetPlatformsNotSites)
+                        {
+                            pkEditModel.PlatformsNotSites = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Не сайты (программы, тулбары, таскбары)");
+                        }
+                        if (!pkEditModel.GetPlatformsSitesStartPagesBrowsers)
+                        {
+                            pkEditModel.PlatformsSitesStartPagesBrowsers = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Сайты, размещенные на стартовых страницах браузеров");
+                        }
+                        if (!pkEditModel.GetPlatformsSearchSystems)
+                        {
+                            pkEditModel.PlatformsSearchSystems = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Поисковые системы");
+                        }
+                        if (!pkEditModel.GetPlatformsEmail)
+                        {
+                            pkEditModel.PlatformsEmail = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Почта");
+                        }
+                        if (!pkEditModel.GetPlatformsPhotoCatalogues)
+                        {
+                            pkEditModel.PlatformsPhotoCatalogues = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Каталоги фотографий");
+                        }
+                        if (!pkEditModel.GetPlatformsVarez)
+                        {
+                            pkEditModel.PlatformsVarez = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Варезники");
+                        }
+                        if (!pkEditModel.GetPlatformsOnlineVideo)
+                        {
+                            pkEditModel.PlatformsOnlineVideo = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Онлайн видео, телевидение, радио");
+                        }
+                        if (!pkEditModel.GetPlatformsOnlineLibraries)
+                        {
+                            pkEditModel.PlatformsOnlineLibraries = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Онлайн-библиотеки");
+                        }
+                        if (!pkEditModel.GetPlatformsInternet)
+                        {
+                            pkEditModel.PlatformsInternet = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Интернет, поисковые сайты, электронная почта, интернет-магазины, аукционы, каталоги ресурсов, фирм и предприятий");
+                        }
+                        if (!pkEditModel.GetPlatformsOnlineGames)
+                        {
+                            pkEditModel.PlatformsOnlineGames = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Онлайн игры");
+                        }
+                        if (!pkEditModel.GetPlatformsInternetRepresentatives)
+                        {
+                            pkEditModel.PlatformsInternetRepresentatives = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Интернет-представительства бизнеса.");
+                        }
+                        if (!pkEditModel.GetPlatformsProgramms)
+                        {
+                            pkEditModel.PlatformsProgramms = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Программы, прошивки, игры для КПК и мобильных устройств");
+                        }
+                        if (!pkEditModel.GetPlatformsCataloguesInternetResources)
+                        {
+                            pkEditModel.PlatformsCataloguesInternetResources = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Каталоги Интернет - ресурсов, фирм и предприятий");
+                        }
+                        if (!pkEditModel.GetPlatformsForWagesInInternet)
+                        {
+                            pkEditModel.PlatformsForWagesInInternet = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Для заработка в Интернете. Партнерские программы");
+                        }
+                        if (!pkEditModel.GetPlatformsHobbies)
+                        {
+                            pkEditModel.PlatformsHobbies = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Хобби и увлечения");
+                        }
+                        if (!pkEditModel.GetPlatformsMarketgid)
+                        {
+                            pkEditModel.PlatformsMarketgid = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Маркетгид");
+                        }
+                        if (!pkEditModel.GetPlatformsShock)
+                        {
+                            pkEditModel.PlatformsShock = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Шокодром");
+                        }
+                        if (!pkEditModel.GetPlatformsEsoteric)
+                        {
+                            pkEditModel.PlatformsEsoteric = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Эзотерика. Непознанное, астрология, гороскопы, гадания");
+                        }
+                        if (!pkEditModel.GetPlatformsPsychology)
+                        {
+                            pkEditModel.PlatformsPsychology = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Психология, мужчина и женщина");
+                        }
+                        if (!pkEditModel.GetPlatformsHistory)
+                        {
+                            pkEditModel.PlatformsHistory = true;
+                            LogTrace.WriteInLog("        Выбран checkbox История, образование, культура");
+                        }
+                        if (!pkEditModel.GetPlatformsMarketgidWomenNet)
+                        {
+                            pkEditModel.PlatformsMarketgidWomenNet = true;
+                            LogTrace.WriteInLog("        Выбран checkbox Маркетгид ЖС");
+                        }
+                    }
+                #endregion
+
+                #region Radiobutton Демографический таргетинг
+                    variant = needSetRadioButton(2).ToString();
+                    pkEditModel.DemoTargeting = variant;
+                    switch (variant)
+                    {
+                        case "0":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Демографический таргетинг. Выбрано: не использовать");
+                                break;
+                            }
+                        case "1":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Демографический таргетинг. Выбрано: использовать");
+                                //развернуть все пункты (Мужчины, Женщины, Пол не определен)
+                                pkEditModel.DemoTargetingMenExpand = true;
+                                pkEditModel.DemoTargetingWomenExpand = true;
+                                pkEditModel.DemoTargetingHermaphroditeExpand = true;
+
+                                #region Мужчины
+                                    //pkEditModel.DemoTargetingMenNotSpecified = true;
+                                    if (!pkEditModel.GetDemoTargetingMenChoseAll)
+                                    {
+                                        pkEditModel.DemoTargetingMenChoseAll = true;
+                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingMenNotSpecified)
+                                    {
+                                        pkEditModel.DemoTargetingMenNotSpecified = true;
+                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox Не определен");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingMen618)
+                                    {
+                                        pkEditModel.DemoTargetingMen618 = true;
+                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox 6-18");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingMen1924)
+                                    {
+                                        pkEditModel.DemoTargetingMen1924 = true;
+                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox 19-24");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingMen2534)
+                                    {
+                                        pkEditModel.DemoTargetingMen2534 = true;
+                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox 25-34");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingMen3544)
+                                    {
+                                        pkEditModel.DemoTargetingMen3544 = true;
+                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox 35-44");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingMen4590)
+                                    {
+                                        pkEditModel.DemoTargetingMen4590 = true;
+                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox 45-90");
+                                    }
+                                #endregion
+
+                                #region Женщины
+                                    if (!pkEditModel.GetDemoTargetingWomenChoseAll)
+                                    {
+                                        pkEditModel.DemoTargetingWomenChoseAll = true;
+                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingWomenNotSpecified)
+                                    {
+                                        pkEditModel.DemoTargetingWomenNotSpecified = true;
+                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox Не определен");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingWomen618)
+                                    {
+                                        pkEditModel.DemoTargetingWomen618 = true;
+                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox 6-18");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingWomen1924)
+                                    {
+                                        pkEditModel.DemoTargetingWomen1924 = true;
+                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox 19-24");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingWomen2534)
+                                    {
+                                        pkEditModel.DemoTargetingWomen2534 = true;
+                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox 25-34");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingWomen3544)
+                                    {
+                                        pkEditModel.DemoTargetingWomen3544 = true;
+                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox 35-44");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingWomen4590)
+                                    {
+                                        pkEditModel.DemoTargetingWomen4590 = true;
+                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox 45-90");
+                                    }
+                                #endregion
+
+                                #region Пол не определен
+                                    if (!pkEditModel.GetDemoTargetingHermaphroditeChoseAll)
+                                    {
+                                        pkEditModel.DemoTargetingHermaphroditeChoseAll = true;
+                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingHermaphrodite618)
+                                    {
+                                        pkEditModel.DemoTargetingHermaphrodite618 = true;
+                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 6-18");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingHermaphrodite1924)
+                                    {
+                                        pkEditModel.DemoTargetingHermaphrodite1924 = true;
+                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 19-24");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingHermaphrodite2534)
+                                    {
+                                        pkEditModel.DemoTargetingHermaphrodite2534 = true;
+                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 25-34");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingHermaphrodite3544)
+                                    {
+                                        pkEditModel.DemoTargetingHermaphrodite3544 = true;
+                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 35-44");
+                                    }
+                                    if (!pkEditModel.GetDemoTargetingHermaphrodite4590)
+                                    {
+                                        pkEditModel.DemoTargetingHermaphrodite4590 = true;
+                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 45-90");
+                                    }
+                                #endregion
+
+                                break;
+                            }
+                    }
+                #endregion
+
+                #region Radiobutton Таргетинг по интересам
+                    variant = needSetRadioButton(2).ToString();
+                    pkEditModel.InterestsTargeting = variant;
+                    switch (variant)
+                    {
+                        case "0":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Таргетинг по интересам. Выбрано: не использовать");
+                                break;
+                            }
+                        case "1":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Таргетинг по интересам. Выбрано: использовать");
+                                pkEditModel.InterestsTargetingBusinessExpand = true;
+                                pkEditModel.InterestsTargetingRealtyExpand = true;
+                                pkEditModel.InterestsTargetingEducationExpand = true;
+                                pkEditModel.InterestsTargetingRestExpand = true;
+                                pkEditModel.InterestsTargetingTelephonesExpand = true;
+                                pkEditModel.InterestsTargetingMedicineExpand = true;
+                                pkEditModel.InterestsTargetingHouseExpand = true;
+                                pkEditModel.InterestsTargetingFinanceExpand = true;
+                                pkEditModel.InterestsTargetingComputersExpand = true;
+                                pkEditModel.InterestsTargetingAutoExpand = true;
+                                pkEditModel.InterestsTargetingAudioExpand = true;
+
+                                //pkEditModel.InterestsTargetingOther = true;
+                                if (!pkEditModel.GetInterestsTargetingOther)
+                                {
+                                    pkEditModel.InterestsTargetingOther = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Прочее");
+                                }
+
+                                #region Бизнес
+                                    if (!pkEditModel.GetInterestsTargetingBusinessChoseAll)
+                                    {
+                                        pkEditModel.InterestsTargetingBusinessChoseAll = true;
+                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingBusinessAcoountancy)
+                                    {
+                                        pkEditModel.InterestsTargetingBusinessAcoountancy = true;
+                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Бухгалтерия");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingBusinessPlacement)
+                                    {
+                                        pkEditModel.InterestsTargetingBusinessPlacement = true;
+                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Трудоустройство, персонал");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingBusinessAudit)
+                                    {
+                                        pkEditModel.InterestsTargetingBusinessAudit = true;
+                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Аудит, консалтинг");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingBusinessAdverts)
+                                    {
+                                        pkEditModel.InterestsTargetingBusinessAdverts = true;
+                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Реклама");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingBusinessMiscellanea)
+                                    {
+                                        pkEditModel.InterestsTargetingBusinessMiscellanea = true;
+                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Разное");
+                                    }
+                                #endregion
+
+                                #region Недвижимость
+                                    if (!pkEditModel.GetInterestsTargetingRealtyChoseAll)
+                                    {
+                                        pkEditModel.InterestsTargetingRealtyChoseAll = true;
+                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingRealtyMiscelanea)
+                                    {
+                                        pkEditModel.InterestsTargetingRealtyMiscelanea = true;
+                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Разное");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingRealtyGarages)
+                                    {
+                                        pkEditModel.InterestsTargetingRealtyGarages = true;
+                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Гаражи");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingRealtyFlats)
+                                    {
+                                        pkEditModel.InterestsTargetingRealtyFlats = true;
+                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Квартиры");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingRealtyAbroad)
+                                    {
+                                        pkEditModel.InterestsTargetingRealtyAbroad = true;
+                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Зарубежная недвижимость");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingRealtyLand)
+                                    {
+                                        pkEditModel.InterestsTargetingRealtyLand = true;
+                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Земля");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingRealtySuburban)
+                                    {
+                                        pkEditModel.InterestsTargetingRealtySuburban = true;
+                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Загородная недвижимость");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingRealtyHypothec)
+                                    {
+                                        pkEditModel.InterestsTargetingRealtyHypothec = true;
+                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Ипотека");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingRealtyCommerce)
+                                    {
+                                        pkEditModel.InterestsTargetingRealtyCommerce = true;
+                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Коммерческая недвижимость");
+                                    }
+                                #endregion
+
+                                if (!pkEditModel.GetInterestsTargetingExhibitions)
+                                {
+                                    pkEditModel.InterestsTargetingExhibitions = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Выставки, концерты, театры, кино");
+                                }
+
+                                #region Образование
+                                    if (!pkEditModel.GetInterestsTargetingEducationChoseAll)
+                                    {
+                                        pkEditModel.InterestsTargetingEducationChoseAll = true;
+                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingEducationForeignLanguages)
+                                    {
+                                        pkEditModel.InterestsTargetingEducationForeignLanguages = true;
+                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Иностранные языки");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingEducationAbroad)
+                                    {
+                                        pkEditModel.InterestsTargetingEducationAbroad = true;
+                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Образование за рубежом");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingEducationHigh)
+                                    {
+                                        pkEditModel.InterestsTargetingEducationHigh = true;
+                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Образование высшее");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingEducationMiscelanea)
+                                    {
+                                        pkEditModel.InterestsTargetingEducationMiscelanea = true;
+                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Разное");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingEducationChildren)
+                                    {
+                                        pkEditModel.InterestsTargetingEducationChildren = true;
+                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Образование для детей");
+                                    }
+                                #endregion
+
+                                #region Отдых, туризм, путешествия
+                                    if (!pkEditModel.GetInterestsTargetingRestChoseAll)
+                                    {
+                                        pkEditModel.InterestsTargetingRestChoseAll = true;
+                                        LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingRestMiscellanea)
+                                    {
+                                        pkEditModel.InterestsTargetingRestMiscellanea = true;
+                                        LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Разное");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingRestRuUa)
+                                    {
+                                        pkEditModel.InterestsTargetingRestRuUa = true;
+                                        LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Отдых в России и Украине");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingRestAbroad)
+                                    {
+                                        pkEditModel.InterestsTargetingRestAbroad = true;
+                                        LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Отдых за рубежом");
+                                    }
+                                #endregion
+
+                                #region Телефоны, связь
+                                    if (!pkEditModel.GetInterestsTargetingTelephonesChoseAll)
+                                    {
+                                        pkEditModel.InterestsTargetingTelephonesChoseAll = true;
+                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingTelephonesMiscellanea)
+                                    {
+                                        pkEditModel.InterestsTargetingTelephonesMiscellanea = true;
+                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Разное");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingTelephonesNavigation)
+                                    {
+                                        pkEditModel.InterestsTargetingTelephonesNavigation = true;
+                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Навигация");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingTelephonesMobileApps)
+                                    {
+                                        pkEditModel.InterestsTargetingTelephonesMobileApps = true;
+                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Мобильные приложения и услуги");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingTelephonesMobile)
+                                    {
+                                        pkEditModel.InterestsTargetingTelephonesMobile = true;
+                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Мобильные телефоны");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingTelephonesStationary)
+                                    {
+                                        pkEditModel.InterestsTargetingTelephonesStationary = true;
+                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Стационарная связь");
+                                    }
+                                #endregion
+
+                                if (!pkEditModel.GetInterestsTargetingHouseAplliances)
+                                {
+                                    pkEditModel.InterestsTargetingHouseAplliances = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Бытовая техника");
+                                }
+                                
+
+                                #region Медицина, здоровье
+                                    if (!pkEditModel.GetInterestsTargetingMedicineChoseAll)
+                                    {
+                                        pkEditModel.InterestsTargetingMedicineChoseAll = true;
+                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingMedicineSport)
+                                    {
+                                        pkEditModel.InterestsTargetingMedicineSport = true;
+                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Спорт, фитнес, йога");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingMedicineEyesight)
+                                    {
+                                        pkEditModel.InterestsTargetingMedicineEyesight = true;
+                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Зрение");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingMedicineMiscellanea)
+                                    {
+                                        pkEditModel.InterestsTargetingMedicineMiscellanea = true;
+                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Разное");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingMedicineDiets)
+                                    {
+                                        pkEditModel.InterestsTargetingMedicineDiets = true;
+                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Диеты");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingMedicineExtraWeight)
+                                    {
+                                        pkEditModel.InterestsTargetingMedicineExtraWeight = true;
+                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Лишний вес");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingMedicinePregnancy)
+                                    {
+                                        pkEditModel.InterestsTargetingMedicinePregnancy = true;
+                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Беременность и роды");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingMedicineStomatology)
+                                    {
+                                        pkEditModel.InterestsTargetingMedicineStomatology = true;
+                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Стоматология");
+                                    }
+                                #endregion
+
+                                #region Дом и семья
+                                    if (!pkEditModel.GetInterestsTargetingHouseChoseAll)
+                                    {
+                                        pkEditModel.InterestsTargetingHouseChoseAll = true;
+                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingHouseChildren)
+                                    {
+                                        pkEditModel.InterestsTargetingHouseChildren = true;
+                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Маленькие дети");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingHouseDogs)
+                                    {
+                                        pkEditModel.InterestsTargetingHouseDogs = true;
+                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Собаки");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingHouseMiscellanea)
+                                    {
+                                        pkEditModel.InterestsTargetingHouseMiscellanea = true;
+                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Разное");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingHouseCats)
+                                    {
+                                        pkEditModel.InterestsTargetingHouseCats = true;
+                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Кошки");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingHouseCookery)
+                                    {
+                                        pkEditModel.InterestsTargetingHouseCookery = true;
+                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Кулинария, рецепты");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingHouseKindergartens)
+                                    {
+                                        pkEditModel.InterestsTargetingHouseKindergartens = true;
+                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Детские сады");
+                                    }
+                                #endregion
+
+                                #region Финансы
+                                    if (!pkEditModel.GetInterestsTargetingFinanceChoseAll)
+                                    {
+                                        pkEditModel.InterestsTargetingFinanceChoseAll = true;
+                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingFinanceStockMarket)
+                                    {
+                                        pkEditModel.InterestsTargetingFinanceStockMarket = true;
+                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Фондовый рынок");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingFinanceCurrency)
+                                    {
+                                        pkEditModel.InterestsTargetingFinanceCurrency = true;
+                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Валюта");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingFinanceInsurence)
+                                    {
+                                        pkEditModel.InterestsTargetingFinanceInsurence = true;
+                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Страхование");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingFinanceMoneyTransfers)
+                                    {
+                                        pkEditModel.InterestsTargetingFinanceMoneyTransfers = true;
+                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Денежные переводы");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingFinanceCredits)
+                                    {
+                                        pkEditModel.InterestsTargetingFinanceCredits = true;
+                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Кредиты");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingFinanceMiscellanea)
+                                    {
+                                        pkEditModel.InterestsTargetingFinanceMiscellanea = true;
+                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Разное");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingFinanceDeposits)
+                                    {
+                                        pkEditModel.InterestsTargetingFinanceDeposits = true;
+                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Вклады, депозиты");
+                                    }
+                                #endregion
+
+                                #region Компьютеры, оргтехника
+                                    if (!pkEditModel.GetInterestsTargetingComputersChoseAll)
+                                    {
+                                        pkEditModel.InterestsTargetingComputersChoseAll = true;
+                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingComputersLaptops)
+                                    {
+                                        pkEditModel.InterestsTargetingComputersLaptops = true;
+                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Ноутбуки");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingComputersParts)
+                                    {
+                                        pkEditModel.InterestsTargetingComputersParts = true;
+                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Компьютерные комплектующие");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingComputersPrinters)
+                                    {
+                                        pkEditModel.InterestsTargetingComputersPrinters = true;
+                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Принтеры");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingComputersTablets)
+                                    {
+                                        pkEditModel.InterestsTargetingComputersTablets = true;
+                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Планшетные ПК");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingComputersMonitors)
+                                    {
+                                        pkEditModel.InterestsTargetingComputersMonitors = true;
+                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Мониторы");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingComputersMiscellanea)
+                                    {
+                                        pkEditModel.InterestsTargetingComputersMiscellanea = true;
+                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Разное");
+                                    }
+                                #endregion
+
+                                #region Авто
+                                    if (!pkEditModel.GetInterestsTargetingAutoChoseAll)
+                                    {
+                                        pkEditModel.InterestsTargetingAutoChoseAll = true;
+                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingAutoInsurence)
+                                    {
+                                        pkEditModel.InterestsTargetingAutoInsurence = true;
+                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Автострахование");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingAutoMiscellanea)
+                                    {
+                                        pkEditModel.InterestsTargetingAutoMiscellanea = true;
+                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Разное");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingAutoNational)
+                                    {
+                                        pkEditModel.InterestsTargetingAutoNational = true;
+                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Отечественные");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingAutoWheels)
+                                    {
+                                        pkEditModel.InterestsTargetingAutoWheels = true;
+                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Колёса, Шины");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingAutoImported)
+                                    {
+                                        pkEditModel.InterestsTargetingAutoImported = true;
+                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Иномарки");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingAutoMoto)
+                                    {
+                                        pkEditModel.InterestsTargetingAutoMoto = true;
+                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Мото-, Квадроциклы, Снегоходы");
+                                    }
+                                #endregion
+
+                                #region Аудио, Видео, Фото
+                                    if (!pkEditModel.GetInterestsTargetingAudioChoseAll)
+                                    {
+                                        pkEditModel.InterestsTargetingAudioChoseAll = true;
+                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Все");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingAudioVideoEquips)
+                                    {
+                                        pkEditModel.InterestsTargetingAudioVideoEquips = true;
+                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Видеоаппаратура");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingAudioMiscellanea)
+                                    {
+                                        pkEditModel.InterestsTargetingAudioMiscellanea = true;
+                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Разное");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingAudioTech)
+                                    {
+                                        pkEditModel.InterestsTargetingAudioTech = true;
+                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Аудио-техника");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingAudioCameras)
+                                    {
+                                        pkEditModel.InterestsTargetingAudioCameras = true;
+                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Фотоаппараты");
+                                    }
+                                    if (!pkEditModel.GetInterestsTargetingAudioTvs)
+                                    {
+                                        pkEditModel.InterestsTargetingAudioTvs = true;
+                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Телевизоры, DVD-проигрыватели");
+                                    }
+                                #endregion
+
+                                break;
+                            }
+                    }
+                #endregion
+
+                #region Radiobutton Браузеры
+                    variant = needSetRadioButton(2).ToString();
+                    pkEditModel.BrowserTargeting = variant;
+                    switch (variant)
+                    {
+                        case "0":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Браузеры. Выбрано: не использовать");
+                                break;
+                            }
+                        case "1":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Браузеры. Выбрано: использовать");
+                                //развернуть все пункты
+                                pkEditModel.BrowserTargetingOtherExpand = true;
+                                pkEditModel.BrowserTargetingOperaExpand = true;
+                                pkEditModel.BrowserTargetingChromeExpand = true;
+                                pkEditModel.BrowserTargetingFirefoxExpand = true;
+                                pkEditModel.BrowserTargetingSafariExpand = true;
+                                pkEditModel.BrowserTargetingIeExpand = true;
+
+                                //pkEditModel.BrowserTargetingOtherAll = true;
+
+                                //if (!pkEditModel)
+                                //{
+                                //    pkEditModel.BrowserTargetingOtherChoseAll = true;
+                                //    LogTrace.WriteInLog("        Другие. Выбран checkbox Другие Все");
+                                //}
+                                if (!pkEditModel.GetBrowserTargetingOtherAll)
+                                {
+                                    pkEditModel.BrowserTargetingOtherAll = true;
+                                    LogTrace.WriteInLog("        Другие. Выбран checkbox Все");
+                                }
+
+                                #region Опера
+                                    //pkEditModel.BrowserTargetingOperaOther = true;
+                                    //LogTrace.WriteInLog("        Опера. Выбран checkbox Другие");
+                                    if (!pkEditModel.GetBrowserTargetingOperaChoseAll)
+                                    {
+                                        pkEditModel.BrowserTargetingOperaChoseAll = true;
+                                        LogTrace.WriteInLog("        Опера. Выбран checkbox Все");
+                                    }
+                                    //if (!pkEditModel) pkEditModel.BrowserTargetingOperaOther = true;
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingOpera10 = true;
+                                    //    LogTrace.WriteInLog("        Опера. Выбран checkbox 10");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingOpera11 = true;
+                                    //    LogTrace.WriteInLog("        Опера. Выбран checkbox 11");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingOperaMini = true;
+                                    //    LogTrace.WriteInLog("        Опера. Выбран checkbox Mini");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingOperaMobile = true;
+                                    //    LogTrace.WriteInLog("        Опера. Выбран checkbox Mobile");
+                                    //}
+                                #endregion
+
+                                #region Chrome
+                                    if (!pkEditModel.GetBrowserTargetingChromeChoseAll)
+                                    {
+                                        pkEditModel.BrowserTargetingChromeChoseAll = true;
+                                        LogTrace.WriteInLog("        Chrome. Выбран checkbox Chrome Все");
+                                    }
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingChromeAll = true;
+                                    //    LogTrace.WriteInLog("        Chrome. Выбран checkbox Все");
+                                    //}
+                                #endregion
+
+                                #region Firefox
+                                    if (!pkEditModel.GetBrowserTargetingFirefoxChoseAll)
+                                    {
+                                        pkEditModel.BrowserTargetingFirefoxChoseAll = true;
+                                        LogTrace.WriteInLog("        Firefox. Выбран checkbox Все");
+                                    }
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingFirefox3 = true;
+                                    //    LogTrace.WriteInLog("        Firefox. Выбран checkbox 3");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingFirefox4 = true;
+                                    //    LogTrace.WriteInLog("        Firefox. Выбран checkbox 4");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingFirefox5 = true;
+                                    //    LogTrace.WriteInLog("        Firefox. Выбран checkbox 5");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingFirefox6 = true;
+                                    //    LogTrace.WriteInLog("        Firefox. Выбран checkbox 6");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingFirefoxOther = true;
+                                    //    LogTrace.WriteInLog("        Firefox. Выбран checkbox Другие");
+                                    //}
+                                #endregion
+
+                                #region Safari
+                                    if (!pkEditModel.GetBrowserTargetingSafariChoseAll)
+                                    {
+                                        pkEditModel.BrowserTargetingSafariChoseAll = true;
+                                        LogTrace.WriteInLog("        Safari. Выбран checkbox Safari Все");
+                                    }
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingSafariAll = true;
+                                    //    LogTrace.WriteInLog("        Safari. Выбран checkbox Все");
+                                    //}
+                                #endregion
+
+                                #region MSIE
+                                    if (!pkEditModel.GetBrowserTargetingIeChoseAll)
+                                    {
+                                        pkEditModel.BrowserTargetingIeChoseAll = true;
+                                        LogTrace.WriteInLog("        MSIE. Выбран checkbox Все");
+                                    }
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingIe6 = true;
+                                    //    LogTrace.WriteInLog("        MSIE. Выбран checkbox 6");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingIe7 = true;
+                                    //    LogTrace.WriteInLog("        MSIE. Выбран checkbox 7");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingIe8 = true;
+                                    //    LogTrace.WriteInLog("        MSIE. Выбран checkbox 8");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingIe9 = true;
+                                    //    LogTrace.WriteInLog("        MSIE. Выбран checkbox 9");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingIeOther = true;
+                                    //    LogTrace.WriteInLog("        MSIE. Выбран checkbox Другие");
+                                    //}
+                                #endregion
+
+                                break;
+                            }
+                    }
+                #endregion
+
+                #region Radiobutton OC таргетинг
+                    variant = needSetRadioButton(2).ToString();
+                    pkEditModel.OsTargeting = variant;
+                    switch (variant)
+                    {
+                        case "0":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton OC таргетинг. Выбрано: не использовать");
+                                break;
+                            }
+                        case "1":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton OC таргетинг. Выбрано: использовать");
+                                //pkEditModel.OsTargetingOther = true;
+                                //LogTrace.WriteInLog("        Выбран checkbox Другие");
+                                if (!pkEditModel.GetOsTargetingOther)
+                                {
+                                    pkEditModel.OsTargetingOther = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Другие");
+                                }
+                                if (!pkEditModel.GetOsTargetingMacOs)
+                                {
+                                    pkEditModel.OsTargetingMacOs = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Mac OS");
+                                }
+                                if (!pkEditModel.GetOsTargetingOtherMobileOs)
+                                {
+                                    pkEditModel.OsTargetingOtherMobileOs = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Прочие мобильные ОС");
+                                }
+                                if (!pkEditModel.GetOsTargetingWindows)
+                                {
+                                    pkEditModel.OsTargetingWindows = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox WIndows");
+                                }
+                                if (!pkEditModel.GetOsTargetingOtherIoS)
+                                {
+                                    pkEditModel.OsTargetingOtherIoS = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Прочие iOS системы");
+                                }
+                                if (!pkEditModel.GetOsTargetingIpad)
+                                {
+                                    pkEditModel.OsTargetingIpad = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox iPAD");
+                                }
+                                if (!pkEditModel.GetOsTargetingIphone)
+                                {
+                                    pkEditModel.OsTargetingIphone = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox IPHONE");
+                                }
+                                if (!pkEditModel.GetOsTargetingAndroid)
+                                {
+                                    pkEditModel.OsTargetingAndroid = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Android");
+                                }
+                                break;
+                            }
+                    }
+                #endregion
+
+                #region Radiobutton Провайдеры
+                    variant = needSetRadioButton(2).ToString();
+                    pkEditModel.ProviderTargeting = variant;
+                    switch (variant)
+                    {
+                        case "0":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Провайдеры. Выбрано: не использовать");
+                                break;
+                            }
+                        case "1":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Провайдеры. Выбрано: использовать");
+                                //pkEditModel.ProviderTargetingOther = true;
+                                //LogTrace.WriteInLog("        Выбран checkbox Другие");
+                                if (!pkEditModel.GetProviderTargetingOther)
+                                {
+                                    pkEditModel.ProviderTargetingOther = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Другие");
+                                }
+                                if (!pkEditModel.GetProviderTargetingMegafon)
+                                {
+                                    pkEditModel.ProviderTargetingMegafon = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Мегафон");
+                                }
+                                if (!pkEditModel.GetProviderTargetingMtc)
+                                {
+                                    pkEditModel.ProviderTargetingMtc = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox МТС Россия");
+                                }
+                                break;
+                            }
+                    }
+                #endregion
+
+                #region Radiobutton Геотаргетинг
+                    variant = needSetRadioButton(2).ToString();
+                    pkEditModel.GeoTargeting = variant;
+                    switch (variant)
+                    {
+                        case "0":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Геотаргетинг. Выбрано: не использовать");
+                                break;
+                            }
+                        case "1":
+                            {
+                                LogTrace.WriteInLog("     Выбираю radiobutton Геотаргетинг. Выбрано: использовать");
+                                pkEditModel.GeoTargetingRussiaExpand = true;
+                                pkEditModel.GeoTargetingUkraineExpand = true;
+
+                                //pkEditModel.GeoTargetingOther = true;
+                                if (!pkEditModel.GetGeoTargetingOther)
+                                {
+                                    pkEditModel.GeoTargetingOther = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Прочие страны");
+                                }
+                                if (!pkEditModel.GetGeoTargetingAustria)
+                                {
+                                    pkEditModel.GeoTargetingAustria = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Австрия");
+                                }
+                                if (!pkEditModel.GetGeoTargetingBelorussia)
+                                {
+                                    pkEditModel.GeoTargetingBelorussia = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Белоруссия");
+                                }
+                                if (!pkEditModel.GetGeoTargetingUk)
+                                {
+                                    pkEditModel.GeoTargetingUk = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Великобритания");
+                                }
+                                if (!pkEditModel.GetGeoTargetingGermany)
+                                {
+                                    pkEditModel.GeoTargetingGermany = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Германия");
+                                }
+                                if (!pkEditModel.GetGeoTargetingIsrael)
+                                {
+                                    pkEditModel.GeoTargetingIsrael = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Израиль");
+                                }
+                                if (!pkEditModel.GetGeoTargetingKazakhstan)
+                                {
+                                    pkEditModel.GeoTargetingKazakhstan = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Казахстан");
+                                }
+                                if (!pkEditModel.GetGeoTargetingLatvia)
+                                {
+                                    pkEditModel.GeoTargetingLatvia = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Латвия");
+                                }
+                                if (!pkEditModel.GetGeoTargetingLithuania)
+                                {
+                                    pkEditModel.GeoTargetingLithuania = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Литва");
+                                }
+
+                                #region Россия
+                                    if (!pkEditModel.GetGeoTargetingRussiaChoseAll)
+                                    {
+                                        pkEditModel.GeoTargetingRussiaChoseAll = true;
+                                        LogTrace.WriteInLog("        Россия. Выбран checkbox Все");
+                                    }
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingRussiaEburg = true;
+                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Екатеринбург");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingRussiaMoscow = true;
+                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Москва");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingRussiaNovosibirsk = true;
+                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Новосибирск");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingRussiaOther = true;
+                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Прочие регионы");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingRussiaSpb = true;
+                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Санкт-Петербург");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingRussiaHabarovsk = true;
+                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Хабаровск");
+                                    //}
+                                #endregion
+
+                                if (!pkEditModel.GetGeoTargetingUsa)
+                                {
+                                    pkEditModel.GeoTargetingUsa = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox США");
+                                }
+
+                                #region Украина
+                                    if (!pkEditModel.GetGeoTargetingUkraineChoseAll)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineChoseAll = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Все");
+                                    }
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineDnepr = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Днепропетровск");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineDonetzk = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Донецк");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineZakarpattya = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Закарпатье");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineKiev = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Киев");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineCrimea = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Крым");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineLvov = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Львов");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineNikolaev = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Николаев");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineOdessa = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Одесса");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineOther = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Прочие области");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineHarkov = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Харьков");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineHerson = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Херсон");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineCherkassy = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Черкассы");
+                                    //}
+                                    //if (!pkEditModel)
+                                    //{
+                                    //    pkEditModel.GeoTargetingUkraineChernovzi = true;
+                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Черновцы");
+                                    //}
+                                #endregion
+
+                                if (!pkEditModel.GetGeoTargetingEstonia)
+                                {
+                                    pkEditModel.GeoTargetingEstonia = true;
+                                    LogTrace.WriteInLog("        Выбран checkbox Эстония");
+                                }
+                                break;
+                            }
+                    }
+                #endregion
+            #endregion
+
+            pkEditModel.Submit();
+        }
+        
+        
+
+        protected int needSetRadioButton(int variants) //генерируем номер варианта выбора для needSetRadioButton. variants - кол-во вариантов выбора
+        {
+            Random rnd = new Random();
+            return rnd.Next(0, variants);
+        }
     }
 }

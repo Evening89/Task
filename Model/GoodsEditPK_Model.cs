@@ -19,6 +19,7 @@ namespace Task.Model
             return date;
         }
 
+    #region Редактирование полей
         #region Required fields
             protected string FieldName;
             public string Name
@@ -33,84 +34,86 @@ namespace Task.Model
                 }
             }
         #endregion
-
+        
         #region Unrequired fields
-            protected bool CheckboxViewSensors;
-            public bool ViewSensors
-            {
-                get { return CheckboxViewSensors; }
-                set
+            #region Разное
+                protected bool CheckboxViewSensors;
+                public bool ViewSensors
                 {
-                    IWebElement webelement = driver.FindElement(By.Id("display_goods_buying"));
-                    webelement.Click();
-                    CheckboxViewSensors = value;
+                    get { return CheckboxViewSensors; }
+                    set
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("display_goods_buying"));
+                        webelement.Click();
+                        CheckboxViewSensors = value;
+                    }
                 }
-            }
 
-            protected bool CheckboxViewConversion;
-            public bool ViewConversion
-            {
-                get { return CheckboxViewConversion; }
-                set
+                protected bool CheckboxViewConversion;
+                public bool ViewConversion
                 {
-                    IWebElement webelement = driver.FindElement(By.Id("display_goods_conversion"));
-                    webelement.Click();
-                    CheckboxViewConversion = value;
+                    get { return CheckboxViewConversion; }
+                    set
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("display_goods_conversion"));
+                        webelement.Click();
+                        CheckboxViewConversion = value;
+                    }
                 }
-            }
 
-            protected string FieldStartPkDate;
-            public string StartPkDate
-            {
-                get { return FieldStartPkDate; }
-                set
+                protected string FieldStartPkDate;
+                public string StartPkDate
                 {
-                    IWebElement webelement = driver.FindElement(By.Id("when_autostart"));
-                    webelement.Clear();
-                    webelement.SendKeys(value);
-                    FieldStartPkDate = value;
+                    get { return FieldStartPkDate; }
+                    set
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("when_autostart"));
+                        webelement.Clear();
+                        webelement.SendKeys(value);
+                        FieldStartPkDate = value;
+                    }
                 }
-            }
 
-            protected string FieldEndPkDate;
-            public string EndPkDate
-            {
-                get { return FieldEndPkDate; }
-                set
+                protected string FieldEndPkDate;
+                public string EndPkDate
                 {
-                    IWebElement webelement = driver.FindElement(By.Id("limit_date"));
-                    webelement.Clear();
-                    webelement.SendKeys(value);
-                    FieldEndPkDate = value;
+                    get { return FieldEndPkDate; }
+                    set
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("limit_date"));
+                        webelement.Clear();
+                        webelement.SendKeys(value);
+                        FieldEndPkDate = value;
+                    }
                 }
-            }
 
-            protected bool CheckboxBlockTeasersAfterCreation;
-            public bool BlockTeasersAfterCreation
-            {
-                get { return CheckboxBlockTeasersAfterCreation; }
-                set
+                protected bool CheckboxBlockTeasersAfterCreation;
+                public bool BlockTeasersAfterCreation
                 {
-                    IWebElement webelement = driver.FindElement(By.Id("block_before_show"));
-                    webelement.Click();
-                    CheckboxBlockTeasersAfterCreation = value;
+                    get { return CheckboxBlockTeasersAfterCreation; }
+                    set
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("block_before_show"));
+                        webelement.Click();
+                        CheckboxBlockTeasersAfterCreation = value;
+                    }
                 }
-            }
 
-            protected bool CheckboxStoppedByManager;
-            public bool StoppedByManager
-            {
-                get { return CheckboxStoppedByManager; }
-                set
+                protected bool CheckboxStoppedByManager;
+                public bool StoppedByManager
                 {
-                    IWebElement webelement = driver.FindElement(By.Id("manager_delete"));
-                    webelement.Click();
-                    CheckboxStoppedByManager = value;
+                    get { return CheckboxStoppedByManager; }
+                    set
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("manager_delete"));
+                        webelement.Click();
+                        CheckboxStoppedByManager = value;
+                    }
                 }
-            }
+        #endregion
 
             #region Ограничения PK
-                //Блок радиобаттонов "ограничения рекламной кампании"
+            //Блок радиобаттонов "ограничения рекламной кампании"
                 protected string RadioLimitsOfPk;
                 public string LimitsOfPk
                 {
@@ -3167,6 +3170,3614 @@ namespace Task.Model
             #endregion
 
         #endregion
+    #endregion
+
+    #region Узнать значения полей
+        #region Разное
+            protected bool GetCheckboxViewSensors;
+            public bool GetViewSensors
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("display_goods_buying"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxViewSensors = value; }
+            }
+
+            protected bool GetCheckboxViewConversion;
+            public bool GetViewConversion
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("display_goods_conversion"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxViewConversion = value; }
+            }
+
+            protected string GetFieldName;
+            public string GetName
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("name"));
+                    GetFieldName = webelement.GetAttribute("value");
+                    return GetFieldName;
+                }
+                set
+                {
+                    GetFieldName = value;
+                }
+            }
+
+            protected string GetFieldStartPkDate;
+            public string GetStartPkDate
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("when_autostart"));
+                    GetFieldStartPkDate = webelement.GetAttribute("value");
+                    return GetFieldStartPkDate;
+                }
+                set
+                {
+                    GetFieldStartPkDate = value;
+                }
+            }
+
+            protected string GetFieldEndPkDate;
+            public string GetEndPkDate
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("limit_date"));
+                    GetFieldEndPkDate = webelement.GetAttribute("value");
+                    return GetFieldEndPkDate;
+                }
+                set
+                {
+                    GetFieldEndPkDate = value;
+                }
+            }
+
+            protected bool GetCheckboxBlockTeasersAfterCreation;
+            public bool GetBlockTeasersAfterCreation
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("block_before_show"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxBlockTeasersAfterCreation = value; }
+            }
+
+            protected bool GetCheckboxStoppedByManager;
+            public bool GetStoppedByManager
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("manager_delete"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxStoppedByManager = value; }
+            }
+        #endregion
+
+        #region Ограничения рекламной кампании
+            protected string GetFieldDayLimitByBudget;
+            public string GetDayLimitByBudget
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("limit_per_day"));
+                    GetFieldDayLimitByBudget = webelement.GetAttribute("value");
+                    return GetFieldDayLimitByBudget;
+                }
+                set
+                {
+                    GetFieldDayLimitByBudget = value;
+                }
+            }
+            protected string GetFieldGeneralLimitByBudget;
+            public string GetGeneralLimitByBudget
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("limit_per_campaign"));
+                    GetFieldGeneralLimitByBudget = webelement.GetAttribute("value");
+                    return GetFieldGeneralLimitByBudget;
+                }
+                set
+                {
+                    GetFieldGeneralLimitByBudget = value;
+                }
+            }
+            protected string GetFieldDayLimitByClicks;
+            public string GetDayLimitByClicks
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("limit_clicks_per_day"));
+                    GetFieldDayLimitByClicks = webelement.GetAttribute("value");
+                    return GetFieldDayLimitByClicks;
+                }
+                set
+                {
+                    GetFieldDayLimitByClicks = value;
+                }
+            }
+            protected string GetFieldGeneralLimitByClicks;
+            public string GetGeneralLimitByClicks
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("limit_clicks"));
+                    GetFieldGeneralLimitByClicks = webelement.GetAttribute("value");
+                    return GetFieldGeneralLimitByClicks;
+                }
+                set
+                {
+                    GetFieldGeneralLimitByClicks = value;
+                }
+            }
+        #endregion
+
+        #region UTM-разметка РК для Google Analytics
+            protected bool GetCheckboxUtmPkForGoogleAnalytics;
+            public bool GetUtmPkForGoogleAnalytics
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("utm_flag"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxUtmPkForGoogleAnalytics = value; }
+            }
+            protected string GetFieldUtmMedium;
+            public string GetUtmMedium
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("utm-utm_medium"));
+                    GetFieldUtmMedium = webelement.GetAttribute("value");
+                    return GetFieldUtmMedium;
+                }
+                set
+                {
+                    GetFieldUtmMedium = value;
+                }
+            }
+            protected string GetFieldUtmSource;
+            public string GetUtmSource
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("utm-utm_source"));
+                    GetFieldUtmSource = webelement.GetAttribute("value");
+                    return GetFieldUtmSource;
+                }
+                set
+                {
+                    GetFieldUtmSource = value;
+                }
+            }
+            protected string GetFieldUtmCampaign;
+            public string GetUtmCampaign
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("utm-utm_campaign"));
+                    GetFieldUtmCampaign = webelement.GetAttribute("value");
+                    return GetFieldUtmCampaign;
+                }
+                set
+                {
+                    GetFieldUtmCampaign = value;
+                }
+            }
+        #endregion
+
+        #region UTM-разметка пользователя
+            protected bool GetCheckboxUtmUser;
+            public bool GetUtmUser
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("user_utm_flag"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxUtmUser = value; }
+            }
+            protected string GetFieldUtmUserStr;
+            public string GetUtmUserStr
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("user_utm-utm_custom"));
+                    GetFieldUtmUserStr = webelement.GetAttribute("value");
+                    return GetFieldUtmUserStr;
+                }
+                set
+                {
+                    GetFieldUtmUserStr = value;
+                }
+            }
+        #endregion
+
+        protected bool GetCheckboxScrewInTovarro;
+        public bool GetScrewInTovarro
+        {
+            get
+            {
+                IWebElement webelement = driver.FindElement(By.Id("tovarro_on"));
+                try
+                {
+                    string _checked = webelement.GetAttribute("checked");
+                    return true; //есть атрибут checked--значит чекбокс выбран
+                }
+                catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+            }
+            set { GetCheckboxScrewInTovarro = value; }
+        }
+
+        #region Блокировка по расписанию
+            protected bool GetCheckboxBlockBySchedule;
+            public bool GetBlockBySchedule
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("proc_tblock"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxBlockBySchedule = value; }
+            }
+            protected bool GetCheckboxWeekends;
+            public bool GetWeekends
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("blocking-buttonsbarbottom-weekends_checkbox"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxWeekends = value; }
+            }
+            protected bool GetCheckboxWeekdays;
+            public bool GetWeekdays
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("blocking-buttonsbarbottom-days_checkbox"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxWeekdays = value; }
+            }
+            protected bool GetCheckboxWorkingTime;
+            public bool GetWorkingTime
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("blocking-buttonsbarbottom-business_time_checkbox"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxWorkingTime = value; }
+            }
+        #endregion
+
+        #region Передавать id площадки в ссылке
+            protected bool GetCheckboxIdOfPlatformInLink;
+            public bool GetIdOfPlatformInLink
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("add_ticker_id"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxIdOfPlatformInLink = value; }
+            }
+            protected string GetFieldIdOfPlatformInLink;
+            public string GetIdOfPlatformInLinkStr
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("add_ticker_id_var_name"));
+                    GetFieldIdOfPlatformInLink = webelement.GetAttribute("value");
+                    return GetFieldIdOfPlatformInLink;
+                }
+                set
+                {
+                    GetFieldIdOfPlatformInLink = value;
+                }
+            }
+        #endregion
+
+        protected bool GetCheckboxAddIdOfTeaserInLink;
+        public bool GetAddIdOfTeaserInLink
+        {
+            get
+            {
+                IWebElement webelement = driver.FindElement(By.Id("add_hit_id"));
+                try
+                {
+                    string _checked = webelement.GetAttribute("checked");
+                    return true; //есть атрибут checked--значит чекбокс выбран
+                }
+                catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+            }
+            set { GetCheckboxAddIdOfTeaserInLink = value; }
+        }
+
+        protected string GetFieldCommentsForPk;
+        public string GetCommentsForPk
+        {
+            get
+            {
+                IWebElement webelement = driver.FindElement(By.Id("comments"));
+                GetFieldCommentsForPk = webelement.GetAttribute("value");
+                return GetFieldCommentsForPk;
+            }
+            set
+            {
+                GetFieldCommentsForPk = value;
+            }
+        }
+
+        #region Площадки
+            protected bool GetCheckboxPlatforms;
+            public bool GetPlatforms
+            {
+                get
+                {
+                IWebElement webelement = driver.FindElement(By.Id("proc_category_platform"));
+                try
+                {
+                    string _checked = webelement.GetAttribute("checked");
+                    return true; //есть атрибут checked--значит чекбокс выбран
+                }
+                catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatforms = value; }
+            }
+            protected bool GetCheckboxPlatformsNotSpecified;
+            public bool GetPlatformsNotSpecified
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-0"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsNotSpecified = value; }
+            }
+            protected bool GetCheckboxPlatformsPolitics;
+            public bool GetPlatformsPolitics
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-1"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsPolitics = value; }
+            }
+            protected bool GetCheckboxPlatformsEconomics;
+            public bool GetPlatformsEconomics
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-2"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsEconomics = value; }
+            }
+            protected bool GetCheckboxPlatformsCelebrities;
+            public bool GetPlatformsCelebrities
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-3"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsCelebrities = value; }
+            }
+            protected bool GetCheckboxPlatformsScience;
+            public bool GetPlatformsScience
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-4"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsScience = value; }
+            }
+            protected bool GetCheckboxPlatformsConnection;
+            public bool GetPlatformsConnection
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-5"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsConnection = value; }
+            }
+            protected bool GetCheckboxPlatformsSports;
+            public bool GetPlatformsSports
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-6"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsSports = value; }
+            }
+            protected bool GetCheckboxPlatformsAuto;
+            public bool GetPlatformsAuto
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-7"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsAuto = value; }
+            }
+            protected bool GetCheckboxPlatformsFashion;
+            public bool GetPlatformsFashion
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-8"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsFashion = value; }
+            }
+            protected bool GetCheckboxPlatformsMedicine;
+            public bool GetPlatformsMedicine
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-9"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsMedicine = value; }
+            }
+            protected bool GetCheckboxPlatformsTourism;
+            public bool GetPlatformsTourism
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-10"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsTourism = value; }
+            }
+            protected bool GetCheckboxPlatformsGlobalPortals;
+            public bool GetPlatformsGlobalPortals
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-11"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsGlobalPortals = value; }
+            }
+            protected bool GetCheckboxPlatformsHumor;
+            public bool GetPlatformsHumor
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-12"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsHumor = value; }
+            }
+            protected bool GetCheckboxPlatformsFileshares;
+            public bool GetPlatformsFileshares
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-13"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsFileshares = value; }
+            }
+            protected bool GetCheckboxPlatformsSocialNetworks;
+            public bool GetPlatformsSocialNetworks
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-14"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsSocialNetworks = value; }
+            }
+            protected bool GetCheckboxPlatformsAnimals;
+            public bool GetPlatformsAnimals
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-15"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsAnimals = value; }
+            }
+            protected bool GetCheckboxPlatformsReligion;
+            public bool GetPlatformsReligion
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-16"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsReligion = value; }
+            }
+            protected bool GetCheckboxPlatformsChildren;
+            public bool GetPlatformsChildren
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-17"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsChildren = value; }
+            }
+            protected bool GetCheckboxPlatformsBuilding;
+            public bool GetPlatformsBuilding
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-18"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsBuilding = value; }
+            }
+            protected bool GetCheckboxPlatformsCookery;
+            public bool GetPlatformsCookery
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-19"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsCookery = value; }
+            }
+            protected bool GetCheckboxPlatformsJob;
+            public bool GetPlatformsJob
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-20"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsJob = value; }
+            }
+            protected bool GetCheckboxPlatformsNotSites;
+            public bool GetPlatformsNotSites
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-21"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsNotSites = value; }
+            }
+            protected bool GetCheckboxPlatformsSitesStartPagesBrowsers;
+            public bool GetPlatformsSitesStartPagesBrowsers
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-22"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsSitesStartPagesBrowsers = value; }
+            }
+            protected bool GetCheckboxPlatformsSearchSystems;
+            public bool GetPlatformsSearchSystems
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-23"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsSearchSystems = value; }
+            }
+            protected bool GetCheckboxPlatformsEmail;
+            public bool GetPlatformsEmail
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-24"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsEmail = value; }
+            }
+            protected bool GetCheckboxPlatformsPhotoCatalogues;
+            public bool GetPlatformsPhotoCatalogues
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-25"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsPhotoCatalogues = value; }
+            }
+            protected bool GetCheckboxPlatformsVarez;
+            public bool GetPlatformsVarez
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-26"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsVarez = value; }
+            }
+            protected bool GetCheckboxPlatformsOnlineVideo;
+            public bool GetPlatformsOnlineVideo
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-27"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsOnlineVideo = value; }
+            }
+            protected bool GetCheckboxPlatformsOnlineLibraries;
+            public bool GetPlatformsOnlineLibraries
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-28"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsOnlineLibraries = value; }
+            }
+            protected bool GetCheckboxPlatformsInternet;
+            public bool GetPlatformsInternet
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-29"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsInternet = value; }
+            }
+            protected bool GetCheckboxPlatformsOnlineGames;
+            public bool GetPlatformsOnlineGames
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-30"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsOnlineGames = value; }
+            }
+            protected bool GetCheckboxPlatformsInternetRepresentatives;
+            public bool GetPlatformsInternetRepresentatives
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-31"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsInternetRepresentatives = value; }
+            }
+            protected bool GetCheckboxPlatformsProgramms;
+            public bool GetPlatformsProgramms
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-32"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsProgramms = value; }
+            }
+            protected bool GetCheckboxPlatformsCataloguesInternetResources;
+            public bool GetPlatformsCataloguesInternetResources
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-33"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsCataloguesInternetResources = value; }
+            }
+            protected bool GetCheckboxPlatformsForWagesInInternet;
+            public bool GetPlatformsForWagesInInternet
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-34"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsForWagesInInternet = value; }
+            }
+            protected bool GetCheckboxPlatformsHobbies;
+            public bool GetPlatformsHobbies
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-35"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsHobbies = value; }
+            }
+            protected bool GetCheckboxPlatformsMarketgid;
+            public bool GetPlatformsMarketgid
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-36"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsMarketgid = value; }
+            }
+            protected bool GetCheckboxPlatformsShock;
+            public bool GetPlatformsShock
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-37"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsShock = value; }
+            }
+            protected bool GetCheckboxPlatformsEsoteric;
+            public bool GetPlatformsEsoteric
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-38"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsEsoteric = value; }
+            }
+            protected bool GetCheckboxPlatformsPsychology;
+            public bool GetPlatformsPsychology
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-39"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsPsychology = value; }
+            }
+            protected bool GetCheckboxPlatformsHistory;
+            public bool GetPlatformsHistory
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-40"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsHistory = value; }
+            }
+            protected bool GetCheckboxPlatformsMarketgidWomenNet;
+            public bool GetPlatformsMarketgidWomenNet
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("category_platform-ids-41"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxPlatformsMarketgidWomenNet = value; }
+            }
+        #endregion
+
+        #region Демографический Таргетинг
+            #region Мужчины
+                protected bool GetCheckboxDemoTargetingMen;
+                public bool GetDemoTargetingMenChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-country_M"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingMen = value; }
+                }
+                protected bool GetCheckboxDemoTargetingMenNotSpecified;
+                public bool GetDemoTargetingMenNotSpecified
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-M-2"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingMenNotSpecified = value; }
+                }
+                protected bool GetCheckboxDemoTargetingMen618;
+                public bool GetDemoTargetingMen618
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-M-4"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingMen618 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingMen1924;
+                public bool GetDemoTargetingMen1924
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-M-6"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingMen1924 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingMen2534;
+                public bool GetDemoTargetingMen2534
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-M-8"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingMen2534 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingMen3544;
+                public bool GetDemoTargetingMen3544
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-M-10"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingMen3544 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingMen4590;
+                public bool GetDemoTargetingMen4590
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-M-12"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingMen4590 = value; }
+                }
+            #endregion
+
+            #region Женщины
+                protected bool GetCheckboxDemoTargetingWomen;
+                public bool GetDemoTargetingWomenChoseAll
+                {
+                   get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-country_W"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingWomen = value; }
+                }
+                protected bool GetCheckboxDemoTargetingWomenNotSpecified;
+                public bool GetDemoTargetingWomenNotSpecified
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-W-1"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingWomenNotSpecified = value; }
+                }
+                protected bool GetCheckboxDemoTargetingWomen618;
+                public bool GetDemoTargetingWomen618
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-W-3"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingWomen618 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingWomen1924;
+                public bool GetDemoTargetingWomen1924
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-W-5"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingWomen1924 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingWomen2534;
+                public bool GetDemoTargetingWomen2534
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-W-7"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingWomen2534 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingWomen3544;
+                public bool GetDemoTargetingWomen3544
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-W-9"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingWomen3544 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingWomen4590;
+                public bool GetDemoTargetingWomen4590
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-W-11"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingWomen4590 = value; }
+                }
+            #endregion
+
+            #region Пол не определен
+                protected bool GetCheckboxDemoTargetingHermaphrodite;
+                public bool GetDemoTargetingHermaphroditeChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-country_N"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingHermaphrodite = value; }
+                }
+                protected bool GetCheckboxDemoTargetingHermaphrodite618;
+                public bool GetDemoTargetingHermaphrodite618
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-N-13"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingHermaphrodite618 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingHermaphrodite1924;
+                public bool GetDemoTargetingHermaphrodite1924
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-N-14"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingHermaphrodite1924 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingHermaphrodite2534;
+                public bool GetDemoTargetingHermaphrodite2534
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-N-15"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingHermaphrodite2534 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingHermaphrodite3544;
+                public bool GetDemoTargetingHermaphrodite3544
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-N-16"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingHermaphrodite3544 = value; }
+                }
+                protected bool GetCheckboxDemoTargetingHermaphrodite4590;
+                public bool GetDemoTargetingHermaphrodite4590
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("socdem-N-17"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxDemoTargetingHermaphrodite4590 = value; }
+                }
+            #endregion
+        #endregion
+
+        #region  Таргетинг по интересам
+            protected bool GetCheckboxInterestsTargetingOther;
+            public bool GetInterestsTargetingOther
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("interests-country_0"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxInterestsTargetingOther = value; }
+            }
+
+            #region Бизнес
+                protected bool GetCheckboxInterestsTargetingBusiness;
+                public bool GetInterestsTargetingBusinessChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-country_14"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingBusiness = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingBusinessAcoountancy;
+                public bool GetInterestsTargetingBusinessAcoountancy
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-14-16"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingBusinessAcoountancy = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingBusinessPlacement;
+                public bool GetInterestsTargetingBusinessPlacement
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-14-19"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingBusinessPlacement = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingBusinessAudit;
+                public bool GetInterestsTargetingBusinessAudit
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-14-18"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingBusinessAudit = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingBusinessAdverts;
+                public bool GetInterestsTargetingBusinessAdverts
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-14-17"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingBusinessAdverts = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingBusinessMiscellanea;
+                public bool GetInterestsTargetingBusinessMiscellanea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-14-15"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingBusinessMiscellanea = value; }
+                }
+            #endregion
+
+            #region Недвижимость
+                protected bool GetCheckboxInterestsTargetingRealty;
+                public bool GetInterestsTargetingRealtyChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-country_44"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRealty = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingRealtyMiscelanea;
+                public bool GetInterestsTargetingRealtyMiscelanea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-44-45"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRealtyMiscelanea = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingRealtyGarages;
+                public bool GetInterestsTargetingRealtyGarages
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-44-47"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRealtyGarages = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingRealtyFlats;
+                public bool GetInterestsTargetingRealtyFlats
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-44-46"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRealtyFlats = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingRealtyAbroad;
+                public bool GetInterestsTargetingRealtyAbroad
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-44-52"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRealtyAbroad = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingRealtyLand;
+                public bool GetInterestsTargetingRealtyLand
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-44-51"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRealtyLand = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingRealtySuburban;
+                public bool GetInterestsTargetingRealtySuburban
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-44-48"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRealtySuburban = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingRealtyHypothec;
+                public bool GetInterestsTargetingRealtyHypothec
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-44-50"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRealtyHypothec = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingRealtyCommerce;
+                public bool GetInterestsTargetingRealtyCommerce
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-44-49"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRealtyCommerce = value; }
+                }
+            #endregion
+
+            protected bool GetCheckboxInterestsTargetingExhibitions;
+            public bool GetInterestsTargetingExhibitions
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("interests-country_21"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxInterestsTargetingExhibitions = value; }
+            }
+
+            #region Образование
+                protected bool GetCheckboxInterestsTargetingEducation;
+                public bool GetInterestsTargetingEducationChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-country_53"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingEducation = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingEducationForeignLanguages;
+                public bool GetInterestsTargetingEducationForeignLanguages
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-53-58"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingEducationForeignLanguages = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingEducationAbroad;
+                public bool GetInterestsTargetingEducationAbroad
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-53-57"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingEducationAbroad = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingEducationHigh;
+                public bool GetInterestsTargetingEducationHigh
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-53-56"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingEducationHigh = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingEducationMiscelanea;
+                public bool GetInterestsTargetingEducationMiscelanea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-53-54"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingEducationMiscelanea = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingEducationChildren;
+                public bool GetInterestsTargetingEducationChildren
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-53-55"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingEducationChildren = value; }
+                }
+            #endregion
+
+            #region Отдых, туризм, путешествия
+                protected bool GetCheckboxInterestsTargetingRest;
+                public bool GetInterestsTargetingRestChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-country_59"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRest = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingRestMiscellanea;
+                public bool GetInterestsTargetingRestMiscellanea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-59-77"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRestMiscellanea = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingRestRuUa;
+                public bool GetInterestsTargetingRestRuUa
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-59-61"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRestRuUa = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingRestAbroad;
+                public bool GetInterestsTargetingRestAbroad
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-59-62"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingRestAbroad = value; }
+                }
+            #endregion
+
+            #region Телефоны, связь
+                protected bool GetCheckboxInterestsTargetingTelephones;
+                public bool GetInterestsTargetingTelephonesChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-country_63"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingTelephones = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingTelephonesMiscellanea;
+                public bool GetInterestsTargetingTelephonesMiscellanea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-63-64"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingTelephonesMiscellanea = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingTelephonesNavigation;
+                public bool GetInterestsTargetingTelephonesNavigation
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-63-68"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingTelephonesNavigation = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingTelephonesMobileApps;
+                public bool GetInterestsTargetingTelephonesMobileApps
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-63-67"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingTelephonesMobileApps = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingTelephonesMobile;
+                public bool GetInterestsTargetingTelephonesMobile
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-63-66"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingTelephonesMobile = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingTelephonesStationary;
+                public bool GetInterestsTargetingTelephonesStationary
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-63-65"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingTelephonesStationary = value; }
+                }
+            #endregion
+
+            protected bool GetCheckboxInterestsTargetingHouseAplliances;
+            public bool GetInterestsTargetingHouseAplliances
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("interests-country_20"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxInterestsTargetingHouseAplliances = value; }
+            }
+
+            #region Медицина, здоровье
+                protected bool GetCheckboxInterestsTargetingMedicine;
+                public bool GetInterestsTargetingMedicineChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-country_36"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingMedicine = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingMedicineSport;
+                public bool GetInterestsTargetingMedicineSport
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-36-43"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingMedicineSport = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingMedicineEyesight;
+                public bool GetInterestsTargetingMedicineEyesight
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-36-42"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingMedicineEyesight = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingMedicineMiscellanea;
+                public bool GetInterestsTargetingMedicineMiscellanea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-36-37"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingMedicineMiscellanea = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingMedicineDiets;
+                public bool GetInterestsTargetingMedicineDiets
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-36-39"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingMedicineDiets = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingMedicineExtraWeight;
+                public bool GetInterestsTargetingMedicineExtraWeight
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-36-40"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingMedicineExtraWeight = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingMedicinePregnancy;
+                public bool GetInterestsTargetingMedicinePregnancy
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-36-38"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingMedicinePregnancy = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingMedicineStomatology;
+                public bool GetInterestsTargetingMedicineStomatology
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-36-41"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingMedicineStomatology = value; }
+                }
+            #endregion
+
+            #region Дом и семья
+                protected bool GetCheckboxInterestsTargetingHouse;
+                public bool GetInterestsTargetingHouseChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-country_22"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingHouse = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingHouseChildren;
+                public bool GetInterestsTargetingHouseChildren
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-22-24"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingHouseChildren = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingHouseDogs;
+                public bool GetInterestsTargetingHouseDogs
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-22-28"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingHouseDogs = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingHouseMiscellanea;
+                public bool GetInterestsTargetingHouseMiscellanea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-22-23"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingHouseMiscellanea = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingHouseCats;
+                public bool GetInterestsTargetingHouseCats
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-22-27"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingHouseCats = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingHouseCookery;
+                public bool GetInterestsTargetingHouseCookery
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-22-26"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingHouseCookery = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingHouseKindergartens;
+                public bool GetInterestsTargetingHouseKindergartens
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-22-25"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingHouseKindergartens = value; }
+                }
+            #endregion
+
+            #region Финансы
+                protected bool GetCheckboxInterestsTargetingFinance;
+                public bool GetInterestsTargetingFinanceChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-country_69"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingFinance = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingFinanceStockMarket;
+                public bool GetInterestsTargetingFinanceStockMarket
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-69-76"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingFinanceStockMarket = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingFinanceCurrency;
+                public bool GetInterestsTargetingFinanceCurrency
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-69-75"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingFinanceCurrency = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingFinanceInsurence;
+                public bool GetInterestsTargetingFinanceInsurence
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-69-74"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingFinanceInsurence = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingFinanceMoneyTransfers;
+                public bool GetInterestsTargetingFinanceMoneyTransfers
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-69-73"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingFinanceMoneyTransfers = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingFinanceCredits;
+                public bool GetInterestsTargetingFinanceCredits
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-69-72"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingFinanceCredits = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingFinanceMiscellanea;
+                public bool GetInterestsTargetingFinanceMiscellanea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-69-70"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingFinanceMiscellanea = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingFinanceDeposits;
+                public bool GetInterestsTargetingFinanceDeposits
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-69-71"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingFinanceDeposits = value; }
+                }
+            #endregion
+
+            #region Компьютеры, оргтехника
+                protected bool GetCheckboxInterestsTargetingComputers;
+                public bool GetInterestsTargetingComputersChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-country_29"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingComputers = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingComputersLaptops;
+                public bool GetInterestsTargetingComputersLaptops
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-29-32"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingComputersLaptops = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingComputersParts;
+                public bool GetInterestsTargetingComputersParts
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-29-35"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingComputersParts = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingComputersPrinters;
+                public bool GetInterestsTargetingComputersPrinters
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-29-34"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingComputersPrinters = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingComputersTablets;
+                public bool GetInterestsTargetingComputersTablets
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-29-33"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingComputersTablets = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingComputersMonitors;
+                public bool GetInterestsTargetingComputersMonitors
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-29-31"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingComputersMonitors = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingComputersMiscellanea;
+                public bool GetInterestsTargetingComputersMiscellanea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-29-30"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingComputersMiscellanea = value; }
+                }
+            #endregion
+
+            #region Авто
+                protected bool GetCheckboxInterestsTargetingAuto;
+                public bool GetInterestsTargetingAutoChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-country_1"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAuto = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingAutoInsurence;
+                public bool GetInterestsTargetingAutoInsurence
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-1-6"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAutoInsurence = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingAutoMiscellanea;
+                public bool GetInterestsTargetingAutoMiscellanea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-1-2"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAutoMiscellanea = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingAutoNational;
+                public bool GetInterestsTargetingAutoNational
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-1-3"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAutoNational = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingAutoWheels;
+                public bool GetInterestsTargetingAutoWheels
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-1-7"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAutoWheels = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingAutoImported;
+                public bool GetInterestsTargetingAutoImported
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-1-4"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAutoImported = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingAutoMoto;
+                public bool GetInterestsTargetingAutoMoto
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-1-5"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAutoMoto = value; }
+                }
+            #endregion
+
+            #region Аудио, Видео, Фото
+                protected bool GetCheckboxInterestsTargetingAudio;
+                public bool GetInterestsTargetingAudioChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-country_8"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAudio = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingAudioVideoEquips;
+                public bool GetInterestsTargetingAudioVideoEquips
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-8-11"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAudioVideoEquips = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingAudioMiscellanea;
+                public bool GetInterestsTargetingAudioMiscellanea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-8-9"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAudioMiscellanea = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingAudioTech;
+                public bool GetInterestsTargetingAudioTech
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-8-10"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAudioTech = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingAudioCameras;
+                public bool GetInterestsTargetingAudioCameras
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-8-13"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAudioCameras = value; }
+                }
+                protected bool GetCheckboxInterestsTargetingAudioTvs;
+                public bool GetInterestsTargetingAudioTvs
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("interests-8-12"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxInterestsTargetingAudioTvs = value; }
+                }
+            #endregion
+        #endregion
+
+        #region Браузеры
+            #region Другие
+                protected bool GetCheckboxBrowserTargetingOther;
+                public bool GetBrowserTargetingOtherChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-country_Другие"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingOther = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingOtherAll;
+                public bool GetBrowserTargetingOtherAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Другие-0"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingOtherAll = value; }
+                }
+            #endregion
+
+            #region Opera
+                protected bool GetCheckboxBrowserTargetingOpera;
+                public bool GetBrowserTargetingOperaChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-country_Opera"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingOpera = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingOperaOther;
+                public bool GetBrowserTargetingOperaOther
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Opera-2"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingOperaOther = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingOpera10;
+                public bool GetBrowserTargetingOpera10
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Opera-3"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingOpera10 = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingOpera11;
+                public bool GetBrowserTargetingOpera11
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Opera-4"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingOpera11 = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingOperaMini;
+                public bool GetBrowserTargetingOperaMini
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Opera-18"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingOperaMini = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingOperaMobile;
+                public bool GetBrowserTargetingOperaMobile
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Opera-19"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingOperaMobile = value; }
+                }
+            #endregion
+
+            #region Chrome
+                protected bool GetCheckboxBrowserTargetingChrome;
+                public bool GetBrowserTargetingChromeChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-country_GoogleChrome"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingChrome = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingChromeAll;
+                public bool GetBrowserTargetingChromeAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-GoogleChrome-5"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingChromeAll = value; }
+                }
+            #endregion
+
+            #region Firefox
+                protected bool GetCheckboxBrowserTargetingFirefox;
+                public bool GetBrowserTargetingFirefoxChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-country_Firefox"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingFirefox = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingFirefox3;
+                public bool GetBrowserTargetingFirefox3
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Firefox-6"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingFirefox3 = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingFirefox4;
+                public bool GetBrowserTargetingFirefox4
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Firefox-7"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingFirefox4 = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingFirefox5;
+                public bool GetBrowserTargetingFirefox5
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Firefox-8"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingFirefox5 = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingFirefox6;
+                public bool GetBrowserTargetingFirefox6
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Firefox-9"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingFirefox6 = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingFirefoxOther;
+                public bool GetBrowserTargetingFirefoxOther
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Firefox-15"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingFirefoxOther = value; }
+                }
+            #endregion
+
+            #region Safari
+                protected bool GetCheckboxBrowserTargetingSafari;
+                public bool GetBrowserTargetingSafariChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-country_Safari"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingSafari = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingSafariAll;
+                public bool GetBrowserTargetingSafariAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-Safari-10"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingSafariAll = value; }
+                }
+            #endregion
+
+            #region MSIE
+                protected bool GetCheckboxBrowserTargetingIe;
+                public bool GetBrowserTargetingIeChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-country_MSIE"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingIe = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingIe6;
+                public bool GetBrowserTargetingIe6
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-MSIE-11"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingIe6 = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingIe7;
+                public bool GetBrowserTargetingIe7
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-MSIE-12"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingIe7 = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingIe8;
+                public bool GetBrowserTargetingIe8
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-MSIE-13"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingIe8 = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingIe9;
+                public bool GetBrowserTargetingIe9
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-MSIE-14"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingIe9 = value; }
+                }
+                protected bool GetCheckboxBrowserTargetingIeOther;
+                public bool GetBrowserTargetingIeOther
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-MSIE-16"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxBrowserTargetingIeOther = value; }
+                }
+            #endregion
+        #endregion
+
+        #region ОС таргетинг
+            protected bool GetCheckboxOsTargetingOther;
+            public bool GetOsTargetingOther
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("osList-use_os_targeting_0"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxOsTargetingOther = value; }
+            }
+            protected bool GetCheckboxOsTargetingMacOs;
+            public bool GetOsTargetingMacOs
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("osList-use_os_targeting_1"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxOsTargetingMacOs = value; }
+            }
+            protected bool GetCheckboxOsTargetingOtherMobileOs;
+            public bool GetOsTargetingOtherMobileOs
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("osList-use_os_targeting_2"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxOsTargetingOtherMobileOs = value; }
+            }
+            protected bool GetCheckboxOsTargetingWindows;
+            public bool GetOsTargetingWindows
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("osList-use_os_targeting_3"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxOsTargetingWindows = value; }
+            }
+            protected bool GetCheckboxOsTargetingOtherIoS;
+            public bool GetOsTargetingOtherIoS
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("osList-use_os_targeting_4"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxOsTargetingOtherIoS = value; }
+            }
+            protected bool GetCheckboxOsTargetingIpad;
+            public bool GetOsTargetingIpad
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("osList-use_os_targeting_5"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxOsTargetingIpad = value; }
+            }
+            protected bool GetCheckboxOsTargetingIphone;
+            public bool GetOsTargetingIphone
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("osList-use_os_targeting_6"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxOsTargetingIphone = value; }
+            }
+            protected bool GetCheckboxOsTargetingAndroid;
+            public bool GetOsTargetingAndroid
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("osList-use_os_targeting_7"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxOsTargetingAndroid = value; }
+            }
+        #endregion
+
+        #region Таргетинг по провайдерам
+            protected bool GetCheckboxProviderTargetingOther;
+            public bool GetProviderTargetingOther
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("provider-country_0"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxProviderTargetingOther = value; }
+            }
+            protected bool GetCheckboxProviderTargetingMegafon;
+            public bool GetProviderTargetingMegafon
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("provider-country_1"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxProviderTargetingMegafon = value; }
+            }
+            protected bool GetCheckboxProviderTargetingMtc;
+            public bool GetProviderTargetingMtc
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("provider-country_2"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxProviderTargetingMtc = value; }
+            }
+        #endregion
+
+        #region Геотаргетинг
+            protected bool GetCheckboxGeoTargetingOther;
+            public bool GetGeoTargetingOther
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("countries-country_0"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxGeoTargetingOther = value; }
+            }
+            protected bool GetCheckboxGeoTargetingAustria;
+            public bool GetGeoTargetingAustria
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("countries-country_14"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxGeoTargetingAustria = value; }
+            }
+            protected bool GetCheckboxGeoTargetingBelorussia;
+            public bool GetGeoTargetingBelorussia
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("countries-country_6"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxGeoTargetingBelorussia = value; }
+            }
+            protected bool GetCheckboxGeoTargetingUk;
+            public bool GetGeoTargetingUk
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("countries-country_25"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxGeoTargetingUk = value; }
+            }
+            protected bool GetCheckboxGeoTargetingGermany;
+            public bool GetGeoTargetingGermany
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("countries-country_7"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxGeoTargetingGermany = value; }
+            }
+            protected bool GetCheckboxGeoTargetingIsrael;
+            public bool GetGeoTargetingIsrael
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("countries-country_10"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxGeoTargetingIsrael = value; }
+            }
+            protected bool GetCheckboxGeoTargetingKazakhstan;
+            public bool GetGeoTargetingKazakhstan
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("countries-country_9"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxGeoTargetingKazakhstan = value; }
+            }
+            protected bool GetCheckboxGeoTargetingLatvia;
+            public bool GetGeoTargetingLatvia
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("countries-country_11"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxGeoTargetingLatvia = value; }
+            }
+            protected bool GetCheckboxGeoTargetingLithuania;
+            public bool GetGeoTargetingLithuania
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("countries-country_12"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxGeoTargetingLithuania = value; }
+            }
+
+            #region Россия
+                protected bool GetCheckboxGeoTargetingRussia;
+                public bool GetGeoTargetingRussiaChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-country_24"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingRussia = value; }
+                }
+                protected bool GetCheckboxGeoTargetingRussiaEburg;
+                public bool GetGeoTargetingRussiaEburg
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-24-24"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingRussiaEburg = value; }
+                }
+                protected bool GetCheckboxGeoTargetingRussiaMoscow;
+                public bool GetGeoTargetingRussiaMoscow
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-24-4"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingRussiaMoscow = value; }
+                }
+                protected bool GetCheckboxGeoTargetingRussiaNovosibirsk;
+                public bool GetGeoTargetingRussiaNovosibirsk
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-24-16"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingRussiaNovosibirsk = value; }
+                }
+                protected bool GetCheckboxGeoTargetingRussiaOther;
+                public bool GetGeoTargetingRussiaOther
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-24-2"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingRussiaOther = value; }
+                }
+                protected bool GetCheckboxGeoTargetingRussiaSpb;
+                public bool GetGeoTargetingRussiaSpb
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-24-5"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingRussiaSpb = value; }
+                }
+                protected bool GetCheckboxGeoTargetingRussiaHabarovsk;
+                public bool GetGeoTargetingRussiaHabarovsk
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-24-29"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingRussiaHabarovsk = value; }
+                }
+            #endregion
+
+            protected bool GetCheckboxGeoTargetingUsa;
+            public bool GetGeoTargetingUsa
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("countries-country_8"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxGeoTargetingUsa = value; }
+            }
+
+            #region Украина
+                protected bool GetCheckboxGeoTargetingUkraine;
+                public bool GetGeoTargetingUkraineChoseAll
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-country_28"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraine = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineDnepr;
+                public bool GetGeoTargetingUkraineDnepr
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-28"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineDnepr = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineDonetzk;
+                public bool GetGeoTargetingUkraineDonetzk
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-23"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineDonetzk = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineZakarpattya;
+                public bool GetGeoTargetingUkraineZakarpattya
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-17"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineZakarpattya = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineKiev;
+                public bool GetGeoTargetingUkraineKiev
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-3"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineKiev = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineCrimea;
+                public bool GetGeoTargetingUkraineCrimea
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-27"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineCrimea = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineLvov;
+                public bool GetGeoTargetingUkraineLvov
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-18"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineLvov = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineNikolaev;
+                public bool GetGeoTargetingUkraineNikolaev
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-26"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineNikolaev = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineOdessa;
+                public bool GetGeoTargetingUkraineOdessa
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-15"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineOdessa = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineOther;
+                public bool GetGeoTargetingUkraineOther
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-1"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineOther = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineHarkov;
+                public bool GetGeoTargetingUkraineHarkov
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-19"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineHarkov = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineHerson;
+                public bool GetGeoTargetingUkraineHerson
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-20"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineHerson = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineCherkassy;
+                public bool GetGeoTargetingUkraineCherkassy
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-22"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineCherkassy = value; }
+                }
+                protected bool GetCheckboxGeoTargetingUkraineChernovzi;
+                public bool GetGeoTargetingUkraineChernovzi
+                {
+                    get
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("countries-28-21"));
+                        try
+                        {
+                            string _checked = webelement.GetAttribute("checked");
+                            return true; //есть атрибут checked--значит чекбокс выбран
+                        }
+                        catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                    }
+                    set { GetCheckboxGeoTargetingUkraineChernovzi = value; }
+                }
+            #endregion
+
+            protected bool GetCheckboxGeoTargetingEstonia;
+            public bool GetGeoTargetingEstonia
+            {
+                get
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("countries-country_13"));
+                    try
+                    {
+                        string _checked = webelement.GetAttribute("checked");
+                        return true; //есть атрибут checked--значит чекбокс выбран
+                    }
+                    catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
+                }
+                set { GetCheckboxGeoTargetingEstonia = value; }
+            }
+        #endregion
+    #endregion
+
+
+
+
+
+
+
 
         public void Submit()
         {
