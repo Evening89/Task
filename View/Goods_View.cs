@@ -453,35 +453,35 @@ namespace Task.View
             }
             else
             {
-                //listBox1.Items.Add("          РК успешно отредактирована");
+                listBox1.Items.Add("          РК успешно отредактирована");
 
-                //listBox1.Items.Add(
-                //"          ===============================Проверка редактирования РК===========================");
-                //LogForClickers.WriteInLog("          ===============================Проверка редактирования РК===========================");
-                //LogTrace.WriteInLog("          ===============================Проверка редактирования РК===========================");
+                listBox1.Items.Add(
+                "          ===============================Проверка редактирования РК===========================");
+                LogForClickers.WriteInLog("          ===============================Проверка редактирования РК===========================");
+                LogTrace.WriteInLog("          ===============================Проверка редактирования РК===========================");
 
-                //listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
-                //LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-                //LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-                //listBox1.Items.Add("          ID РК: " + Registry.hashTable["pkId"]);
-                //LogForClickers.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
-                //LogTrace.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
+                listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
+                LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+                LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+                listBox1.Items.Add("          ID РК: " + Registry.hashTable["pkId"]);
+                LogForClickers.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
+                LogTrace.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
 
-                //editPkController.CheckEditingSite();
+                editPkController.CheckEditingPk();
 
-                //if (editPkController.wasMismatch)
-                //{
-                //    listBox1.Items.Add("");
-                //    listBox1.Items.Add("          !!!   Обнаружены несовпадения. См. лог");
-                //    listBox1.Items.Add("");
-                //    LogForClickers.WriteInLog("");
-                //    LogForClickers.WriteInLog("          !!!   Обнаружены несовпадения. См. лог");
-                //    LogForClickers.WriteInLog("");
-                //}
-                //else
-                //{
-                //    listBox1.Items.Add("          ОК, всё ранее введенное совпадает с текущими значениями");
-                //}
+                if (editPkController.wasMismatch)
+                {
+                    listBox1.Items.Add("");
+                    listBox1.Items.Add("          !!!   Обнаружены несовпадения. См. лог");
+                    listBox1.Items.Add("");
+                    LogForClickers.WriteInLog("");
+                    LogForClickers.WriteInLog("          !!!   Обнаружены несовпадения. См. лог");
+                    LogForClickers.WriteInLog("");
+                }
+                else
+                {
+                    listBox1.Items.Add("          ОК, всё ранее введенное совпадает с текущими значениями");
+                }
             }
 
             LogForClickers.WriteInLog("");
