@@ -60,14 +60,15 @@
             this.button3 = new System.Windows.Forms.Button();
             this.editClientCheckBox = new System.Windows.Forms.CheckBox();
             this.editSiteCheckBox = new System.Windows.Forms.CheckBox();
+            this.editPkCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(12, 390);
+            this.button1.Location = new System.Drawing.Point(12, 380);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(145, 45);
+            this.button1.Size = new System.Drawing.Size(145, 34);
             this.button1.TabIndex = 0;
             this.button1.Text = "Пуск";
             this.button1.UseVisualStyleBackColor = true;
@@ -112,7 +113,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(12, 370);
+            this.label2.Location = new System.Drawing.Point(12, 360);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(90, 17);
             this.label2.TabIndex = 4;
@@ -121,7 +122,7 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 487);
+            this.listBox1.Location = new System.Drawing.Point(12, 458);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
             this.listBox1.Size = new System.Drawing.Size(662, 212);
@@ -131,7 +132,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(9, 459);
+            this.label3.Location = new System.Drawing.Point(9, 430);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(217, 17);
             this.label3.TabIndex = 6;
@@ -224,7 +225,7 @@
             // 
             this.newPKCheckbox.AutoSize = true;
             this.newPKCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newPKCheckbox.Location = new System.Drawing.Point(37, 199);
+            this.newPKCheckbox.Location = new System.Drawing.Point(37, 193);
             this.newPKCheckbox.Name = "newPKCheckbox";
             this.newPKCheckbox.Size = new System.Drawing.Size(45, 21);
             this.newPKCheckbox.TabIndex = 16;
@@ -234,7 +235,7 @@
             // newPKTextBox
             // 
             this.newPKTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newPKTextBox.Location = new System.Drawing.Point(102, 197);
+            this.newPKTextBox.Location = new System.Drawing.Point(102, 191);
             this.newPKTextBox.Name = "newPKTextBox";
             this.newPKTextBox.Size = new System.Drawing.Size(53, 23);
             this.newPKTextBox.TabIndex = 15;
@@ -244,7 +245,7 @@
             // 
             this.newTeaserCheckbox.AutoSize = true;
             this.newTeaserCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newTeaserCheckbox.Location = new System.Drawing.Point(37, 226);
+            this.newTeaserCheckbox.Location = new System.Drawing.Point(37, 246);
             this.newTeaserCheckbox.Name = "newTeaserCheckbox";
             this.newTeaserCheckbox.Size = new System.Drawing.Size(67, 21);
             this.newTeaserCheckbox.TabIndex = 18;
@@ -255,7 +256,7 @@
             // newTeaserTextBox
             // 
             this.newTeaserTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newTeaserTextBox.Location = new System.Drawing.Point(102, 224);
+            this.newTeaserTextBox.Location = new System.Drawing.Point(102, 244);
             this.newTeaserTextBox.Name = "newTeaserTextBox";
             this.newTeaserTextBox.Size = new System.Drawing.Size(53, 23);
             this.newTeaserTextBox.TabIndex = 17;
@@ -365,7 +366,7 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(567, 459);
+            this.button3.Location = new System.Drawing.Point(567, 430);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(107, 22);
             this.button3.TabIndex = 28;
@@ -397,11 +398,24 @@
             this.editSiteCheckBox.Text = "Редактирование сайта";
             this.editSiteCheckBox.UseVisualStyleBackColor = true;
             // 
+            // editPkCheckBox
+            // 
+            this.editPkCheckBox.AutoSize = true;
+            this.editPkCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.editPkCheckBox.ForeColor = System.Drawing.Color.ForestGreen;
+            this.editPkCheckBox.Location = new System.Drawing.Point(62, 220);
+            this.editPkCheckBox.Name = "editPkCheckBox";
+            this.editPkCheckBox.Size = new System.Drawing.Size(127, 17);
+            this.editPkCheckBox.TabIndex = 31;
+            this.editPkCheckBox.Text = "Редактирование РК";
+            this.editPkCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Goods_View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(686, 711);
+            this.ClientSize = new System.Drawing.Size(686, 684);
+            this.Controls.Add(this.editPkCheckBox);
             this.Controls.Add(this.editSiteCheckBox);
             this.Controls.Add(this.editClientCheckBox);
             this.Controls.Add(this.button3);
@@ -474,6 +488,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.CheckBox editClientCheckBox;
         private System.Windows.Forms.CheckBox editSiteCheckBox;
+        private System.Windows.Forms.CheckBox editPkCheckBox;
     }
 }
 

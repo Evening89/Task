@@ -411,6 +411,84 @@ namespace Task.View
             LogTrace.WriteInLog("");
         }
 
+        public void EditAndCheckPk()
+        {
+            listBox1.Items.Add(
+                "          ===============================Редактирование РК====================================");
+            LogForClickers.WriteInLog("          ===============================Редактирование РК====================================");
+            LogForClickers.WriteInLog("          " + DateTime.Now.ToString());
+            LogTrace.WriteInLog("          ===============================Редактирование РК====================================");
+            LogTrace.WriteInLog("          " + DateTime.Now.ToString());
+
+            listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
+            LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+            LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+            listBox1.Items.Add("          ID РК: " + Registry.hashTable["pkId"]);
+            LogForClickers.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
+            LogTrace.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
+
+            GoodsEditPk_Controller editPkController = new GoodsEditPk_Controller();
+
+            editPkController.EditPk();
+
+            List<string> errors = editPkController.errors;
+
+            if (errors.Count != 0) //список непустой -- ошибки есть
+            {
+                listBox1.Items.Add("");
+                listBox1.Items.Add("               !!! Ошибки !!!");
+
+                LogForClickers.WriteInLog("");
+                LogForClickers.WriteInLog("               !!! Ошибки !!!");
+
+                LogTrace.WriteInLog("");
+                LogTrace.WriteInLog("               !!! Ошибки !!!");
+
+                for (int i = 0; i < errors.Count; i++)
+                {
+                    listBox1.Items.Add(errors[i]);
+                    LogForClickers.WriteInLog(errors[i]);
+                    LogTrace.WriteInLog(errors[i]);
+                }
+            }
+            else
+            {
+                //listBox1.Items.Add("          РК успешно отредактирована");
+
+                //listBox1.Items.Add(
+                //"          ===============================Проверка редактирования РК===========================");
+                //LogForClickers.WriteInLog("          ===============================Проверка редактирования РК===========================");
+                //LogTrace.WriteInLog("          ===============================Проверка редактирования РК===========================");
+
+                //listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
+                //LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+                //LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+                //listBox1.Items.Add("          ID РК: " + Registry.hashTable["pkId"]);
+                //LogForClickers.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
+                //LogTrace.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
+
+                //editPkController.CheckEditingSite();
+
+                //if (editPkController.wasMismatch)
+                //{
+                //    listBox1.Items.Add("");
+                //    listBox1.Items.Add("          !!!   Обнаружены несовпадения. См. лог");
+                //    listBox1.Items.Add("");
+                //    LogForClickers.WriteInLog("");
+                //    LogForClickers.WriteInLog("          !!!   Обнаружены несовпадения. См. лог");
+                //    LogForClickers.WriteInLog("");
+                //}
+                //else
+                //{
+                //    listBox1.Items.Add("          ОК, всё ранее введенное совпадает с текущими значениями");
+                //}
+            }
+
+            LogForClickers.WriteInLog("");
+            LogTrace.WriteInLog("");
+        }
+
+
         private void Button1Click(object sender, EventArgs e)
         {
             int loopClient; //сколько создать клиентов
@@ -471,6 +549,8 @@ namespace Task.View
                             for (int x = loopPK; x > 0; x--)
                             {
                                 CreateNewPk();
+                                if (editPkCheckBox.Checked)
+                                    EditAndCheckPk();
                                 if (newTeaserCheckbox.Checked)
                                 {
                                     for (int z = loopTeaser; z > 0; z--)

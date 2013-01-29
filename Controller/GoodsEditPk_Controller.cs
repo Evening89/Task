@@ -50,53 +50,55 @@ namespace Task.Controller
 
             #region Редактирование полей
 
-                if(!pkEditModel.GetViewSensors) //если checkbox не выбран...
-                {
-                    pkEditModel.ViewSensors = true; //...выбираем его
-                    LogTrace.WriteInLog("     Выбран checkbox Просмотр датчиков");
-                }
+                #region Разное 
+                    if (!pkEditModel.GetViewSensors) //если checkbox не выбран...
+                    {
+                        pkEditModel.ViewSensors = true; //...выбираем его
+                        LogTrace.WriteInLog("          Выбран checkbox Просмотр датчиков");
+                    }
 
-                if(!pkEditModel.GetViewConversion)
-                {
-                    pkEditModel.ViewConversion = true;
-                    LogTrace.WriteInLog("     Выбран checkbox Просмотр конверсии");
-                }
+                    if(!pkEditModel.GetViewConversion)
+                    {
+                        pkEditModel.ViewConversion = true;
+                        LogTrace.WriteInLog("          Выбран checkbox Просмотр конверсии");
+                    }
 
-                namePk = randoms.RandomString(15) + " " + randoms.RandomNumber(5);
-                pkEditModel.Name = namePk;
-                LogTrace.WriteInLog("     Заполняю поле Название РК. Было введено: " + pkEditModel.Name);
+                    namePk = randoms.RandomString(15) + " " + randoms.RandomNumber(5);
+                    pkEditModel.Name = namePk;
+                    LogTrace.WriteInLog("          Заполняю поле Название РК. Было введено: " + pkEditModel.Name);
 
-                dateStartPk = pkEditModel.GenerateDate();
-                pkEditModel.StartPkDate = dateStartPk;
-                LogTrace.WriteInLog("     Заполняю поле Дата старта РК. Было введено: " + pkEditModel.StartPkDate);
+                    dateStartPk = pkEditModel.GenerateDate();
+                    pkEditModel.StartPkDate = dateStartPk;
+                    LogTrace.WriteInLog("          Заполняю поле Дата старта РК. Было введено: " + pkEditModel.StartPkDate);
 
-                dateEndPk = pkEditModel.GenerateDate();
-                pkEditModel.EndPkDate = dateEndPk;
-                LogTrace.WriteInLog("     Заполняю поле Дата окончания РК. Было введено: " + pkEditModel.EndPkDate);
-                List<string> instantErrorsDate = pkEditModel.ErrorsInFillFields();
-                if (instantErrorsDate.Count != 0) //если список с ошибками заполнения полей даты непуст
-                    errors = instantErrorsDate; //копируем в нас общий список ошибок errors
+                    dateEndPk = pkEditModel.GenerateDate();
+                    pkEditModel.EndPkDate = dateEndPk;
+                    LogTrace.WriteInLog("          Заполняю поле Дата окончания РК. Было введено: " + pkEditModel.EndPkDate);
+                    List<string> instantErrorsDate = pkEditModel.ErrorsInFillFields();
+                    if (instantErrorsDate.Count != 0) //если список с ошибками заполнения полей даты непуст
+                        errors = instantErrorsDate; //копируем в нас общий список ошибок errors
 
-                if(!pkEditModel.GetBlockTeasersAfterCreation)
-                {
-                    pkEditModel.BlockTeasersAfterCreation = true;
-                    LogTrace.WriteInLog("     Выбран checkbox Блокировать тизеры после их создания");
-                }
+                    if(!pkEditModel.GetBlockTeasersAfterCreation)
+                    {
+                        pkEditModel.BlockTeasersAfterCreation = true;
+                        LogTrace.WriteInLog("          Выбран checkbox Блокировать тизеры после их создания");
+                    }
 
-                if(!pkEditModel.GetStoppedByManager)
-                {
-                    pkEditModel.StoppedByManager = true;
-                    LogTrace.WriteInLog("     Выбран checkbox Остановлена менеджером");
-                }
+                    if(!pkEditModel.GetStoppedByManager)
+                    {
+                        pkEditModel.StoppedByManager = true;
+                        LogTrace.WriteInLog("          Выбран checkbox Остановлена менеджером");
+                    }
+                #endregion
 
                 #region Radiobutton Ограничения рекламной кампании
-                    string variant = needSetRadioButton(3).ToString();
+                string variant = needSetRadioButton(3).ToString();
                     pkEditModel.LimitsOfPk = variant;
                     switch (variant)
                     {
                         case "0":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Ограничения рекламной кампании. Выбрано: не использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Ограничения рекламной кампании. Выбрано: не использовать");
                                 break;
                             }
                         case "1":
@@ -106,20 +108,20 @@ namespace Task.Controller
                                 {
                                     num2 = int.Parse(randoms.RandomNumber(2));
                                 } while (num2 < 5); //суточный лимит должен быть не менее 5
-                                LogTrace.WriteInLog("     Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по бюджету");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по бюджету");
                                 pkEditModel.DayLimitByBudget = num2.ToString();//суточный лимит должен быть не менее 5
-                                LogTrace.WriteInLog("        Заполняю поле Суточный лимит РК. Было введено: " + pkEditModel.DayLimitByBudget);
+                                LogTrace.WriteInLog("             Заполняю поле Суточный лимит РК. Было введено: " + pkEditModel.DayLimitByBudget);
                                 pkEditModel.GeneralLimitByBudget = randoms.RandomNumber(3);
-                                LogTrace.WriteInLog("        Заполняю поле Общий лимит РК. Было введено: " + pkEditModel.GeneralLimitByBudget);
+                                LogTrace.WriteInLog("             Заполняю поле Общий лимит РК. Было введено: " + pkEditModel.GeneralLimitByBudget);
                                 break;
                             }
                         case "2":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по количеству кликов");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по количеству кликов");
                                 pkEditModel.DayLimitByClicks = randoms.RandomNumber(3);
-                                LogTrace.WriteInLog("        Заполняю поле Суточный лимит кликов РК. Было введено: " + pkEditModel.DayLimitByClicks);
+                                LogTrace.WriteInLog("             Заполняю поле Суточный лимит кликов РК. Было введено: " + pkEditModel.DayLimitByClicks);
                                 pkEditModel.GeneralLimitByClicks = randoms.RandomNumber(3);
-                                LogTrace.WriteInLog("        Заполняю поле Общий лимит кликов РК. Было введено: " + pkEditModel.GeneralLimitByClicks);
+                                LogTrace.WriteInLog("             Заполняю поле Общий лимит кликов РК. Было введено: " + pkEditModel.GeneralLimitByClicks);
                                 break;
                             }
                     }
@@ -129,29 +131,29 @@ namespace Task.Controller
                     if (!pkEditModel.GetUtmPkForGoogleAnalytics)
                     {
                         pkEditModel.UtmPkForGoogleAnalytics = true;
-                        LogTrace.WriteInLog("     Выбран checkbox UTM-разметка рекламной кампании для Google Analytics");
+                        LogTrace.WriteInLog("          Выбран checkbox UTM-разметка рекламной кампании для Google Analytics");
                         pkEditModel.UtmMedium = randoms.RandomString(5);
-                        LogTrace.WriteInLog("        Заполняю поле utm_medium (средство кампании). Было введено: " + pkEditModel.UtmMedium);
+                        LogTrace.WriteInLog("             Заполняю поле utm_medium (средство кампании). Было введено: " + pkEditModel.UtmMedium);
                         pkEditModel.UtmSource = randoms.RandomString(5);
-                        LogTrace.WriteInLog("        Заполняю поле utm_source (источник кампании). Было введено: " + pkEditModel.UtmSource);
+                        LogTrace.WriteInLog("             Заполняю поле utm_source (источник кампании). Было введено: " + pkEditModel.UtmSource);
                         pkEditModel.UtmCampaign = randoms.RandomString(5);
-                        LogTrace.WriteInLog("        Заполняю поле utm_campaign (название кампании). Было введено: " + pkEditModel.UtmCampaign);
+                        LogTrace.WriteInLog("             Заполняю поле utm_campaign (название кампании). Было введено: " + pkEditModel.UtmCampaign);
                     }
-                    #endregion
+                #endregion
 
                 #region Checkbox UTM-разметка пользователя
                 if (!pkEditModel.GetUtmUser)
                 {
                     pkEditModel.UtmUser = true;
-                    LogTrace.WriteInLog("     Выбран checkbox UTM-разметка пользователя");
+                    LogTrace.WriteInLog("          Выбран checkbox UTM-разметка пользователя");
                     pkEditModel.UtmUserStr = randoms.RandomString(5);
-                    LogTrace.WriteInLog("        Заполняю поле UTM-разметка пользователя. Было введено: " + pkEditModel.UtmUserStr);
-                }
+                    LogTrace.WriteInLog("             Заполняю поле UTM-разметка пользователя. Было введено: " + pkEditModel.UtmUserStr);
+                }     
                 #endregion
 
                 if (!pkEditModel.GetScrewInTovarro)
                 {
-                    LogTrace.WriteInLog("     Выбран checkbox Крутить в сети Товарро");
+                    LogTrace.WriteInLog("          Выбран checkbox Крутить в сети Товарро");
                     pkEditModel.ScrewInTovarro = true;
                 }
 
@@ -159,13 +161,22 @@ namespace Task.Controller
                 if (!pkEditModel.GetBlockBySchedule)
                 {
                     pkEditModel.BlockBySchedule = true;
-                    LogTrace.WriteInLog("     Выбран checkbox Блокировка по расписанию");
-                    if (pkEditModel.GetWeekends) pkEditModel.Weekends = true;
-                    LogTrace.WriteInLog("        Выбран checkbox Выходные");
-                    if (pkEditModel.GetWeekdays) pkEditModel.Weekdays = true;
-                    LogTrace.WriteInLog("        Выбран checkbox Будни");
-                    if (pkEditModel.GetWorkingTime) pkEditModel.WorkingTime = true;
-                    LogTrace.WriteInLog("        Выбран checkbox Рабочее время (9-18 по будням)");
+                    LogTrace.WriteInLog("          Выбран checkbox Блокировка по расписанию");
+                    if (!pkEditModel.GetWeekends)
+                    {
+                        pkEditModel.Weekends = true;
+                        LogTrace.WriteInLog("             Выбран checkbox Выходные");
+                    }
+                    if (!pkEditModel.GetWeekdays)
+                    {
+                        pkEditModel.Weekdays = true;
+                        LogTrace.WriteInLog("             Выбран checkbox Будни");
+                    }
+                    if (!pkEditModel.GetWorkingTime)
+                    {
+                        pkEditModel.WorkingTime = true;
+                        LogTrace.WriteInLog("             Выбран checkbox Рабочее время (9-18 по будням)");
+                    }
                 }
                 #endregion
 
@@ -173,236 +184,236 @@ namespace Task.Controller
                 if (!pkEditModel.GetIdOfPlatformInLink)
                 {
                     pkEditModel.IdOfPlatformInLink = true;
-                    LogTrace.WriteInLog("     Выбран checkbox Передавать id площадки в ссылке");
+                    LogTrace.WriteInLog("          Выбран checkbox Передавать id площадки в ссылке");
                     pkEditModel.IdOfPlatformInLinkStr = randoms.RandomString(5);
-                    LogTrace.WriteInLog("        Заполняю поле Передавать id площадки в ссылке. Было введено: " + pkEditModel.IdOfPlatformInLinkStr);
+                    LogTrace.WriteInLog("             Заполняю поле Передавать id площадки в ссылке. Было введено: " + pkEditModel.IdOfPlatformInLinkStr);
                 }
                 #endregion
 
                 if (!pkEditModel.GetAddIdOfTeaserInLink)
                 {
                     pkEditModel.AddIdOfTeaserInLink = true;
-                    LogTrace.WriteInLog("     Выбран checkbox Добавлять id тизера в конец ссылки");
+                    LogTrace.WriteInLog("          Выбран checkbox Добавлять id тизера в конец ссылки");
                 }
 
                 pkEditModel.CommentsForPk = randoms.RandomString(20) + " " + randoms.RandomString(10);
-                LogTrace.WriteInLog("     Заполняю textarea Комментарий к кампании. Было введено: " + pkEditModel.CommentsForPk);
+                LogTrace.WriteInLog("          Заполняю textarea Комментарий к кампании. Было введено: " + pkEditModel.CommentsForPk);
 
                 #region Checkbox Площадки
                     if (!pkEditModel.GetPlatforms)
                     {
                         pkEditModel.Platforms = true;
-                        LogTrace.WriteInLog("     Выбран checkbox Площадки");
+                        LogTrace.WriteInLog("          Выбран checkbox Площадки");
                         if (!pkEditModel.GetPlatformsNotSpecified)
                         {
                             pkEditModel.PlatformsNotSpecified = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Не определено");
+                            LogTrace.WriteInLog("             Выбран checkbox Не определено");
                         }
                         if (!pkEditModel.GetPlatformsPolitics)
                         {
                             pkEditModel.PlatformsPolitics = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Политика, общество, происшествия, религия");
+                            LogTrace.WriteInLog("             Выбран checkbox Политика, общество, происшествия, религия");
                         }
 
                         if (!pkEditModel.GetPlatformsEconomics)
                         {
                             pkEditModel.PlatformsEconomics = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Экономика, финансы, недвижимость, работа и карьера");
+                            LogTrace.WriteInLog("             Выбран checkbox Экономика, финансы, недвижимость, работа и карьера");
                         }
                         if (!pkEditModel.GetPlatformsCelebrities)
                         {
                             pkEditModel.PlatformsCelebrities = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Знаменитости, шоу-бизнес, кино, музыка");
+                            LogTrace.WriteInLog("             Выбран checkbox Знаменитости, шоу-бизнес, кино, музыка");
                         }
                         if (!pkEditModel.GetPlatformsScience)
                         {
                             pkEditModel.PlatformsScience = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Наука и технологии");
+                            LogTrace.WriteInLog("             Выбран checkbox Наука и технологии");
                         }
                         if (!pkEditModel.GetPlatformsConnection)
                         {
                             pkEditModel.PlatformsConnection = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Связь, компьютеры, программы");
+                            LogTrace.WriteInLog("             Выбран checkbox Связь, компьютеры, программы");
                         }
                         if (!pkEditModel.GetPlatformsSports)
                         {
                             pkEditModel.PlatformsSports = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Спорт");
+                            LogTrace.WriteInLog("             Выбран checkbox Спорт");
                         }
                         if (!pkEditModel.GetPlatformsAuto)
                         {
                             pkEditModel.PlatformsAuto = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Авто-вело-мото");
+                            LogTrace.WriteInLog("             Выбран checkbox Авто-вело-мото");
                         }
                         if (!pkEditModel.GetPlatformsFashion)
                         {
                             pkEditModel.PlatformsFashion = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Мода и стиль, здоровье и красота, фитнес и диета, кулинария");
+                            LogTrace.WriteInLog("             Выбран checkbox Мода и стиль, здоровье и красота, фитнес и диета, кулинария");
                         }
                         if (!pkEditModel.GetPlatformsMedicine)
                         {
                             pkEditModel.PlatformsMedicine = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Медицина");
+                            LogTrace.WriteInLog("             Выбран checkbox Медицина");
                         }
                         if (!pkEditModel.GetPlatformsTourism)
                         {
                             pkEditModel.PlatformsTourism = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Туризм и отдых (путевки, отели, рестораны)");
+                            LogTrace.WriteInLog("             Выбран checkbox Туризм и отдых (путевки, отели, рестораны)");
                         }
                         if (!pkEditModel.GetPlatformsGlobalPortals)
                         {
                             pkEditModel.PlatformsGlobalPortals = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Глобальные порталы с множеством подпроектов");
+                            LogTrace.WriteInLog("             Выбран checkbox Глобальные порталы с множеством подпроектов");
                         }
                         if (!pkEditModel.GetPlatformsHumor)
                         {
                             pkEditModel.PlatformsHumor = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Юмор (приколы, картинки, обои), каталог фотографий, блоги");
+                            LogTrace.WriteInLog("             Выбран checkbox Юмор (приколы, картинки, обои), каталог фотографий, блоги");
                         }
                         if (!pkEditModel.GetPlatformsFileshares)
                         {
                             pkEditModel.PlatformsFileshares = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Файлообменники, файлокачалки (кино, музыка, игры, программы)");
+                            LogTrace.WriteInLog("             Выбран checkbox Файлообменники, файлокачалки (кино, музыка, игры, программы)");
                         }
                         if (!pkEditModel.PlatformsSocialNetworks)
                         {
                             pkEditModel.PlatformsSocialNetworks = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Социальные сети, сайты знакомства, личные дневники");
+                            LogTrace.WriteInLog("             Выбран checkbox Социальные сети, сайты знакомства, личные дневники");
                         }
                         if (!pkEditModel.GetPlatformsAnimals)
                         {
                             pkEditModel.PlatformsAnimals = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Животный и растительный мир");
+                            LogTrace.WriteInLog("             Выбран checkbox Животный и растительный мир");
                         }
                         if (!pkEditModel.GetPlatformsReligion)
                         {
                             pkEditModel.PlatformsReligion = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Религия");
+                            LogTrace.WriteInLog("             Выбран checkbox Религия");
                         }
                         if (!pkEditModel.GetPlatformsChildren)
                         {
                             pkEditModel.PlatformsChildren = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Дети и родители");
+                            LogTrace.WriteInLog("             Выбран checkbox Дети и родители");
                         }
                         if (!pkEditModel.GetPlatformsBuilding)
                         {
                             pkEditModel.PlatformsBuilding = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Строительство, ремонт, дача, огород");
+                            LogTrace.WriteInLog("             Выбран checkbox Строительство, ремонт, дача, огород");
                         }
                         if (!pkEditModel.GetPlatformsCookery)
                         {
                             pkEditModel.PlatformsCookery = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Кулинария");
+                            LogTrace.WriteInLog("             Выбран checkbox Кулинария");
                         }
                         if (!pkEditModel.GetPlatformsJob)
                         {
                             pkEditModel.PlatformsJob = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Работа и карьера. Поиск работы, поиск персонала");
+                            LogTrace.WriteInLog("             Выбран checkbox Работа и карьера. Поиск работы, поиск персонала");
                         }
                         if (!pkEditModel.GetPlatformsNotSites)
                         {
                             pkEditModel.PlatformsNotSites = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Не сайты (программы, тулбары, таскбары)");
+                            LogTrace.WriteInLog("             Выбран checkbox Не сайты (программы, тулбары, таскбары)");
                         }
                         if (!pkEditModel.GetPlatformsSitesStartPagesBrowsers)
                         {
                             pkEditModel.PlatformsSitesStartPagesBrowsers = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Сайты, размещенные на стартовых страницах браузеров");
+                            LogTrace.WriteInLog("             Выбран checkbox Сайты, размещенные на стартовых страницах браузеров");
                         }
                         if (!pkEditModel.GetPlatformsSearchSystems)
                         {
                             pkEditModel.PlatformsSearchSystems = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Поисковые системы");
+                            LogTrace.WriteInLog("             Выбран checkbox Поисковые системы");
                         }
                         if (!pkEditModel.GetPlatformsEmail)
                         {
                             pkEditModel.PlatformsEmail = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Почта");
+                            LogTrace.WriteInLog("             Выбран checkbox Почта");
                         }
                         if (!pkEditModel.GetPlatformsPhotoCatalogues)
                         {
                             pkEditModel.PlatformsPhotoCatalogues = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Каталоги фотографий");
+                            LogTrace.WriteInLog("             Выбран checkbox Каталоги фотографий");
                         }
                         if (!pkEditModel.GetPlatformsVarez)
                         {
                             pkEditModel.PlatformsVarez = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Варезники");
+                            LogTrace.WriteInLog("             Выбран checkbox Варезники");
                         }
                         if (!pkEditModel.GetPlatformsOnlineVideo)
                         {
                             pkEditModel.PlatformsOnlineVideo = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Онлайн видео, телевидение, радио");
+                            LogTrace.WriteInLog("             Выбран checkbox Онлайн видео, телевидение, радио");
                         }
                         if (!pkEditModel.GetPlatformsOnlineLibraries)
                         {
                             pkEditModel.PlatformsOnlineLibraries = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Онлайн-библиотеки");
+                            LogTrace.WriteInLog("             Выбран checkbox Онлайн-библиотеки");
                         }
                         if (!pkEditModel.GetPlatformsInternet)
                         {
                             pkEditModel.PlatformsInternet = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Интернет, поисковые сайты, электронная почта, интернет-магазины, аукционы, каталоги ресурсов, фирм и предприятий");
+                            LogTrace.WriteInLog("             Выбран checkbox Интернет, поисковые сайты, электронная почта, интернет-магазины, аукционы, каталоги ресурсов, фирм и предприятий");
                         }
                         if (!pkEditModel.GetPlatformsOnlineGames)
                         {
                             pkEditModel.PlatformsOnlineGames = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Онлайн игры");
+                            LogTrace.WriteInLog("             Выбран checkbox Онлайн игры");
                         }
                         if (!pkEditModel.GetPlatformsInternetRepresentatives)
                         {
                             pkEditModel.PlatformsInternetRepresentatives = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Интернет-представительства бизнеса.");
+                            LogTrace.WriteInLog("             Выбран checkbox Интернет-представительства бизнеса.");
                         }
                         if (!pkEditModel.GetPlatformsProgramms)
                         {
                             pkEditModel.PlatformsProgramms = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Программы, прошивки, игры для КПК и мобильных устройств");
+                            LogTrace.WriteInLog("             Выбран checkbox Программы, прошивки, игры для КПК и мобильных устройств");
                         }
                         if (!pkEditModel.GetPlatformsCataloguesInternetResources)
                         {
                             pkEditModel.PlatformsCataloguesInternetResources = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Каталоги Интернет - ресурсов, фирм и предприятий");
+                            LogTrace.WriteInLog("             Выбран checkbox Каталоги Интернет - ресурсов, фирм и предприятий");
                         }
                         if (!pkEditModel.GetPlatformsForWagesInInternet)
                         {
                             pkEditModel.PlatformsForWagesInInternet = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Для заработка в Интернете. Партнерские программы");
+                            LogTrace.WriteInLog("             Выбран checkbox Для заработка в Интернете. Партнерские программы");
                         }
                         if (!pkEditModel.GetPlatformsHobbies)
                         {
                             pkEditModel.PlatformsHobbies = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Хобби и увлечения");
+                            LogTrace.WriteInLog("             Выбран checkbox Хобби и увлечения");
                         }
                         if (!pkEditModel.GetPlatformsMarketgid)
                         {
                             pkEditModel.PlatformsMarketgid = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Маркетгид");
+                            LogTrace.WriteInLog("             Выбран checkbox Маркетгид");
                         }
                         if (!pkEditModel.GetPlatformsShock)
                         {
                             pkEditModel.PlatformsShock = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Шокодром");
+                            LogTrace.WriteInLog("             Выбран checkbox Шокодром");
                         }
                         if (!pkEditModel.GetPlatformsEsoteric)
                         {
                             pkEditModel.PlatformsEsoteric = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Эзотерика. Непознанное, астрология, гороскопы, гадания");
+                            LogTrace.WriteInLog("             Выбран checkbox Эзотерика. Непознанное, астрология, гороскопы, гадания");
                         }
                         if (!pkEditModel.GetPlatformsPsychology)
                         {
                             pkEditModel.PlatformsPsychology = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Психология, мужчина и женщина");
+                            LogTrace.WriteInLog("             Выбран checkbox Психология, мужчина и женщина");
                         }
                         if (!pkEditModel.GetPlatformsHistory)
                         {
                             pkEditModel.PlatformsHistory = true;
-                            LogTrace.WriteInLog("        Выбран checkbox История, образование, культура");
+                            LogTrace.WriteInLog("             Выбран checkbox История, образование, культура");
                         }
                         if (!pkEditModel.GetPlatformsMarketgidWomenNet)
                         {
                             pkEditModel.PlatformsMarketgidWomenNet = true;
-                            LogTrace.WriteInLog("        Выбран checkbox Маркетгид ЖС");
+                            LogTrace.WriteInLog("             Выбран checkbox Маркетгид ЖС");
                         }
                     }
                 #endregion
@@ -414,12 +425,12 @@ namespace Task.Controller
                     {
                         case "0":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Демографический таргетинг. Выбрано: не использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Демографический таргетинг. Выбрано: не использовать");
                                 break;
                             }
                         case "1":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Демографический таргетинг. Выбрано: использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Демографический таргетинг. Выбрано: использовать");
                                 //развернуть все пункты (Мужчины, Женщины, Пол не определен)
                                 pkEditModel.DemoTargetingMenExpand = true;
                                 pkEditModel.DemoTargetingWomenExpand = true;
@@ -430,37 +441,37 @@ namespace Task.Controller
                                     if (!pkEditModel.GetDemoTargetingMenChoseAll)
                                     {
                                         pkEditModel.DemoTargetingMenChoseAll = true;
-                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Мужчины. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetDemoTargetingMenNotSpecified)
                                     {
                                         pkEditModel.DemoTargetingMenNotSpecified = true;
-                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox Не определен");
+                                        LogTrace.WriteInLog("             Мужчины. Выбран checkbox Не определен");
                                     }
                                     if (!pkEditModel.GetDemoTargetingMen618)
                                     {
                                         pkEditModel.DemoTargetingMen618 = true;
-                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox 6-18");
-                                    }
+                                        LogTrace.WriteInLog("             Мужчины. Выбран checkbox 6-18");
+                                    }     
                                     if (!pkEditModel.GetDemoTargetingMen1924)
                                     {
                                         pkEditModel.DemoTargetingMen1924 = true;
-                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox 19-24");
+                                        LogTrace.WriteInLog("             Мужчины. Выбран checkbox 19-24");
                                     }
                                     if (!pkEditModel.GetDemoTargetingMen2534)
                                     {
                                         pkEditModel.DemoTargetingMen2534 = true;
-                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox 25-34");
+                                        LogTrace.WriteInLog("             Мужчины. Выбран checkbox 25-34");
                                     }
                                     if (!pkEditModel.GetDemoTargetingMen3544)
                                     {
                                         pkEditModel.DemoTargetingMen3544 = true;
-                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox 35-44");
+                                        LogTrace.WriteInLog("             Мужчины. Выбран checkbox 35-44");
                                     }
                                     if (!pkEditModel.GetDemoTargetingMen4590)
                                     {
                                         pkEditModel.DemoTargetingMen4590 = true;
-                                        LogTrace.WriteInLog("        Мужчины. Выбран checkbox 45-90");
+                                        LogTrace.WriteInLog("             Мужчины. Выбран checkbox 45-90");
                                     }
                                 #endregion
 
@@ -468,37 +479,37 @@ namespace Task.Controller
                                     if (!pkEditModel.GetDemoTargetingWomenChoseAll)
                                     {
                                         pkEditModel.DemoTargetingWomenChoseAll = true;
-                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Женщины. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetDemoTargetingWomenNotSpecified)
                                     {
                                         pkEditModel.DemoTargetingWomenNotSpecified = true;
-                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox Не определен");
+                                        LogTrace.WriteInLog("             Женщины. Выбран checkbox Не определен");
                                     }
                                     if (!pkEditModel.GetDemoTargetingWomen618)
                                     {
                                         pkEditModel.DemoTargetingWomen618 = true;
-                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox 6-18");
+                                        LogTrace.WriteInLog("             Женщины. Выбран checkbox 6-18");
                                     }
                                     if (!pkEditModel.GetDemoTargetingWomen1924)
                                     {
                                         pkEditModel.DemoTargetingWomen1924 = true;
-                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox 19-24");
+                                        LogTrace.WriteInLog("             Женщины. Выбран checkbox 19-24");
                                     }
                                     if (!pkEditModel.GetDemoTargetingWomen2534)
                                     {
                                         pkEditModel.DemoTargetingWomen2534 = true;
-                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox 25-34");
+                                        LogTrace.WriteInLog("             Женщины. Выбран checkbox 25-34");
                                     }
                                     if (!pkEditModel.GetDemoTargetingWomen3544)
                                     {
                                         pkEditModel.DemoTargetingWomen3544 = true;
-                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox 35-44");
+                                        LogTrace.WriteInLog("             Женщины. Выбран checkbox 35-44");
                                     }
                                     if (!pkEditModel.GetDemoTargetingWomen4590)
                                     {
                                         pkEditModel.DemoTargetingWomen4590 = true;
-                                        LogTrace.WriteInLog("        Женщины. Выбран checkbox 45-90");
+                                        LogTrace.WriteInLog("             Женщины. Выбран checkbox 45-90");
                                     }
                                 #endregion
 
@@ -506,32 +517,32 @@ namespace Task.Controller
                                     if (!pkEditModel.GetDemoTargetingHermaphroditeChoseAll)
                                     {
                                         pkEditModel.DemoTargetingHermaphroditeChoseAll = true;
-                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Пол не определен. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetDemoTargetingHermaphrodite618)
                                     {
                                         pkEditModel.DemoTargetingHermaphrodite618 = true;
-                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 6-18");
+                                        LogTrace.WriteInLog("             Пол не определен. Выбран checkbox 6-18");
                                     }
                                     if (!pkEditModel.GetDemoTargetingHermaphrodite1924)
                                     {
                                         pkEditModel.DemoTargetingHermaphrodite1924 = true;
-                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 19-24");
+                                        LogTrace.WriteInLog("             Пол не определен. Выбран checkbox 19-24");
                                     }
                                     if (!pkEditModel.GetDemoTargetingHermaphrodite2534)
                                     {
                                         pkEditModel.DemoTargetingHermaphrodite2534 = true;
-                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 25-34");
+                                        LogTrace.WriteInLog("             Пол не определен. Выбран checkbox 25-34");
                                     }
                                     if (!pkEditModel.GetDemoTargetingHermaphrodite3544)
                                     {
                                         pkEditModel.DemoTargetingHermaphrodite3544 = true;
-                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 35-44");
+                                        LogTrace.WriteInLog("             Пол не определен. Выбран checkbox 35-44");
                                     }
                                     if (!pkEditModel.GetDemoTargetingHermaphrodite4590)
                                     {
                                         pkEditModel.DemoTargetingHermaphrodite4590 = true;
-                                        LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 45-90");
+                                        LogTrace.WriteInLog("             Пол не определен. Выбран checkbox 45-90");
                                     }
                                 #endregion
 
@@ -547,12 +558,12 @@ namespace Task.Controller
                     {
                         case "0":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Таргетинг по интересам. Выбрано: не использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Таргетинг по интересам. Выбрано: не использовать");
                                 break;
                             }
                         case "1":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Таргетинг по интересам. Выбрано: использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Таргетинг по интересам. Выбрано: использовать");
                                 pkEditModel.InterestsTargetingBusinessExpand = true;
                                 pkEditModel.InterestsTargetingRealtyExpand = true;
                                 pkEditModel.InterestsTargetingEducationExpand = true;
@@ -569,39 +580,39 @@ namespace Task.Controller
                                 if (!pkEditModel.GetInterestsTargetingOther)
                                 {
                                     pkEditModel.InterestsTargetingOther = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Прочее");
+                                    LogTrace.WriteInLog("             Выбран checkbox Прочее");
                                 }
 
                                 #region Бизнес
                                     if (!pkEditModel.GetInterestsTargetingBusinessChoseAll)
                                     {
                                         pkEditModel.InterestsTargetingBusinessChoseAll = true;
-                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Бизнес. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingBusinessAcoountancy)
                                     {
                                         pkEditModel.InterestsTargetingBusinessAcoountancy = true;
-                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Бухгалтерия");
+                                        LogTrace.WriteInLog("             Бизнес. Выбран checkbox Бухгалтерия");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingBusinessPlacement)
                                     {
                                         pkEditModel.InterestsTargetingBusinessPlacement = true;
-                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Трудоустройство, персонал");
+                                        LogTrace.WriteInLog("             Бизнес. Выбран checkbox Трудоустройство, персонал");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingBusinessAudit)
                                     {
                                         pkEditModel.InterestsTargetingBusinessAudit = true;
-                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Аудит, консалтинг");
+                                        LogTrace.WriteInLog("             Бизнес. Выбран checkbox Аудит, консалтинг");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingBusinessAdverts)
                                     {
                                         pkEditModel.InterestsTargetingBusinessAdverts = true;
-                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Реклама");
+                                        LogTrace.WriteInLog("             Бизнес. Выбран checkbox Реклама");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingBusinessMiscellanea)
                                     {
                                         pkEditModel.InterestsTargetingBusinessMiscellanea = true;
-                                        LogTrace.WriteInLog("        Бизнес. Выбран checkbox Разное");
+                                        LogTrace.WriteInLog("             Бизнес. Выбран checkbox Разное");
                                     }
                                 #endregion
 
@@ -609,86 +620,86 @@ namespace Task.Controller
                                     if (!pkEditModel.GetInterestsTargetingRealtyChoseAll)
                                     {
                                         pkEditModel.InterestsTargetingRealtyChoseAll = true;
-                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Недвижимость. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingRealtyMiscelanea)
                                     {
                                         pkEditModel.InterestsTargetingRealtyMiscelanea = true;
-                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Разное");
+                                        LogTrace.WriteInLog("             Недвижимость. Выбран checkbox Разное");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingRealtyGarages)
                                     {
                                         pkEditModel.InterestsTargetingRealtyGarages = true;
-                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Гаражи");
+                                        LogTrace.WriteInLog("             Недвижимость. Выбран checkbox Гаражи");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingRealtyFlats)
                                     {
                                         pkEditModel.InterestsTargetingRealtyFlats = true;
-                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Квартиры");
+                                        LogTrace.WriteInLog("             Недвижимость. Выбран checkbox Квартиры");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingRealtyAbroad)
                                     {
                                         pkEditModel.InterestsTargetingRealtyAbroad = true;
-                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Зарубежная недвижимость");
+                                        LogTrace.WriteInLog("             Недвижимость. Выбран checkbox Зарубежная недвижимость");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingRealtyLand)
                                     {
                                         pkEditModel.InterestsTargetingRealtyLand = true;
-                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Земля");
+                                        LogTrace.WriteInLog("             Недвижимость. Выбран checkbox Земля");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingRealtySuburban)
                                     {
                                         pkEditModel.InterestsTargetingRealtySuburban = true;
-                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Загородная недвижимость");
+                                        LogTrace.WriteInLog("             Недвижимость. Выбран checkbox Загородная недвижимость");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingRealtyHypothec)
                                     {
                                         pkEditModel.InterestsTargetingRealtyHypothec = true;
-                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Ипотека");
+                                        LogTrace.WriteInLog("             Недвижимость. Выбран checkbox Ипотека");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingRealtyCommerce)
                                     {
                                         pkEditModel.InterestsTargetingRealtyCommerce = true;
-                                        LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Коммерческая недвижимость");
+                                        LogTrace.WriteInLog("             Недвижимость. Выбран checkbox Коммерческая недвижимость");
                                     }
                                 #endregion
 
                                 if (!pkEditModel.GetInterestsTargetingExhibitions)
                                 {
                                     pkEditModel.InterestsTargetingExhibitions = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Выставки, концерты, театры, кино");
+                                    LogTrace.WriteInLog("             Выбран checkbox Выставки, концерты, театры, кино");
                                 }
 
                                 #region Образование
                                     if (!pkEditModel.GetInterestsTargetingEducationChoseAll)
                                     {
                                         pkEditModel.InterestsTargetingEducationChoseAll = true;
-                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Образование. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingEducationForeignLanguages)
                                     {
                                         pkEditModel.InterestsTargetingEducationForeignLanguages = true;
-                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Иностранные языки");
+                                        LogTrace.WriteInLog("             Образование. Выбран checkbox Иностранные языки");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingEducationAbroad)
                                     {
                                         pkEditModel.InterestsTargetingEducationAbroad = true;
-                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Образование за рубежом");
+                                        LogTrace.WriteInLog("             Образование. Выбран checkbox Образование за рубежом");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingEducationHigh)
                                     {
                                         pkEditModel.InterestsTargetingEducationHigh = true;
-                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Образование высшее");
+                                        LogTrace.WriteInLog("             Образование. Выбран checkbox Образование высшее");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingEducationMiscelanea)
                                     {
                                         pkEditModel.InterestsTargetingEducationMiscelanea = true;
-                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Разное");
+                                        LogTrace.WriteInLog("             Образование. Выбран checkbox Разное");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingEducationChildren)
                                     {
                                         pkEditModel.InterestsTargetingEducationChildren = true;
-                                        LogTrace.WriteInLog("        Образование. Выбран checkbox Образование для детей");
+                                        LogTrace.WriteInLog("             Образование. Выбран checkbox Образование для детей");
                                     }
                                 #endregion
 
@@ -696,22 +707,22 @@ namespace Task.Controller
                                     if (!pkEditModel.GetInterestsTargetingRestChoseAll)
                                     {
                                         pkEditModel.InterestsTargetingRestChoseAll = true;
-                                        LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Отдых, туризм, путешествия. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingRestMiscellanea)
                                     {
                                         pkEditModel.InterestsTargetingRestMiscellanea = true;
-                                        LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Разное");
+                                        LogTrace.WriteInLog("             Отдых, туризм, путешествия. Выбран checkbox Разное");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingRestRuUa)
                                     {
                                         pkEditModel.InterestsTargetingRestRuUa = true;
-                                        LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Отдых в России и Украине");
+                                        LogTrace.WriteInLog("             Отдых, туризм, путешествия. Выбран checkbox Отдых в России и Украине");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingRestAbroad)
                                     {
                                         pkEditModel.InterestsTargetingRestAbroad = true;
-                                        LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Отдых за рубежом");
+                                        LogTrace.WriteInLog("             Отдых, туризм, путешествия. Выбран checkbox Отдых за рубежом");
                                     }
                                 #endregion
 
@@ -719,39 +730,39 @@ namespace Task.Controller
                                     if (!pkEditModel.GetInterestsTargetingTelephonesChoseAll)
                                     {
                                         pkEditModel.InterestsTargetingTelephonesChoseAll = true;
-                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Телефоны, связь. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingTelephonesMiscellanea)
                                     {
                                         pkEditModel.InterestsTargetingTelephonesMiscellanea = true;
-                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Разное");
+                                        LogTrace.WriteInLog("             Телефоны, связь. Выбран checkbox Разное");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingTelephonesNavigation)
                                     {
                                         pkEditModel.InterestsTargetingTelephonesNavigation = true;
-                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Навигация");
+                                        LogTrace.WriteInLog("             Телефоны, связь. Выбран checkbox Навигация");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingTelephonesMobileApps)
                                     {
                                         pkEditModel.InterestsTargetingTelephonesMobileApps = true;
-                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Мобильные приложения и услуги");
+                                        LogTrace.WriteInLog("             Телефоны, связь. Выбран checkbox Мобильные приложения и услуги");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingTelephonesMobile)
                                     {
                                         pkEditModel.InterestsTargetingTelephonesMobile = true;
-                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Мобильные телефоны");
+                                        LogTrace.WriteInLog("             Телефоны, связь. Выбран checkbox Мобильные телефоны");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingTelephonesStationary)
                                     {
                                         pkEditModel.InterestsTargetingTelephonesStationary = true;
-                                        LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Стационарная связь");
+                                        LogTrace.WriteInLog("             Телефоны, связь. Выбран checkbox Стационарная связь");
                                     }
                                 #endregion
 
                                 if (!pkEditModel.GetInterestsTargetingHouseAplliances)
                                 {
                                     pkEditModel.InterestsTargetingHouseAplliances = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Бытовая техника");
+                                    LogTrace.WriteInLog("             Выбран checkbox Бытовая техника");
                                 }
                                 
 
@@ -759,42 +770,42 @@ namespace Task.Controller
                                     if (!pkEditModel.GetInterestsTargetingMedicineChoseAll)
                                     {
                                         pkEditModel.InterestsTargetingMedicineChoseAll = true;
-                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Медицина, здоровье. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingMedicineSport)
                                     {
                                         pkEditModel.InterestsTargetingMedicineSport = true;
-                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Спорт, фитнес, йога");
+                                        LogTrace.WriteInLog("             Медицина, здоровье. Выбран checkbox Спорт, фитнес, йога");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingMedicineEyesight)
                                     {
                                         pkEditModel.InterestsTargetingMedicineEyesight = true;
-                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Зрение");
+                                        LogTrace.WriteInLog("             Медицина, здоровье. Выбран checkbox Зрение");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingMedicineMiscellanea)
                                     {
                                         pkEditModel.InterestsTargetingMedicineMiscellanea = true;
-                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Разное");
+                                        LogTrace.WriteInLog("             Медицина, здоровье. Выбран checkbox Разное");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingMedicineDiets)
                                     {
                                         pkEditModel.InterestsTargetingMedicineDiets = true;
-                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Диеты");
+                                        LogTrace.WriteInLog("             Медицина, здоровье. Выбран checkbox Диеты");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingMedicineExtraWeight)
                                     {
                                         pkEditModel.InterestsTargetingMedicineExtraWeight = true;
-                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Лишний вес");
+                                        LogTrace.WriteInLog("             Медицина, здоровье. Выбран checkbox Лишний вес");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingMedicinePregnancy)
                                     {
                                         pkEditModel.InterestsTargetingMedicinePregnancy = true;
-                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Беременность и роды");
+                                        LogTrace.WriteInLog("             Медицина, здоровье. Выбран checkbox Беременность и роды");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingMedicineStomatology)
                                     {
                                         pkEditModel.InterestsTargetingMedicineStomatology = true;
-                                        LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Стоматология");
+                                        LogTrace.WriteInLog("             Медицина, здоровье. Выбран checkbox Стоматология");
                                     }
                                 #endregion
 
@@ -802,37 +813,37 @@ namespace Task.Controller
                                     if (!pkEditModel.GetInterestsTargetingHouseChoseAll)
                                     {
                                         pkEditModel.InterestsTargetingHouseChoseAll = true;
-                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Дом и семья. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingHouseChildren)
                                     {
                                         pkEditModel.InterestsTargetingHouseChildren = true;
-                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Маленькие дети");
+                                        LogTrace.WriteInLog("             Дом и семья. Выбран checkbox Маленькие дети");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingHouseDogs)
                                     {
                                         pkEditModel.InterestsTargetingHouseDogs = true;
-                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Собаки");
+                                        LogTrace.WriteInLog("             Дом и семья. Выбран checkbox Собаки");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingHouseMiscellanea)
                                     {
                                         pkEditModel.InterestsTargetingHouseMiscellanea = true;
-                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Разное");
+                                        LogTrace.WriteInLog("             Дом и семья. Выбран checkbox Разное");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingHouseCats)
                                     {
                                         pkEditModel.InterestsTargetingHouseCats = true;
-                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Кошки");
+                                        LogTrace.WriteInLog("             Дом и семья. Выбран checkbox Кошки");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingHouseCookery)
                                     {
                                         pkEditModel.InterestsTargetingHouseCookery = true;
-                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Кулинария, рецепты");
+                                        LogTrace.WriteInLog("             Дом и семья. Выбран checkbox Кулинария, рецепты");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingHouseKindergartens)
                                     {
                                         pkEditModel.InterestsTargetingHouseKindergartens = true;
-                                        LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Детские сады");
+                                        LogTrace.WriteInLog("             Дом и семья. Выбран checkbox Детские сады");
                                     }
                                 #endregion
 
@@ -840,42 +851,42 @@ namespace Task.Controller
                                     if (!pkEditModel.GetInterestsTargetingFinanceChoseAll)
                                     {
                                         pkEditModel.InterestsTargetingFinanceChoseAll = true;
-                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Финансы. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingFinanceStockMarket)
                                     {
                                         pkEditModel.InterestsTargetingFinanceStockMarket = true;
-                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Фондовый рынок");
+                                        LogTrace.WriteInLog("             Финансы. Выбран checkbox Фондовый рынок");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingFinanceCurrency)
                                     {
                                         pkEditModel.InterestsTargetingFinanceCurrency = true;
-                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Валюта");
+                                        LogTrace.WriteInLog("             Финансы. Выбран checkbox Валюта");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingFinanceInsurence)
                                     {
                                         pkEditModel.InterestsTargetingFinanceInsurence = true;
-                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Страхование");
+                                        LogTrace.WriteInLog("             Финансы. Выбран checkbox Страхование");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingFinanceMoneyTransfers)
                                     {
                                         pkEditModel.InterestsTargetingFinanceMoneyTransfers = true;
-                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Денежные переводы");
+                                        LogTrace.WriteInLog("             Финансы. Выбран checkbox Денежные переводы");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingFinanceCredits)
                                     {
                                         pkEditModel.InterestsTargetingFinanceCredits = true;
-                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Кредиты");
+                                        LogTrace.WriteInLog("             Финансы. Выбран checkbox Кредиты");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingFinanceMiscellanea)
                                     {
                                         pkEditModel.InterestsTargetingFinanceMiscellanea = true;
-                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Разное");
+                                        LogTrace.WriteInLog("             Финансы. Выбран checkbox Разное");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingFinanceDeposits)
                                     {
                                         pkEditModel.InterestsTargetingFinanceDeposits = true;
-                                        LogTrace.WriteInLog("        Финансы. Выбран checkbox Вклады, депозиты");
+                                        LogTrace.WriteInLog("             Финансы. Выбран checkbox Вклады, депозиты");
                                     }
                                 #endregion
 
@@ -883,37 +894,37 @@ namespace Task.Controller
                                     if (!pkEditModel.GetInterestsTargetingComputersChoseAll)
                                     {
                                         pkEditModel.InterestsTargetingComputersChoseAll = true;
-                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Компьютеры, оргтехника. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingComputersLaptops)
                                     {
                                         pkEditModel.InterestsTargetingComputersLaptops = true;
-                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Ноутбуки");
+                                        LogTrace.WriteInLog("             Компьютеры, оргтехника. Выбран checkbox Ноутбуки");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingComputersParts)
                                     {
                                         pkEditModel.InterestsTargetingComputersParts = true;
-                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Компьютерные комплектующие");
+                                        LogTrace.WriteInLog("             Компьютеры, оргтехника. Выбран checkbox Компьютерные комплектующие");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingComputersPrinters)
                                     {
                                         pkEditModel.InterestsTargetingComputersPrinters = true;
-                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Принтеры");
+                                        LogTrace.WriteInLog("             Компьютеры, оргтехника. Выбран checkbox Принтеры");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingComputersTablets)
                                     {
                                         pkEditModel.InterestsTargetingComputersTablets = true;
-                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Планшетные ПК");
+                                        LogTrace.WriteInLog("             Компьютеры, оргтехника. Выбран checkbox Планшетные ПК");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingComputersMonitors)
                                     {
                                         pkEditModel.InterestsTargetingComputersMonitors = true;
-                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Мониторы");
+                                        LogTrace.WriteInLog("             Компьютеры, оргтехника. Выбран checkbox Мониторы");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingComputersMiscellanea)
                                     {
                                         pkEditModel.InterestsTargetingComputersMiscellanea = true;
-                                        LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Разное");
+                                        LogTrace.WriteInLog("             Компьютеры, оргтехника. Выбран checkbox Разное");
                                     }
                                 #endregion
 
@@ -921,37 +932,37 @@ namespace Task.Controller
                                     if (!pkEditModel.GetInterestsTargetingAutoChoseAll)
                                     {
                                         pkEditModel.InterestsTargetingAutoChoseAll = true;
-                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Авто. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingAutoInsurence)
                                     {
                                         pkEditModel.InterestsTargetingAutoInsurence = true;
-                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Автострахование");
+                                        LogTrace.WriteInLog("             Авто. Выбран checkbox Автострахование");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingAutoMiscellanea)
                                     {
                                         pkEditModel.InterestsTargetingAutoMiscellanea = true;
-                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Разное");
+                                        LogTrace.WriteInLog("             Авто. Выбран checkbox Разное");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingAutoNational)
                                     {
                                         pkEditModel.InterestsTargetingAutoNational = true;
-                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Отечественные");
+                                        LogTrace.WriteInLog("             Авто. Выбран checkbox Отечественные");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingAutoWheels)
                                     {
                                         pkEditModel.InterestsTargetingAutoWheels = true;
-                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Колёса, Шины");
+                                        LogTrace.WriteInLog("             Авто. Выбран checkbox Колёса, Шины");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingAutoImported)
                                     {
                                         pkEditModel.InterestsTargetingAutoImported = true;
-                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Иномарки");
+                                        LogTrace.WriteInLog("             Авто. Выбран checkbox Иномарки");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingAutoMoto)
                                     {
                                         pkEditModel.InterestsTargetingAutoMoto = true;
-                                        LogTrace.WriteInLog("        Авто. Выбран checkbox Мото-, Квадроциклы, Снегоходы");
+                                        LogTrace.WriteInLog("             Авто. Выбран checkbox Мото-, Квадроциклы, Снегоходы");
                                     }
                                 #endregion
 
@@ -959,32 +970,32 @@ namespace Task.Controller
                                     if (!pkEditModel.GetInterestsTargetingAudioChoseAll)
                                     {
                                         pkEditModel.InterestsTargetingAudioChoseAll = true;
-                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Аудио, Видео, Фото. Выбран checkbox Все");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingAudioVideoEquips)
                                     {
                                         pkEditModel.InterestsTargetingAudioVideoEquips = true;
-                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Видеоаппаратура");
+                                        LogTrace.WriteInLog("             Аудио, Видео, Фото. Выбран checkbox Видеоаппаратура");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingAudioMiscellanea)
                                     {
                                         pkEditModel.InterestsTargetingAudioMiscellanea = true;
-                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Разное");
+                                        LogTrace.WriteInLog("             Аудио, Видео, Фото. Выбран checkbox Разное");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingAudioTech)
                                     {
                                         pkEditModel.InterestsTargetingAudioTech = true;
-                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Аудио-техника");
+                                        LogTrace.WriteInLog("             Аудио, Видео, Фото. Выбран checkbox Аудио-техника");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingAudioCameras)
                                     {
                                         pkEditModel.InterestsTargetingAudioCameras = true;
-                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Фотоаппараты");
+                                        LogTrace.WriteInLog("             Аудио, Видео, Фото. Выбран checkbox Фотоаппараты");
                                     }
                                     if (!pkEditModel.GetInterestsTargetingAudioTvs)
                                     {
                                         pkEditModel.InterestsTargetingAudioTvs = true;
-                                        LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Телевизоры, DVD-проигрыватели");
+                                        LogTrace.WriteInLog("             Аудио, Видео, Фото. Выбран checkbox Телевизоры, DVD-проигрыватели");
                                     }
                                 #endregion
 
@@ -1000,12 +1011,12 @@ namespace Task.Controller
                     {
                         case "0":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Браузеры. Выбрано: не использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Браузеры. Выбрано: не использовать");
                                 break;
                             }
                         case "1":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Браузеры. Выбрано: использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Браузеры. Выбрано: использовать");
                                 //развернуть все пункты
                                 pkEditModel.BrowserTargetingOtherExpand = true;
                                 pkEditModel.BrowserTargetingOperaExpand = true;
@@ -1013,7 +1024,7 @@ namespace Task.Controller
                                 pkEditModel.BrowserTargetingFirefoxExpand = true;
                                 pkEditModel.BrowserTargetingSafariExpand = true;
                                 pkEditModel.BrowserTargetingIeExpand = true;
-
+                                pkEditModel.BrowserTargetingGoogleChromeMobileExpand = true;
                                 //pkEditModel.BrowserTargetingOtherAll = true;
 
                                 //if (!pkEditModel)
@@ -1024,16 +1035,16 @@ namespace Task.Controller
                                 if (!pkEditModel.GetBrowserTargetingOtherAll)
                                 {
                                     pkEditModel.BrowserTargetingOtherAll = true;
-                                    LogTrace.WriteInLog("        Другие. Выбран checkbox Все");
+                                    LogTrace.WriteInLog("             Другие. Выбран checkbox Все");
                                 }
 
                                 #region Опера
                                     //pkEditModel.BrowserTargetingOperaOther = true;
-                                    //LogTrace.WriteInLog("        Опера. Выбран checkbox Другие");
+                                    //LogTrace.WriteInLog("             Опера. Выбран checkbox Другие");
                                     if (!pkEditModel.GetBrowserTargetingOperaChoseAll)
                                     {
                                         pkEditModel.BrowserTargetingOperaChoseAll = true;
-                                        LogTrace.WriteInLog("        Опера. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Опера. Выбран checkbox Все");
                                     }
                                     //if (!pkEditModel) pkEditModel.BrowserTargetingOperaOther = true;
                                     //if (!pkEditModel)
@@ -1062,7 +1073,7 @@ namespace Task.Controller
                                     if (!pkEditModel.GetBrowserTargetingChromeChoseAll)
                                     {
                                         pkEditModel.BrowserTargetingChromeChoseAll = true;
-                                        LogTrace.WriteInLog("        Chrome. Выбран checkbox Chrome Все");
+                                        LogTrace.WriteInLog("             Chrome. Выбран checkbox Chrome Все");
                                     }
                                     //if (!pkEditModel)
                                     //{
@@ -1075,7 +1086,7 @@ namespace Task.Controller
                                     if (!pkEditModel.GetBrowserTargetingFirefoxChoseAll)
                                     {
                                         pkEditModel.BrowserTargetingFirefoxChoseAll = true;
-                                        LogTrace.WriteInLog("        Firefox. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Firefox. Выбран checkbox Все");
                                     }
                                     //if (!pkEditModel)
                                     //{
@@ -1108,7 +1119,7 @@ namespace Task.Controller
                                     if (!pkEditModel.GetBrowserTargetingSafariChoseAll)
                                     {
                                         pkEditModel.BrowserTargetingSafariChoseAll = true;
-                                        LogTrace.WriteInLog("        Safari. Выбран checkbox Safari Все");
+                                        LogTrace.WriteInLog("             Safari. Выбран checkbox Safari Все");
                                     }
                                     //if (!pkEditModel)
                                     //{
@@ -1121,7 +1132,7 @@ namespace Task.Controller
                                     if (!pkEditModel.GetBrowserTargetingIeChoseAll)
                                     {
                                         pkEditModel.BrowserTargetingIeChoseAll = true;
-                                        LogTrace.WriteInLog("        MSIE. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             MSIE. Выбран checkbox Все");
                                     }
                                     //if (!pkEditModel)
                                     //{
@@ -1150,6 +1161,14 @@ namespace Task.Controller
                                     //}
                                 #endregion
 
+                                #region Chrome
+                                    if (!pkEditModel.GetBrowserTargetingGoogleChromeMobileChoseAll)
+                                    {
+                                        pkEditModel.BrowserTargetingGoogleChromeMobileChoseAll = true;
+                                        LogTrace.WriteInLog("             Google Chrome Mobile. Выбран checkbox Google Chrome Mobile");
+                                    }
+                                #endregion
+
                                 break;
                             }
                     }
@@ -1162,53 +1181,53 @@ namespace Task.Controller
                     {
                         case "0":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton OC таргетинг. Выбрано: не использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton OC таргетинг. Выбрано: не использовать");
                                 break;
                             }
                         case "1":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton OC таргетинг. Выбрано: использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton OC таргетинг. Выбрано: использовать");
                                 //pkEditModel.OsTargetingOther = true;
                                 //LogTrace.WriteInLog("        Выбран checkbox Другие");
                                 if (!pkEditModel.GetOsTargetingOther)
                                 {
                                     pkEditModel.OsTargetingOther = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Другие");
+                                    LogTrace.WriteInLog("             Выбран checkbox Другие");
                                 }
                                 if (!pkEditModel.GetOsTargetingMacOs)
                                 {
                                     pkEditModel.OsTargetingMacOs = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Mac OS");
+                                    LogTrace.WriteInLog("             Выбран checkbox Mac OS");
                                 }
                                 if (!pkEditModel.GetOsTargetingOtherMobileOs)
                                 {
                                     pkEditModel.OsTargetingOtherMobileOs = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Прочие мобильные ОС");
+                                    LogTrace.WriteInLog("             Выбран checkbox Прочие мобильные ОС");
                                 }
                                 if (!pkEditModel.GetOsTargetingWindows)
                                 {
                                     pkEditModel.OsTargetingWindows = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox WIndows");
+                                    LogTrace.WriteInLog("             Выбран checkbox WIndows");
                                 }
                                 if (!pkEditModel.GetOsTargetingOtherIoS)
                                 {
                                     pkEditModel.OsTargetingOtherIoS = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Прочие iOS системы");
+                                    LogTrace.WriteInLog("             Выбран checkbox Прочие iOS системы");
                                 }
                                 if (!pkEditModel.GetOsTargetingIpad)
                                 {
                                     pkEditModel.OsTargetingIpad = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox iPAD");
+                                    LogTrace.WriteInLog("             Выбран checkbox iPAD");
                                 }
                                 if (!pkEditModel.GetOsTargetingIphone)
                                 {
                                     pkEditModel.OsTargetingIphone = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox IPHONE");
+                                    LogTrace.WriteInLog("             Выбран checkbox IPHONE");
                                 }
                                 if (!pkEditModel.GetOsTargetingAndroid)
                                 {
                                     pkEditModel.OsTargetingAndroid = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Android");
+                                    LogTrace.WriteInLog("             Выбран checkbox Android");
                                 }
                                 break;
                             }
@@ -1222,28 +1241,28 @@ namespace Task.Controller
                     {
                         case "0":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Провайдеры. Выбрано: не использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Провайдеры. Выбрано: не использовать");
                                 break;
                             }
                         case "1":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Провайдеры. Выбрано: использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Провайдеры. Выбрано: использовать");
                                 //pkEditModel.ProviderTargetingOther = true;
                                 //LogTrace.WriteInLog("        Выбран checkbox Другие");
                                 if (!pkEditModel.GetProviderTargetingOther)
                                 {
                                     pkEditModel.ProviderTargetingOther = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Другие");
+                                    LogTrace.WriteInLog("             Выбран checkbox Другие");
                                 }
                                 if (!pkEditModel.GetProviderTargetingMegafon)
                                 {
                                     pkEditModel.ProviderTargetingMegafon = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Мегафон");
+                                    LogTrace.WriteInLog("             Выбран checkbox Мегафон");
                                 }
                                 if (!pkEditModel.GetProviderTargetingMtc)
                                 {
                                     pkEditModel.ProviderTargetingMtc = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox МТС Россия");
+                                    LogTrace.WriteInLog("             Выбран checkbox МТС Россия");
                                 }
                                 break;
                             }
@@ -1257,12 +1276,12 @@ namespace Task.Controller
                     {
                         case "0":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Геотаргетинг. Выбрано: не использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Геотаргетинг. Выбрано: не использовать");
                                 break;
                             }
                         case "1":
                             {
-                                LogTrace.WriteInLog("     Выбираю radiobutton Геотаргетинг. Выбрано: использовать");
+                                LogTrace.WriteInLog("          Выбираю radiobutton Геотаргетинг. Выбрано: использовать");
                                 pkEditModel.GeoTargetingRussiaExpand = true;
                                 pkEditModel.GeoTargetingUkraineExpand = true;
 
@@ -1270,54 +1289,54 @@ namespace Task.Controller
                                 if (!pkEditModel.GetGeoTargetingOther)
                                 {
                                     pkEditModel.GeoTargetingOther = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Прочие страны");
+                                    LogTrace.WriteInLog("             Выбран checkbox Прочие страны");
                                 }
                                 if (!pkEditModel.GetGeoTargetingAustria)
                                 {
                                     pkEditModel.GeoTargetingAustria = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Австрия");
+                                    LogTrace.WriteInLog("             Выбран checkbox Австрия");
                                 }
                                 if (!pkEditModel.GetGeoTargetingBelorussia)
                                 {
                                     pkEditModel.GeoTargetingBelorussia = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Белоруссия");
+                                    LogTrace.WriteInLog("             Выбран checkbox Белоруссия");
                                 }
                                 if (!pkEditModel.GetGeoTargetingUk)
                                 {
                                     pkEditModel.GeoTargetingUk = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Великобритания");
+                                    LogTrace.WriteInLog("             Выбран checkbox Великобритания");
                                 }
                                 if (!pkEditModel.GetGeoTargetingGermany)
                                 {
                                     pkEditModel.GeoTargetingGermany = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Германия");
+                                    LogTrace.WriteInLog("             Выбран checkbox Германия");
                                 }
                                 if (!pkEditModel.GetGeoTargetingIsrael)
                                 {
                                     pkEditModel.GeoTargetingIsrael = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Израиль");
+                                    LogTrace.WriteInLog("             Выбран checkbox Израиль");
                                 }
                                 if (!pkEditModel.GetGeoTargetingKazakhstan)
                                 {
                                     pkEditModel.GeoTargetingKazakhstan = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Казахстан");
+                                    LogTrace.WriteInLog("             Выбран checkbox Казахстан");
                                 }
                                 if (!pkEditModel.GetGeoTargetingLatvia)
                                 {
                                     pkEditModel.GeoTargetingLatvia = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Латвия");
+                                    LogTrace.WriteInLog("             Выбран checkbox Латвия");
                                 }
                                 if (!pkEditModel.GetGeoTargetingLithuania)
                                 {
                                     pkEditModel.GeoTargetingLithuania = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Литва");
+                                    LogTrace.WriteInLog("             Выбран checkbox Литва");
                                 }
 
                                 #region Россия
                                     if (!pkEditModel.GetGeoTargetingRussiaChoseAll)
                                     {
                                         pkEditModel.GeoTargetingRussiaChoseAll = true;
-                                        LogTrace.WriteInLog("        Россия. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Россия. Выбран checkbox Все");
                                     }
                                     //if (!pkEditModel)
                                     //{
@@ -1354,14 +1373,14 @@ namespace Task.Controller
                                 if (!pkEditModel.GetGeoTargetingUsa)
                                 {
                                     pkEditModel.GeoTargetingUsa = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox США");
+                                    LogTrace.WriteInLog("             Выбран checkbox США");
                                 }
 
                                 #region Украина
                                     if (!pkEditModel.GetGeoTargetingUkraineChoseAll)
                                     {
                                         pkEditModel.GeoTargetingUkraineChoseAll = true;
-                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Все");
+                                        LogTrace.WriteInLog("             Украина. Выбран checkbox Все");
                                     }
                                     //if (!pkEditModel)
                                     //{
@@ -1433,7 +1452,7 @@ namespace Task.Controller
                                 if (!pkEditModel.GetGeoTargetingEstonia)
                                 {
                                     pkEditModel.GeoTargetingEstonia = true;
-                                    LogTrace.WriteInLog("        Выбран checkbox Эстония");
+                                    LogTrace.WriteInLog("             Выбран checkbox Эстония");
                                 }
                                 break;
                             }
@@ -1441,10 +1460,83 @@ namespace Task.Controller
                 #endregion
             #endregion
 
-            pkEditModel.Submit();
+            string editPktUrl = driver.Url; //запоминаем url страницы
+
+            pkEditModel.Submit(); //пытаемся сохранить форму
+            LogTrace.WriteInLog("               Нажал кнопку Сохранить");
+            LogTrace.WriteInLog("               " + driver.Url);
+            LogTrace.WriteInLog("");
+
+            string isEditedPkUrl = driver.Url; //запоминаем url страницы, открывшейся после нажатия "Сохранить"
+            //если editPktUrl и isEditedPkUrl совпали - мы никуда не перешли и значит есть ошибки заполнения полей
+            //если editPktUrl и isEditedPkUrl не совпали - клиент отредактировался и ошибки искать не надо
+            if (editPktUrl == isEditedPkUrl)
+            {
+                errors = pkEditModel.GetErrors(); //проверяем, появились ли на форме ошибки заполнения полей
+            }
+            else
+            {
+                LogTrace.WriteInLog("               РК успешно отредактирована");
+                LogForClickers.WriteInLog("               РК успешно отредактирована");
+            }
+            Registry.hashTable["driver"] = driver;
         }
-        
-        
+
+        public bool wasMismatch = false;
+
+        public void CheckEditingClient()
+        {
+            driver = (IWebDriver) Registry.hashTable["driver"];
+                //забираем из хештаблицы сохраненный при создании клиента драйвер
+            driver.Navigate().GoToUrl(baseUrl); //заходим по ссылке
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+            LogTrace.WriteInLog("               " + driver.Url);
+
+            #region Проверка заполнения
+                if (pkEditModel.GetViewSensors) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Просмотр датчиков' и выбранное при редактировании"); }
+                else
+                {
+                    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Просмотр датчиков' и выбранное при редактировании");
+                    wasMismatch = true;
+                }
+
+                if (pkEditModel.GetViewConversion) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Просмотр конверсии' и выбранное при редактировании"); }
+                else
+                {
+                    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Просмотр конверсии' и выбранное при редактировании");
+                    wasMismatch = true;
+                }
+
+                if (namePk == pkEditModel.GetName) { LogTrace.WriteInLog("          Совпадают: содержимое поля Название и введенное при редактировании"); }
+                else
+                {
+                    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля Название и введенное при редактировании");
+                    wasMismatch = true;
+                }
+
+                if (dateStartPk == pkEditModel.GetStartPkDate) { LogTrace.WriteInLog("          Совпадают: содержимое поля Дата старта РК и введенное при редактировании"); }
+                else
+                {
+                    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля Дата старта РК и введенное при редактировании");
+                    wasMismatch = true;
+                }
+
+                if (dateEndPk == pkEditModel.GetEndPkDate) { LogTrace.WriteInLog("          Совпадают: содержимое поля Дата окончания РК и введенное при редактировании"); }
+                else
+                {
+                    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля Дата окончания РК и введенное при редактировании");
+                    wasMismatch = true;
+                }
+            #endregion
+
+            LogTrace.WriteInLog("               " + driver.Url);
+            LogTrace.WriteInLog("");
+            if (!wasMismatch)
+            {
+                LogTrace.WriteInLog("               ОК, всё ранее введенное совпадает с текущими значениями");
+                LogForClickers.WriteInLog("               ОК, всё ранее введенное совпадает с текущими значениями");
+            }
+        }
 
         protected int needSetRadioButton(int variants) //генерируем номер варианта выбора для needSetRadioButton. variants - кол-во вариантов выбора
         {

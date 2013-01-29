@@ -2547,6 +2547,41 @@ namespace Task.Model
                     }
                 #endregion
 
+                #region Google Chrome Mobile
+                    protected bool ClickBrowserTargetingGoogleChromeMobile;
+                    public bool BrowserTargetingGoogleChromeMobileExpand
+                    {
+                        get { return ClickBrowserTargetingGoogleChromeMobile; }
+                        set
+                        {
+                            IWebElement webelement = driver.FindElement(By.CssSelector("#browser-country_GoogleChromeMobile + .hint"));
+                            webelement.Click();
+                            ClickBrowserTargetingGoogleChromeMobile = value;
+                        }
+                    }
+                    protected bool CheckboxBrowserTargetingGoogleChromeMobile;
+                    public bool BrowserTargetingGoogleChromeMobileChoseAll
+                    {
+                        get { return CheckboxBrowserTargetingGoogleChromeMobile; }
+                        set
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("browser-country_GoogleChromeMobile"));
+                            webelement.Click();
+                            CheckboxBrowserTargetingGoogleChromeMobile = value;
+                        }
+                    }
+                    protected bool CheckboxBrowserTargetingMobileChromeMobile;
+                    public bool BrowserTargetingGoogleChromeMobile
+                    {
+                        get { return CheckboxBrowserTargetingMobileChromeMobile; }
+                        set
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("browser-GoogleChromeMobile-20"));
+                            webelement.Click();
+                            CheckboxBrowserTargetingMobileChromeMobile = value;
+                        }
+                    }
+                #endregion
             #endregion
 
             #region ОС таргетинг
@@ -3183,6 +3218,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3199,6 +3235,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3260,6 +3297,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3276,6 +3314,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3353,6 +3392,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3413,6 +3453,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3444,6 +3485,7 @@ namespace Task.Model
                 try
                 {
                     string _checked = webelement.GetAttribute("checked");
+                    if (_checked == null) return false;
                     return true; //есть атрибут checked--значит чекбокс выбран
                 }
                 catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3461,6 +3503,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3476,6 +3519,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3491,6 +3535,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3506,6 +3551,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3524,6 +3570,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3555,6 +3602,7 @@ namespace Task.Model
                 try
                 {
                     string _checked = webelement.GetAttribute("checked");
+                    if (_checked == null) return false;
                     return true; //есть атрибут checked--значит чекбокс выбран
                 }
                 catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3587,6 +3635,7 @@ namespace Task.Model
                 try
                 {
                     string _checked = webelement.GetAttribute("checked");
+                    if (_checked == null) return false;
                     return true; //есть атрибут checked--значит чекбокс выбран
                 }
                 catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3602,6 +3651,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3617,6 +3667,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3632,6 +3683,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3647,6 +3699,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3662,6 +3715,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3677,6 +3731,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3692,6 +3747,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3707,6 +3763,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3722,6 +3779,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3737,6 +3795,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3752,6 +3811,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3767,6 +3827,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3782,6 +3843,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                    if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3797,6 +3859,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3812,6 +3875,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3827,6 +3891,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3842,6 +3907,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3857,6 +3923,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3872,6 +3939,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3887,6 +3955,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3902,6 +3971,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3917,6 +3987,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3932,6 +4003,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3947,6 +4019,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3962,6 +4035,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3977,6 +4051,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -3992,6 +4067,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4007,6 +4083,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4022,6 +4099,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4037,6 +4115,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4052,6 +4131,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4067,6 +4147,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4082,6 +4163,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4097,6 +4179,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4112,6 +4195,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4127,6 +4211,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4142,6 +4227,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4157,6 +4243,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4172,6 +4259,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4187,6 +4275,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4202,6 +4291,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4217,6 +4307,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4226,6 +4317,7 @@ namespace Task.Model
         #endregion
 
         #region Демографический Таргетинг
+
             #region Мужчины
                 protected bool GetCheckboxDemoTargetingMen;
                 public bool GetDemoTargetingMenChoseAll
@@ -4236,6 +4328,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4251,6 +4344,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4266,6 +4360,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4281,6 +4376,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4296,6 +4392,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4311,6 +4408,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4326,6 +4424,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4344,6 +4443,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4359,6 +4459,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4374,6 +4475,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4389,6 +4491,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4404,6 +4507,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4419,6 +4523,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4434,6 +4539,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4452,6 +4558,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4467,6 +4574,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4482,6 +4590,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4497,6 +4606,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4512,6 +4622,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4527,6 +4638,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4546,6 +4658,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4563,6 +4676,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4578,6 +4692,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4593,6 +4708,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4608,6 +4724,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4623,6 +4740,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4638,6 +4756,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4656,6 +4775,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4671,6 +4791,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4686,6 +4807,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4701,6 +4823,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4716,6 +4839,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4731,6 +4855,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4746,6 +4871,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4761,6 +4887,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4776,6 +4903,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4793,6 +4921,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4810,6 +4939,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4825,6 +4955,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4840,6 +4971,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4855,6 +4987,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4870,6 +5003,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4885,6 +5019,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4903,6 +5038,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4918,6 +5054,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4933,6 +5070,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4948,6 +5086,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4966,6 +5105,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4981,6 +5121,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -4996,6 +5137,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5011,6 +5153,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5026,6 +5169,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5041,6 +5185,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5058,6 +5203,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5075,6 +5221,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5090,6 +5237,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5105,6 +5253,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5120,6 +5269,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5135,6 +5285,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5150,6 +5301,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5165,6 +5317,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5180,6 +5333,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5198,6 +5352,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5213,6 +5368,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5228,6 +5384,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5243,6 +5400,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5258,6 +5416,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5273,6 +5432,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5288,6 +5448,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5306,6 +5467,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5321,6 +5483,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5336,6 +5499,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5351,6 +5515,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5366,6 +5531,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5381,6 +5547,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5396,6 +5563,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5411,6 +5579,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5429,6 +5598,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5444,6 +5614,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5459,6 +5630,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5474,6 +5646,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5489,6 +5662,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5504,6 +5678,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5519,6 +5694,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5537,6 +5713,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5552,6 +5729,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5567,6 +5745,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5582,6 +5761,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5597,6 +5777,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5627,6 +5808,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5645,6 +5827,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5660,6 +5843,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5675,6 +5859,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5690,6 +5875,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5705,6 +5891,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5720,6 +5907,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5740,6 +5928,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5755,6 +5944,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5773,6 +5963,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5788,6 +5979,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5803,6 +5995,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5818,6 +6011,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5833,6 +6027,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5848,6 +6043,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5866,6 +6062,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5881,6 +6078,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5899,6 +6097,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5914,6 +6113,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5929,6 +6129,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5944,6 +6145,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5959,6 +6161,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5974,6 +6177,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -5992,6 +6196,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6007,6 +6212,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6025,6 +6231,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6040,6 +6247,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6055,6 +6263,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6070,6 +6279,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6085,6 +6295,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6100,11 +6311,37 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
                     }
                     set { GetCheckboxBrowserTargetingIeOther = value; }
+                }
+            #endregion
+
+            #region Google Chrome Mobile
+                protected bool GetCheckboxBrowserTargetingGoogleChromeMobile;
+                public bool GetBrowserTargetingGoogleChromeMobileChoseAll
+                {
+                    get { return GetCheckboxBrowserTargetingGoogleChromeMobile; }
+                    set
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-country_GoogleChromeMobile"));
+                        webelement.Click();
+                        GetCheckboxBrowserTargetingGoogleChromeMobile = value;
+                    }
+                }
+                protected bool GetCheckboxBrowserTargetingMobileChromeMobile;
+                public bool GetBrowserTargetingGoogleChromeMobile
+                {
+                    get { return GetCheckboxBrowserTargetingMobileChromeMobile; }
+                    set
+                    {
+                        IWebElement webelement = driver.FindElement(By.Id("browser-GoogleChromeMobile-20"));
+                        webelement.Click();
+                        GetCheckboxBrowserTargetingMobileChromeMobile = value;
+                    }
                 }
             #endregion
         #endregion
@@ -6119,6 +6356,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6134,6 +6372,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6149,6 +6388,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6164,6 +6404,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6179,6 +6420,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6194,6 +6436,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6209,6 +6452,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6224,6 +6468,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6242,6 +6487,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6257,6 +6503,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6272,6 +6519,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6290,6 +6538,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6305,6 +6554,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6320,6 +6570,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6335,6 +6586,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6350,6 +6602,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6365,6 +6618,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6380,6 +6634,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6395,6 +6650,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6410,6 +6666,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6427,6 +6684,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6442,6 +6700,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6457,6 +6716,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6472,6 +6732,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6487,6 +6748,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6502,6 +6764,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6517,6 +6780,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6534,6 +6798,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6551,6 +6816,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6566,6 +6832,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6581,6 +6848,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6596,6 +6864,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6611,6 +6880,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6626,6 +6896,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6641,6 +6912,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6656,6 +6928,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6671,6 +6944,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6686,6 +6960,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6701,6 +6976,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6716,6 +6992,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6731,6 +7008,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6746,6 +7024,7 @@ namespace Task.Model
                         try
                         {
                             string _checked = webelement.GetAttribute("checked");
+                            if (_checked == null) return false;
                             return true; //есть атрибут checked--значит чекбокс выбран
                         }
                         catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
@@ -6763,6 +7042,7 @@ namespace Task.Model
                     try
                     {
                         string _checked = webelement.GetAttribute("checked");
+                        if (_checked == null) return false;
                         return true; //есть атрибут checked--значит чекбокс выбран
                     }
                     catch (Exception) { return false; } //нет атрибута checked--значит чекбокс не выбран
