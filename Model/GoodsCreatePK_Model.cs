@@ -2508,39 +2508,39 @@ namespace Task.Model
                 #endregion
 
                 #region Google Chrome Mobile
-                    protected bool ClickBrowserTargetingGoogleChromeMobile;
-                    public bool BrowserTargetingGoogleChromeMobileExpand
-                    {
-                        get { return ClickBrowserTargetingGoogleChromeMobile; }
-                        set
-                        {
-                            IWebElement webelement = driver.FindElement(By.CssSelector("#browser-country_GoogleChromeMobile + .hint"));
-                            webelement.Click();
-                            ClickBrowserTargetingGoogleChromeMobile = value;
-                        }
-                    }
-                    protected bool CheckboxBrowserTargetingGoogleChromeMobile;
-                    public bool BrowserTargetingGoogleChromeMobileChoseAll
-                    {
-                        get { return CheckboxBrowserTargetingGoogleChromeMobile; }
-                        set
-                        {
-                            IWebElement webelement = driver.FindElement(By.Id("browser-country_GoogleChromeMobile"));
-                            webelement.Click();
-                            CheckboxBrowserTargetingGoogleChromeMobile = value;
-                        }
-                    }
-                    protected bool CheckboxBrowserTargetingMobileChromeMobile;
-                    public bool BrowserTargetingGoogleChromeMobile
-                    {
-                        get { return CheckboxBrowserTargetingMobileChromeMobile; }
-                        set
-                        {
-                            IWebElement webelement = driver.FindElement(By.Id("browser-GoogleChromeMobile-20"));
-                            webelement.Click();
-                            CheckboxBrowserTargetingMobileChromeMobile = value;
-                        }
-                    }
+                    //protected bool ClickBrowserTargetingGoogleChromeMobile;
+                    //public bool BrowserTargetingGoogleChromeMobileExpand
+                    //{
+                    //    get { return ClickBrowserTargetingGoogleChromeMobile; }
+                    //    set
+                    //    {
+                    //        IWebElement webelement = driver.FindElement(By.CssSelector("#browser-country_GoogleChromeMobile + .hint"));
+                    //        webelement.Click();
+                    //        ClickBrowserTargetingGoogleChromeMobile = value;
+                    //    }
+                    //}
+                    //protected bool CheckboxBrowserTargetingGoogleChromeMobile;
+                    //public bool BrowserTargetingGoogleChromeMobileChoseAll
+                    //{
+                    //    get { return CheckboxBrowserTargetingGoogleChromeMobile; }
+                    //    set
+                    //    {
+                    //        IWebElement webelement = driver.FindElement(By.Id("browser-country_GoogleChromeMobile"));
+                    //        webelement.Click();
+                    //        CheckboxBrowserTargetingGoogleChromeMobile = value;
+                    //    }
+                    //}
+                    //protected bool CheckboxBrowserTargetingMobileChromeMobile;
+                    //public bool BrowserTargetingGoogleChromeMobile
+                    //{
+                    //    get { return CheckboxBrowserTargetingMobileChromeMobile; }
+                    //    set
+                    //    {
+                    //        IWebElement webelement = driver.FindElement(By.Id("browser-GoogleChromeMobile-20"));
+                    //        webelement.Click();
+                    //        CheckboxBrowserTargetingMobileChromeMobile = value;
+                    //    }
+                    //}
                 #endregion
             #endregion
 

@@ -36,6 +36,15 @@ namespace Task.Controller
 
         public string commentsForPk;
 
+        public int chosenVariantLimitsPk;
+        public int chosenVariantDemoTargeting;
+        public int chosenVariantInterestsTargeting;
+        public int chosenVariantBrowserTargeting;
+        public int chosenVariantOsTargeting;
+        public int chosenVariantProviderTargeting;
+        public int chosenVariantGeoTargeting;
+        public int variant;
+
         GoodsEditPK_Model pkEditModel = new GoodsEditPK_Model();
 
         public void EditPk()
@@ -50,7 +59,7 @@ namespace Task.Controller
 
             #region Редактирование полей
 
-                #region Разное 
+                #region Разное
                     if (!pkEditModel.GetViewSensors) //если checkbox не выбран...
                     {
                         pkEditModel.ViewSensors = true; //...выбираем его
@@ -67,12 +76,14 @@ namespace Task.Controller
                     pkEditModel.Name = namePk;
                     LogTrace.WriteInLog("          Заполняю поле Название РК. Было введено: " + pkEditModel.Name);
 
-                    dateStartPk = pkEditModel.GenerateDate();
-                    pkEditModel.StartPkDate = dateStartPk;
+                    //dateStartPk = pkEditModel.GenerateDate();
+                    pkEditModel.StartPkDate = pkEditModel.GenerateDate();
+                    dateStartPk = pkEditModel.GetStartPkDate;
                     LogTrace.WriteInLog("          Заполняю поле Дата старта РК. Было введено: " + pkEditModel.StartPkDate);
 
-                    dateEndPk = pkEditModel.GenerateDate();
-                    pkEditModel.EndPkDate = dateEndPk;
+                    //dateEndPk = pkEditModel.GenerateDate();
+                    pkEditModel.EndPkDate = pkEditModel.GenerateDate();
+                    dateEndPk = pkEditModel.GetEndPkDate;
                     LogTrace.WriteInLog("          Заполняю поле Дата окончания РК. Было введено: " + pkEditModel.EndPkDate);
                     List<string> instantErrorsDate = pkEditModel.ErrorsInFillFields();
                     if (instantErrorsDate.Count != 0) //если список с ошибками заполнения полей даты непуст
@@ -91,17 +102,17 @@ namespace Task.Controller
                     }
                 #endregion
 
-                #region Radiobutton Ограничения рекламной кампании
-                string variant = needSetRadioButton(3).ToString();
+                #region Ограничения рекламной кампании
+                    variant = chosenVariantLimitsPk = needSetRadioButton(3);
                     pkEditModel.LimitsOfPk = variant;
                     switch (variant)
                     {
-                        case "0":
+                        case 0:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Ограничения рекламной кампании. Выбрано: не использовать");
                                 break;
                             }
-                        case "1":
+                        case 1:
                             {
                                 int num2;
                                 do
@@ -109,59 +120,76 @@ namespace Task.Controller
                                     num2 = int.Parse(randoms.RandomNumber(2));
                                 } while (num2 < 5); //суточный лимит должен быть не менее 5
                                 LogTrace.WriteInLog("          Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по бюджету");
-                                pkEditModel.DayLimitByBudget = num2.ToString();//суточный лимит должен быть не менее 5
+                                
+                                dayLimitByBudget = num2.ToString() + ".00";//суточный лимит должен быть не менее 5
+                                pkEditModel.DayLimitByBudget = dayLimitByBudget;
                                 LogTrace.WriteInLog("             Заполняю поле Суточный лимит РК. Было введено: " + pkEditModel.DayLimitByBudget);
-                                pkEditModel.GeneralLimitByBudget = randoms.RandomNumber(3);
+
+                                generalLimitByBudget = randoms.RandomNumber(3) + ".00";
+                                pkEditModel.GeneralLimitByBudget = generalLimitByBudget;
                                 LogTrace.WriteInLog("             Заполняю поле Общий лимит РК. Было введено: " + pkEditModel.GeneralLimitByBudget);
                                 break;
                             }
-                        case "2":
+                        case 2:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по количеству кликов");
-                                pkEditModel.DayLimitByClicks = randoms.RandomNumber(3);
+                                
+                                dayLimitByClicks = randoms.RandomNumber(3);
+                                pkEditModel.DayLimitByClicks = dayLimitByClicks;
                                 LogTrace.WriteInLog("             Заполняю поле Суточный лимит кликов РК. Было введено: " + pkEditModel.DayLimitByClicks);
-                                pkEditModel.GeneralLimitByClicks = randoms.RandomNumber(3);
+                                
+                                generalLimitByClicks = randoms.RandomNumber(3);
+                                pkEditModel.GeneralLimitByClicks = generalLimitByClicks;
                                 LogTrace.WriteInLog("             Заполняю поле Общий лимит кликов РК. Было введено: " + pkEditModel.GeneralLimitByClicks);
                                 break;
                             }
                     }
-                    #endregion
+                #endregion
 
-                #region Checkbox UTM-разметка рекламной кампании для Google Analytics
+                #region UTM-разметка рекламной кампании для Google Analytics
                     if (!pkEditModel.GetUtmPkForGoogleAnalytics)
                     {
                         pkEditModel.UtmPkForGoogleAnalytics = true;
                         LogTrace.WriteInLog("          Выбран checkbox UTM-разметка рекламной кампании для Google Analytics");
-                        pkEditModel.UtmMedium = randoms.RandomString(5);
-                        LogTrace.WriteInLog("             Заполняю поле utm_medium (средство кампании). Было введено: " + pkEditModel.UtmMedium);
-                        pkEditModel.UtmSource = randoms.RandomString(5);
-                        LogTrace.WriteInLog("             Заполняю поле utm_source (источник кампании). Было введено: " + pkEditModel.UtmSource);
-                        pkEditModel.UtmCampaign = randoms.RandomString(5);
-                        LogTrace.WriteInLog("             Заполняю поле utm_campaign (название кампании). Было введено: " + pkEditModel.UtmCampaign);
+                    }   
+                    utmMedium = randoms.RandomString(5);
+                    pkEditModel.UtmMedium = utmMedium;
+                    LogTrace.WriteInLog("             Заполняю поле utm_medium (средство кампании). Было введено: " + pkEditModel.UtmMedium);
+                        
+                    utmSource = randoms.RandomString(5);
+                    pkEditModel.UtmSource = utmSource;
+                    LogTrace.WriteInLog("             Заполняю поле utm_source (источник кампании). Было введено: " + pkEditModel.UtmSource);
+                        
+                    utmCampaign = randoms.RandomString(5);
+                    pkEditModel.UtmCampaign = utmCampaign;
+                    LogTrace.WriteInLog("             Заполняю поле utm_campaign (название кампании). Было введено: " + pkEditModel.UtmCampaign);
+                #endregion
+
+                #region UTM-разметка пользователя
+                    if (!pkEditModel.GetUtmUser)
+                    {
+                        pkEditModel.UtmUser = true;
+                        LogTrace.WriteInLog("          Выбран checkbox UTM-разметка пользователя");
+                    }
+                    utmUserStr = randoms.RandomString(5);
+                    pkEditModel.UtmUserStr = utmUserStr;
+                    LogTrace.WriteInLog("             Заполняю поле UTM-разметка пользователя. Было введено: " + pkEditModel.UtmUserStr);
+                #endregion
+
+                #region Крутить в сети Товарро
+                    if (!pkEditModel.GetScrewInTovarro)
+                    {
+                        LogTrace.WriteInLog("          Выбран checkbox Крутить в сети Товарро");
+                        pkEditModel.ScrewInTovarro = true;
                     }
                 #endregion
 
-                #region Checkbox UTM-разметка пользователя
-                if (!pkEditModel.GetUtmUser)
-                {
-                    pkEditModel.UtmUser = true;
-                    LogTrace.WriteInLog("          Выбран checkbox UTM-разметка пользователя");
-                    pkEditModel.UtmUserStr = randoms.RandomString(5);
-                    LogTrace.WriteInLog("             Заполняю поле UTM-разметка пользователя. Было введено: " + pkEditModel.UtmUserStr);
-                }     
-                #endregion
-
-                if (!pkEditModel.GetScrewInTovarro)
-                {
-                    LogTrace.WriteInLog("          Выбран checkbox Крутить в сети Товарро");
-                    pkEditModel.ScrewInTovarro = true;
-                }
-
-                #region Checkbox Блокировка по расписанию
-                if (!pkEditModel.GetBlockBySchedule)
-                {
-                    pkEditModel.BlockBySchedule = true;
-                    LogTrace.WriteInLog("          Выбран checkbox Блокировка по расписанию");
+                #region Блокировка по расписанию
+                    if (!pkEditModel.GetBlockBySchedule)
+                    {
+                        pkEditModel.BlockBySchedule = true;
+                        LogTrace.WriteInLog("          Выбран checkbox Блокировка по расписанию");
+                    }
                     if (!pkEditModel.GetWeekends)
                     {
                         pkEditModel.Weekends = true;
@@ -177,33 +205,39 @@ namespace Task.Controller
                         pkEditModel.WorkingTime = true;
                         LogTrace.WriteInLog("             Выбран checkbox Рабочее время (9-18 по будням)");
                     }
-                }
                 #endregion
 
-                #region Checkbox Передавать id площадки в ссылке
-                if (!pkEditModel.GetIdOfPlatformInLink)
-                {
-                    pkEditModel.IdOfPlatformInLink = true;
-                    LogTrace.WriteInLog("          Выбран checkbox Передавать id площадки в ссылке");
-                    pkEditModel.IdOfPlatformInLinkStr = randoms.RandomString(5);
+                #region Передавать id площадки в ссылке
+                    if (!pkEditModel.GetIdOfPlatformInLink)
+                    {
+                        pkEditModel.IdOfPlatformInLink = true;
+                        LogTrace.WriteInLog("          Выбран checkbox Передавать id площадки в ссылке");
+                    }
+                    idOfPlatformInLink = randoms.RandomString(5);
+                    pkEditModel.IdOfPlatformInLinkStr = idOfPlatformInLink;
                     LogTrace.WriteInLog("             Заполняю поле Передавать id площадки в ссылке. Было введено: " + pkEditModel.IdOfPlatformInLinkStr);
-                }
                 #endregion
 
-                if (!pkEditModel.GetAddIdOfTeaserInLink)
-                {
-                    pkEditModel.AddIdOfTeaserInLink = true;
-                    LogTrace.WriteInLog("          Выбран checkbox Добавлять id тизера в конец ссылки");
-                }
+                #region Передавать id площадки в ссылке
+                    if (!pkEditModel.GetAddIdOfTeaserInLink)
+                    {
+                        pkEditModel.AddIdOfTeaserInLink = true;
+                        LogTrace.WriteInLog("          Выбран checkbox Добавлять id тизера в конец ссылки");
+                    }
+                #endregion
 
-                pkEditModel.CommentsForPk = randoms.RandomString(20) + " " + randoms.RandomString(10);
-                LogTrace.WriteInLog("          Заполняю textarea Комментарий к кампании. Было введено: " + pkEditModel.CommentsForPk);
+                #region Комментарий к кампании
+                    commentsForPk = randoms.RandomString(20) + " " + randoms.RandomString(10);
+                    pkEditModel.CommentsForPk = commentsForPk;
+                    LogTrace.WriteInLog("          Заполняю textarea Комментарий к кампании. Было введено: " + pkEditModel.CommentsForPk);
+                #endregion
 
-                #region Checkbox Площадки
+                #region Площадки
                     if (!pkEditModel.GetPlatforms)
                     {
                         pkEditModel.Platforms = true;
                         LogTrace.WriteInLog("          Выбран checkbox Площадки");
+                    }
                         if (!pkEditModel.GetPlatformsNotSpecified)
                         {
                             pkEditModel.PlatformsNotSpecified = true;
@@ -415,20 +449,19 @@ namespace Task.Controller
                             pkEditModel.PlatformsMarketgidWomenNet = true;
                             LogTrace.WriteInLog("             Выбран checkbox Маркетгид ЖС");
                         }
-                    }
                 #endregion
 
-                #region Radiobutton Демографический таргетинг
-                    variant = needSetRadioButton(2).ToString();
+                #region Демографический таргетинг
+                    variant = chosenVariantDemoTargeting = needSetRadioButton(2);
                     pkEditModel.DemoTargeting = variant;
                     switch (variant)
                     {
-                        case "0":
+                        case 0:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Демографический таргетинг. Выбрано: не использовать");
                                 break;
                             }
-                        case "1":
+                        case 1:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Демографический таргетинг. Выбрано: использовать");
                                 //развернуть все пункты (Мужчины, Женщины, Пол не определен)
@@ -551,17 +584,17 @@ namespace Task.Controller
                     }
                 #endregion
 
-                #region Radiobutton Таргетинг по интересам
-                    variant = needSetRadioButton(2).ToString();
+                #region Таргетинг по интересам
+                    variant = chosenVariantInterestsTargeting = needSetRadioButton(2);
                     pkEditModel.InterestsTargeting = variant;
                     switch (variant)
                     {
-                        case "0":
+                        case 0:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Таргетинг по интересам. Выбрано: не использовать");
                                 break;
                             }
-                        case "1":
+                        case 1:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Таргетинг по интересам. Выбрано: использовать");
                                 pkEditModel.InterestsTargetingBusinessExpand = true;
@@ -1004,17 +1037,17 @@ namespace Task.Controller
                     }
                 #endregion
 
-                #region Radiobutton Браузеры
-                    variant = needSetRadioButton(2).ToString();
+                #region Браузеры
+                    variant = chosenVariantBrowserTargeting = needSetRadioButton(2);
                     pkEditModel.BrowserTargeting = variant;
                     switch (variant)
                     {
-                        case "0":
+                        case 0:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Браузеры. Выбрано: не использовать");
                                 break;
                             }
-                        case "1":
+                        case 1:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Браузеры. Выбрано: использовать");
                                 //развернуть все пункты
@@ -1024,7 +1057,7 @@ namespace Task.Controller
                                 pkEditModel.BrowserTargetingFirefoxExpand = true;
                                 pkEditModel.BrowserTargetingSafariExpand = true;
                                 pkEditModel.BrowserTargetingIeExpand = true;
-                                pkEditModel.BrowserTargetingGoogleChromeMobileExpand = true;
+                                //pkEditModel.BrowserTargetingGoogleChromeMobileExpand = true;
                                 //pkEditModel.BrowserTargetingOtherAll = true;
 
                                 //if (!pkEditModel)
@@ -1161,12 +1194,12 @@ namespace Task.Controller
                                     //}
                                 #endregion
 
-                                #region Chrome
-                                    if (!pkEditModel.GetBrowserTargetingGoogleChromeMobileChoseAll)
-                                    {
-                                        pkEditModel.BrowserTargetingGoogleChromeMobileChoseAll = true;
-                                        LogTrace.WriteInLog("             Google Chrome Mobile. Выбран checkbox Google Chrome Mobile");
-                                    }
+                                #region Google Chrome Mobile
+                                    //if (!pkEditModel.GetBrowserTargetingGoogleChromeMobileChoseAll)
+                                    //{
+                                    //    pkEditModel.BrowserTargetingGoogleChromeMobileChoseAll = true;
+                                    //    LogTrace.WriteInLog("             Google Chrome Mobile. Выбран checkbox Google Chrome Mobile");
+                                    //}
                                 #endregion
 
                                 break;
@@ -1174,17 +1207,17 @@ namespace Task.Controller
                     }
                 #endregion
 
-                #region Radiobutton OC таргетинг
-                    variant = needSetRadioButton(2).ToString();
+                #region OC таргетинг
+                    variant = chosenVariantOsTargeting = needSetRadioButton(2);
                     pkEditModel.OsTargeting = variant;
                     switch (variant)
                     {
-                        case "0":
+                        case 0:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton OC таргетинг. Выбрано: не использовать");
                                 break;
                             }
-                        case "1":
+                        case 1:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton OC таргетинг. Выбрано: использовать");
                                 //pkEditModel.OsTargetingOther = true;
@@ -1234,17 +1267,17 @@ namespace Task.Controller
                     }
                 #endregion
 
-                #region Radiobutton Провайдеры
-                    variant = needSetRadioButton(2).ToString();
+                #region Провайдеры
+                    variant = chosenVariantProviderTargeting = needSetRadioButton(2);
                     pkEditModel.ProviderTargeting = variant;
                     switch (variant)
                     {
-                        case "0":
+                        case 0:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Провайдеры. Выбрано: не использовать");
                                 break;
                             }
-                        case "1":
+                        case 1:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Провайдеры. Выбрано: использовать");
                                 //pkEditModel.ProviderTargetingOther = true;
@@ -1269,17 +1302,17 @@ namespace Task.Controller
                     }
                 #endregion
 
-                #region Radiobutton Геотаргетинг
-                    variant = needSetRadioButton(2).ToString();
+                #region Геотаргетинг
+                    variant = chosenVariantGeoTargeting = needSetRadioButton(2);
                     pkEditModel.GeoTargeting = variant;
                     switch (variant)
                     {
-                        case "0":
+                        case 0:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Геотаргетинг. Выбрано: не использовать");
                                 break;
                             }
-                        case "1":
+                        case 1:
                             {
                                 LogTrace.WriteInLog("          Выбираю radiobutton Геотаргетинг. Выбрано: использовать");
                                 pkEditModel.GeoTargetingRussiaExpand = true;
@@ -1511,21 +1544,21 @@ namespace Task.Controller
                     if (namePk == pkEditModel.GetName) { LogTrace.WriteInLog("          Совпадают: содержимое поля Название и введенное при редактировании"); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля Название и введенное при редактировании");
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Название и введенное при редактировании");
                         wasMismatch = true;
                     }
 
                     if (dateStartPk == pkEditModel.GetStartPkDate) { LogTrace.WriteInLog("          Совпадают: содержимое поля Дата старта РК и введенное при редактировании"); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля Дата старта РК и введенное при редактировании");
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Дата старта РК и введенное при редактировании");
                         wasMismatch = true;
                     }
 
                     if (dateEndPk == pkEditModel.GetEndPkDate) { LogTrace.WriteInLog("          Совпадают: содержимое поля Дата окончания РК и введенное при редактировании"); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля Дата окончания РК и введенное при редактировании");
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Дата окончания РК и введенное при редактировании");
                         wasMismatch = true;
                     }
 
@@ -1545,34 +1578,64 @@ namespace Task.Controller
                 #endregion
 
                 #region Ограничения рекламной кампании
-                    if (dayLimitByBudget != null && dayLimitByBudget == pkEditModel.GetDayLimitByBudget) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'Суточный лимит РК' и введенное при редактировании"); }
-                    else
+                    if (chosenVariantLimitsPk != 0)
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'Суточный лимит РК' и введенное при редактировании");
-                        wasMismatch = true;
+                        if (chosenVariantLimitsPk == 1)
+                        {
+                            if (dayLimitByBudget == pkEditModel.GetDayLimitByBudget)
+                            {
+                                LogTrace.WriteInLog(
+                                    "          Совпадают: содержимое поля 'Суточный лимит РК' и введенное при редактировании");
+                            }
+                            else
+                            {
+                                LogTrace.WriteInLog(
+                                    "НЕ СОВПАДАЮТ: содержимое поля 'Суточный лимит РК' и введенное при редактировании");
+                                wasMismatch = true;
+                            }
+
+                            if (generalLimitByBudget == pkEditModel.GetGeneralLimitByBudget)
+                            {
+                                LogTrace.WriteInLog(
+                                    "          Совпадают: содержимое поля 'Общий лимит РК' и введенное при редактировании");
+                            }
+                            else
+                            {
+                                LogTrace.WriteInLog(
+                                    "НЕ СОВПАДАЮТ: содержимое поля 'Общий лимит РК' и введенное при редактировании");
+                                wasMismatch = true;
+                            }
+                        }
+
+                        if (chosenVariantLimitsPk == 2)
+                        {
+                            if (dayLimitByClicks == pkEditModel.GetDayLimitByClicks)
+                            {
+                                LogTrace.WriteInLog(
+                                    "          Совпадают: содержимое поля 'Суточный лимит кликов' и введенное при редактировании");
+                            }
+                            else
+                            {
+                                LogTrace.WriteInLog(
+                                    "НЕ СОВПАДАЮТ: содержимое поля 'Суточный лимит кликов' и введенное при редактировании");
+                                wasMismatch = true;
+                            }
+
+                            if (generalLimitByClicks == pkEditModel.GetGeneralLimitByClicks)
+                            {
+                                LogTrace.WriteInLog(
+                                    "          Совпадают: содержимое поля 'Лимит на кампанию' и введенное при редактировании");
+                            }
+                            else
+                            {
+                                LogTrace.WriteInLog(
+                                    "НЕ СОВПАДАЮТ: содержимое поля 'Лимит на кампанию' и введенное при редактировании");
+                                wasMismatch = true;
+                            }
+                        }
                     }
 
-                    if (generalLimitByBudget != null && generalLimitByBudget == pkEditModel.GetGeneralLimitByBudget) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'Общий лимит РК' и введенное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'Общий лимит РК' и введенное при редактировании");
-                        wasMismatch = true;
-                    }
-
-                    if (dayLimitByClicks != null && dayLimitByClicks == pkEditModel.GetDayLimitByClicks) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'Суточный лимит кликов' и введенное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'Суточный лимит кликов' и введенное при редактировании");
-                        wasMismatch = true;
-                    }
-
-                    if (generalLimitByClicks != null && generalLimitByClicks == pkEditModel.GetGeneralLimitByClicks) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'Лимит на кампанию' и введенное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'Лимит на кампанию' и введенное при редактировании");
-                        wasMismatch = true;
-                    }
-                #endregion
+            #endregion
 
                 #region UTM-разметка рекламной кампании для Google Analytics
                     if (pkEditModel.GetUtmPkForGoogleAnalytics) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'UTM-разметка рекламной кампании для Google Analytics' и выбранное при редактировании"); }
@@ -1949,289 +2012,525 @@ namespace Task.Controller
                 #endregion
 
                 #region Демографический таргетинг
-                    if (pkEditModel.GetDemoTargetingMenChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Мужчины' и выбранное при редактировании"); }
-                    else
+                    if (chosenVariantDemoTargeting != 0)
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Мужчины' и выбранное при редактировании");
-                        wasMismatch = true;
+                        if (pkEditModel.GetDemoTargetingMenChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Мужчины' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Мужчины' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetDemoTargetingWomenChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Женщины' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Женщины' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetDemoTargetingHermaphroditeChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Пол не определен' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Пол не определен' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
                     }
-                    if (pkEditModel.GetDemoTargetingWomenChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Женщины' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Женщины' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetDemoTargetingHermaphroditeChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Пол не определен' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Пол не определен' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                #endregion
-
-                #region Таргетинг по интересам
-                    if (pkEditModel.GetInterestsTargetingOther) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Прочее' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Прочее' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetInterestsTargetingBusinessChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Бизнес' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Бизнес' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetInterestsTargetingRealtyChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Недвижимость' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Недвижимость' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetInterestsTargetingExhibitions) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Выставки, концерты, театры, кино' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Выставки, концерты, театры, кино' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetInterestsTargetingMedicineChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Медицина, здоровье' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Медицина, здоровье' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetInterestsTargetingHouseChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Дом и семья' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Дом и семья' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetInterestsTargetingFinanceChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Финансы' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Финансы' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetInterestsTargetingComputersChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Компьютеры, оргтехника' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Компьютеры, оргтехника' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetInterestsTargetingAutoChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Авто' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Авто' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetInterestsTargetingAudioChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Аудио, Видео, Фото' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Аудио, Видео, Фото' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                #endregion
-
-                #region Таргетинг по браузерам
-                    if (pkEditModel.GetBrowserTargetingIeOther) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Другие' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Другие' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetBrowserTargetingOperaChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Opera' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Opera' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetBrowserTargetingChromeChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Google Chrome' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Google Chrome' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetBrowserTargetingFirefoxChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Firefox' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Firefox' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetBrowserTargetingSafariChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Safari' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Safari' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetBrowserTargetingIeChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'MSIE' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'MSIE' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetBrowserTargetingGoogleChromeMobileChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Google Chrome Mobile' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Google Chrome Mobile' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                #endregion
-
-                #region OC таргетинг
-                    if (pkEditModel.OsTargetingOther) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Другие' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Другие' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetOsTargetingMacOs) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Mac OS' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Mac OS' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetOsTargetingOtherMobileOs) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Прочие мобильные ОС' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Прочие мобильные ОС' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetOsTargetingWindows) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'WIndows' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'WIndows' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetOsTargetingOtherIoS) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Прочие iOS системы' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Прочие iOS системы' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetOsTargetingIpad) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'iPAD' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'iPAD' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetOsTargetingIphone) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'IPHONE' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'IPHONE' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetOsTargetingAndroid) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Android' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Android' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                #endregion
-
-                #region Таргетинг по провайдерам
-                    if (pkEditModel.GetProviderTargetingOther) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Другие' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Другие' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetProviderTargetingMegafon) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Мегафон' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Мегафон' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetProviderTargetingMtc) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'МТС Россия' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'МТС Россия' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                #endregion
-
-                #region Геотаргетинг
-                    if (pkEditModel.GetGeoTargetingOther) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Прочие страны' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Прочие страны' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingAustria) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Австрия' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Австрия' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingBelorussia) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Белоруссия' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Белоруссия' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingUk) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Великобритания' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Великобритания' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingGermany) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Германия' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Германия' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingIsrael) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Израиль' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Израиль' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingKazakhstan) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Казахстан' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Казахстан' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingLatvia) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Латвия' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Латвия' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingLithuania) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Литва' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Литва' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingRussiaChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Россия' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Россия' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingUsa) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'США' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'США' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingUkraineChoseAll) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Украина' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Украина' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                    if (pkEditModel.GetGeoTargetingEstonia) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Эстония' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Эстония' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
-                #endregion
             #endregion
 
-            LogTrace.WriteInLog("               " + driver.Url);
+                #region Таргетинг по интересам
+                    if (chosenVariantInterestsTargeting != 0)
+                    {
+                        if (pkEditModel.GetInterestsTargetingOther)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Прочее' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Прочее' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetInterestsTargetingBusinessChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Бизнес' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Бизнес' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetInterestsTargetingRealtyChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Недвижимость' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Недвижимость' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetInterestsTargetingExhibitions)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Выставки, концерты, театры, кино' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Выставки, концерты, театры, кино' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetInterestsTargetingMedicineChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Медицина, здоровье' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Медицина, здоровье' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetInterestsTargetingHouseChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Дом и семья' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Дом и семья' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetInterestsTargetingFinanceChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Финансы' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Финансы' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetInterestsTargetingComputersChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Компьютеры, оргтехника' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Компьютеры, оргтехника' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetInterestsTargetingAutoChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Авто' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Авто' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetInterestsTargetingAudioChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Аудио, Видео, Фото' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Аудио, Видео, Фото' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                    }
+
+            #endregion
+
+                #region Таргетинг по браузерам
+                    if (chosenVariantBrowserTargeting != 0)
+                    {
+                        if (pkEditModel.GetBrowserTargetingIeOther)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Другие' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Другие' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetBrowserTargetingOperaChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Opera' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Opera' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetBrowserTargetingChromeChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Google Chrome' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Google Chrome' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetBrowserTargetingFirefoxChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Firefox' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Firefox' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetBrowserTargetingSafariChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Safari' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Safari' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetBrowserTargetingIeChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'MSIE' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'MSIE' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        //if (pkEditModel.GetBrowserTargetingGoogleChromeMobileChoseAll)
+                        //{
+                        //    LogTrace.WriteInLog(
+                        //        "          Совпадают: состояние checkbox 'Google Chrome Mobile' и выбранное при редактировании");
+                        //}
+                        //else
+                        //{
+                        //    LogTrace.WriteInLog(
+                        //        "НЕ СОВПАДАЮТ: состояние checkbox 'Google Chrome Mobile' и выбранное при редактировании");
+                        //    wasMismatch = true;
+                        //}
+                    }
+
+            #endregion
+
+                #region OC таргетинг
+                    if (chosenVariantOsTargeting != 0)
+                    {
+                        if (pkEditModel.OsTargetingOther)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Другие' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Другие' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetOsTargetingMacOs)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Mac OS' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Mac OS' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetOsTargetingOtherMobileOs)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Прочие мобильные ОС' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Прочие мобильные ОС' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetOsTargetingWindows)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'WIndows' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'WIndows' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetOsTargetingOtherIoS)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Прочие iOS системы' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Прочие iOS системы' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetOsTargetingIpad)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'iPAD' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'iPAD' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetOsTargetingIphone)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'IPHONE' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'IPHONE' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetOsTargetingAndroid)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Android' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Android' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                    }
+            #endregion
+
+                #region Таргетинг по провайдерам
+                    if (chosenVariantProviderTargeting != 0)
+                    {
+                        if (pkEditModel.GetProviderTargetingOther)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Другие' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Другие' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetProviderTargetingMegafon)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Мегафон' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Мегафон' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetProviderTargetingMtc)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'МТС Россия' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'МТС Россия' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                    }
+            #endregion
+
+                #region Геотаргетинг
+                    if (chosenVariantGeoTargeting != 0)
+                    {
+                        if (pkEditModel.GetGeoTargetingOther)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Прочие страны' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Прочие страны' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingAustria)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Австрия' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Австрия' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingBelorussia)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Белоруссия' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Белоруссия' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingUk)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Великобритания' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Великобритания' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingGermany)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Германия' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Германия' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingIsrael)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Израиль' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Израиль' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingKazakhstan)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Казахстан' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Казахстан' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingLatvia)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Латвия' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Латвия' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingLithuania)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Литва' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Литва' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingRussiaChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Россия' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Россия' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingUsa)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'США' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'США' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingUkraineChoseAll)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Украина' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Украина' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                        if (pkEditModel.GetGeoTargetingEstonia)
+                        {
+                            LogTrace.WriteInLog(
+                                "          Совпадают: состояние checkbox 'Эстония' и выбранное при редактировании");
+                        }
+                        else
+                        {
+                            LogTrace.WriteInLog(
+                                "НЕ СОВПАДАЮТ: состояние checkbox 'Эстония' и выбранное при редактировании");
+                            wasMismatch = true;
+                        }
+                    }
+            #endregion
+            #endregion
+
+            LogTrace.WriteInLog("          " + driver.Url);
             LogTrace.WriteInLog("");
             if (!wasMismatch)
             {

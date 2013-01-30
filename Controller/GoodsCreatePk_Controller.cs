@@ -992,7 +992,7 @@ namespace Task.Controller
                                     pkModel.BrowserTargetingFirefoxExpand = true;
                                     pkModel.BrowserTargetingSafariExpand = true;
                                     pkModel.BrowserTargetingIeExpand = true;
-                                    pkModel.BrowserTargetingGoogleChromeMobileExpand = true;
+                                    //pkModel.BrowserTargetingGoogleChromeMobileExpand = true;
 
                                     pkModel.BrowserTargetingOtherAll = true;
 
@@ -1131,16 +1131,16 @@ namespace Task.Controller
                                     #endregion
 
                                     #region Google Chrome Mobile
-                                        if (needSetCheckBox())
-                                        {
-                                            pkModel.BrowserTargetingGoogleChromeMobileChoseAll = true;
-                                            LogTrace.WriteInLog("        Google Chrome Mobile. Выбран checkbox Google Chrome Mobile");
-                                        }
-                                        if (needSetCheckBox())
-                                        {
-                                            pkModel.BrowserTargetingGoogleChromeMobile = true;
-                                            LogTrace.WriteInLog("        Google Chrome Mobile. Выбран checkbox Mobile");
-                                        }
+                                        //if (needSetCheckBox())
+                                        //{
+                                        //    pkModel.BrowserTargetingGoogleChromeMobileChoseAll = true;
+                                        //    LogTrace.WriteInLog("        Google Chrome Mobile. Выбран checkbox Google Chrome Mobile");
+                                        //}
+                                        //if (needSetCheckBox())
+                                        //{
+                                        //    pkModel.BrowserTargetingGoogleChromeMobile = true;
+                                        //    LogTrace.WriteInLog("        Google Chrome Mobile. Выбран checkbox Mobile");
+                                        //}
                                     #endregion
 
                                     break;

@@ -114,8 +114,8 @@ namespace Task.Model
 
             #region Ограничения PK
             //Блок радиобаттонов "ограничения рекламной кампании"
-                protected string RadioLimitsOfPk;
-                public string LimitsOfPk
+                protected int RadioLimitsOfPk;
+                public int LimitsOfPk
                 {
                     get { return RadioLimitsOfPk; }
                     set
@@ -123,19 +123,19 @@ namespace Task.Model
                         RadioLimitsOfPk = value;
                         switch (value)
                         {
-                            case "0":
+                            case 0:
                                 {
                                     IWebElement unlimited = driver.FindElement(By.Id("limit_type-unlimited"));
                                     unlimited.Click();
                                     break;
                                 }
-                            case "1":
+                            case 1:
                                 {
                                     IWebElement byBudget = driver.FindElement(By.Id("limit_type-budgetlimits"));
                                     byBudget.Click();
                                     break;
                                 }
-                            case "2":
+                            case 2:
                                 {
                                     IWebElement byClickNum = driver.FindElement(By.Id("limit_type-clickslimits"));
                                     byClickNum.Click();
@@ -858,8 +858,8 @@ namespace Task.Model
             #endregion
 
             #region Демографический Таргетинг
-                protected string RadioDemoTargeting;
-                public string DemoTargeting
+                protected int RadioDemoTargeting;
+                public int DemoTargeting
                 {
                     get { return RadioDemoTargeting; }
                     set
@@ -867,13 +867,13 @@ namespace Task.Model
                         RadioDemoTargeting = value;
                         switch (value)
                         {
-                            case "0":
+                            case 0:
                                 {
                                     IWebElement notUseDemoTargeting = driver.FindElement(By.Id("use_socdem-0")); //не использовать демотаргетинг
                                     notUseDemoTargeting.Click();
                                     break;
                                 }
-                            case "1":
+                            case 1:
                                 {
                                     IWebElement useDemoTargeting = driver.FindElement(By.Id("use_socdem-1")); //использовать демотаргетинг
                                     useDemoTargeting.Click();
@@ -1146,8 +1146,8 @@ namespace Task.Model
             #endregion
 
             #region  Таргетинг по интересам
-                protected string RadioInterestsTargeting;
-                public string InterestsTargeting
+                protected int RadioInterestsTargeting;
+                public int InterestsTargeting
                 {
                     get { return RadioInterestsTargeting; }
                     set
@@ -1155,13 +1155,13 @@ namespace Task.Model
                         RadioInterestsTargeting = value;
                         switch (value)
                         {
-                            case "0":
+                            case 0:
                                 {
                                     IWebElement notUseDemoTargeting = driver.FindElement(By.Id("use_socdem_interests-0")); //не использовать таргетинг
                                     notUseDemoTargeting.Click();
                                     break;
                                 }
-                            case "1":
+                            case 1:
                                 {
                                     IWebElement useDemoTargeting = driver.FindElement(By.Id("use_socdem_interests-1")); //использовать таргетинг
                                     useDemoTargeting.Click();
@@ -2175,8 +2175,8 @@ namespace Task.Model
             #endregion
 
             #region Браузеры
-                protected string RadioBrowserTargeting;
-                public string BrowserTargeting
+                protected int RadioBrowserTargeting;
+                public int BrowserTargeting
                 {
                     get { return RadioBrowserTargeting; }
                     set
@@ -2184,13 +2184,13 @@ namespace Task.Model
                         RadioBrowserTargeting = value;
                         switch (value)
                         {
-                            case "0":
+                            case 0:
                                 {
                                     IWebElement notUseBrowserTargeting = driver.FindElement(By.Id("use_browsers_targeting-0")); //не использовать таргетинг
                                     notUseBrowserTargeting.Click();
                                     break;
                                 }
-                            case "1":
+                            case 1:
                                 {
                                     IWebElement useBrowserTargeting = driver.FindElement(By.Id("use_browsers_targeting-1")); //использовать таргетинг
                                     useBrowserTargeting.Click();
@@ -2548,45 +2548,45 @@ namespace Task.Model
                 #endregion
 
                 #region Google Chrome Mobile
-                    protected bool ClickBrowserTargetingGoogleChromeMobile;
-                    public bool BrowserTargetingGoogleChromeMobileExpand
-                    {
-                        get { return ClickBrowserTargetingGoogleChromeMobile; }
-                        set
-                        {
-                            IWebElement webelement = driver.FindElement(By.CssSelector("#browser-country_GoogleChromeMobile + .hint"));
-                            webelement.Click();
-                            ClickBrowserTargetingGoogleChromeMobile = value;
-                        }
-                    }
-                    protected bool CheckboxBrowserTargetingGoogleChromeMobile;
-                    public bool BrowserTargetingGoogleChromeMobileChoseAll
-                    {
-                        get { return CheckboxBrowserTargetingGoogleChromeMobile; }
-                        set
-                        {
-                            IWebElement webelement = driver.FindElement(By.Id("browser-country_GoogleChromeMobile"));
-                            webelement.Click();
-                            CheckboxBrowserTargetingGoogleChromeMobile = value;
-                        }
-                    }
-                    protected bool CheckboxBrowserTargetingMobileChromeMobile;
-                    public bool BrowserTargetingGoogleChromeMobile
-                    {
-                        get { return CheckboxBrowserTargetingMobileChromeMobile; }
-                        set
-                        {
-                            IWebElement webelement = driver.FindElement(By.Id("browser-GoogleChromeMobile-20"));
-                            webelement.Click();
-                            CheckboxBrowserTargetingMobileChromeMobile = value;
-                        }
-                    }
+                    //protected bool ClickBrowserTargetingGoogleChromeMobile;
+                    //public bool BrowserTargetingGoogleChromeMobileExpand
+                    //{
+                    //    get { return ClickBrowserTargetingGoogleChromeMobile; }
+                    //    set
+                    //    {
+                    //        IWebElement webelement = driver.FindElement(By.CssSelector("#browser-country_GoogleChromeMobile + .hint"));
+                    //        webelement.Click();
+                    //        ClickBrowserTargetingGoogleChromeMobile = value;
+                    //    }
+                    //}
+                    //protected bool CheckboxBrowserTargetingGoogleChromeMobile;
+                    //public bool BrowserTargetingGoogleChromeMobileChoseAll
+                    //{
+                    //    get { return CheckboxBrowserTargetingGoogleChromeMobile; }
+                    //    set
+                    //    {
+                    //        IWebElement webelement = driver.FindElement(By.Id("browser-country_GoogleChromeMobile"));
+                    //        webelement.Click();
+                    //        CheckboxBrowserTargetingGoogleChromeMobile = value;
+                    //    }
+                    //}
+                    //protected bool CheckboxBrowserTargetingMobileChromeMobile;
+                    //public bool BrowserTargetingGoogleChromeMobile
+                    //{
+                    //    get { return CheckboxBrowserTargetingMobileChromeMobile; }
+                    //    set
+                    //    {
+                    //        IWebElement webelement = driver.FindElement(By.Id("browser-GoogleChromeMobile-20"));
+                    //        webelement.Click();
+                    //        CheckboxBrowserTargetingMobileChromeMobile = value;
+                    //    }
+                    //}
                 #endregion
             #endregion
 
             #region ОС таргетинг
-                protected string RadioOsTargeting;
-                public string OsTargeting
+                protected int RadioOsTargeting;
+                public int OsTargeting
                 {
                     get { return RadioOsTargeting; }
                     set
@@ -2594,13 +2594,13 @@ namespace Task.Model
                         RadioOsTargeting = value;
                         switch (value)
                         {
-                            case "0":
+                            case 0:
                                 {
                                     IWebElement notUseOsTargeting = driver.FindElement(By.Id("use_os_targeting-0")); //не использовать таргетинг
                                     notUseOsTargeting.Click();
                                     break;
                                 }
-                            case "1":
+                            case 1:
                                 {
                                     IWebElement useOsTargeting = driver.FindElement(By.Id("use_os_targeting-1")); //использовать таргетинг
                                     useOsTargeting.Click();
@@ -2700,8 +2700,8 @@ namespace Task.Model
             #endregion
 
             #region Таргетинг по провайдерам
-                protected string RadioProviderTargeting;
-                public string ProviderTargeting
+                protected int RadioProviderTargeting;
+                public int ProviderTargeting
                 {
                     get { return RadioProviderTargeting; }
                     set
@@ -2709,13 +2709,13 @@ namespace Task.Model
                         RadioProviderTargeting = value;
                         switch (value)
                         {
-                            case "0":
+                            case 0:
                                 {
                                     IWebElement notUseProviderTargeting = driver.FindElement(By.Id("use_providers_targeting-0")); //не использовать таргетинг
                                     notUseProviderTargeting.Click();
                                     break;
                                 }
-                            case "1":
+                            case 1:
                                 {
                                     IWebElement useProviderTargeting = driver.FindElement(By.Id("use_providers_targeting-1")); //использовать таргетинг
                                     useProviderTargeting.Click();
@@ -2760,8 +2760,8 @@ namespace Task.Model
             #endregion
 
             #region Геотаргетинг
-                protected string RadioGeoTargeting;
-                public string GeoTargeting
+                protected int RadioGeoTargeting;
+                public int GeoTargeting
                 {
                     get { return RadioGeoTargeting; }
                     set
@@ -2769,13 +2769,13 @@ namespace Task.Model
                         RadioGeoTargeting = value;
                         switch (value)
                         {
-                            case "0":
+                            case 0:
                                 {
                                     IWebElement notUseGeoTargeting = driver.FindElement(By.Id("geo-0")); //не использовать таргетинг
                                     notUseGeoTargeting.Click();
                                     break;
                                 }
-                            case "1":
+                            case 1:
                                 {
                                     IWebElement useGeoTargeting = driver.FindElement(By.Id("geo-1")); //использовать таргетинг
                                     useGeoTargeting.Click();
@@ -6321,28 +6321,28 @@ namespace Task.Model
             #endregion
 
             #region Google Chrome Mobile
-                protected bool GetCheckboxBrowserTargetingGoogleChromeMobile;
-                public bool GetBrowserTargetingGoogleChromeMobileChoseAll
-                {
-                    get { return GetCheckboxBrowserTargetingGoogleChromeMobile; }
-                    set
-                    {
-                        IWebElement webelement = driver.FindElement(By.Id("browser-country_GoogleChromeMobile"));
-                        webelement.Click();
-                        GetCheckboxBrowserTargetingGoogleChromeMobile = value;
-                    }
-                }
-                protected bool GetCheckboxBrowserTargetingMobileChromeMobile;
-                public bool GetBrowserTargetingGoogleChromeMobile
-                {
-                    get { return GetCheckboxBrowserTargetingMobileChromeMobile; }
-                    set
-                    {
-                        IWebElement webelement = driver.FindElement(By.Id("browser-GoogleChromeMobile-20"));
-                        webelement.Click();
-                        GetCheckboxBrowserTargetingMobileChromeMobile = value;
-                    }
-                }
+                //protected bool GetCheckboxBrowserTargetingGoogleChromeMobile;
+                //public bool GetBrowserTargetingGoogleChromeMobileChoseAll
+                //{
+                //    get { return GetCheckboxBrowserTargetingGoogleChromeMobile; }
+                //    set
+                //    {
+                //        IWebElement webelement = driver.FindElement(By.Id("browser-country_GoogleChromeMobile"));
+                //        webelement.Click();
+                //        GetCheckboxBrowserTargetingGoogleChromeMobile = value;
+                //    }
+                //}
+                //protected bool GetCheckboxBrowserTargetingMobileChromeMobile;
+                //public bool GetBrowserTargetingGoogleChromeMobile
+                //{
+                //    get { return GetCheckboxBrowserTargetingMobileChromeMobile; }
+                //    set
+                //    {
+                //        IWebElement webelement = driver.FindElement(By.Id("browser-GoogleChromeMobile-20"));
+                //        webelement.Click();
+                //        GetCheckboxBrowserTargetingMobileChromeMobile = value;
+                //    }
+                //}
             #endregion
         #endregion
 
