@@ -26,7 +26,10 @@ namespace Task.View
         }
 
         //public StreamWriter sw; //запись в файл
-       
+
+        public string tab1 = "\t";
+        public string tab2 = "\t\t";
+
         public void CreateNewClient()
         {
             listBox1.Items.Add(
@@ -44,6 +47,7 @@ namespace Task.View
             
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
+                listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
                 listBox1.Items.Add("!!! Ошибки !!!");
 
@@ -62,6 +66,7 @@ namespace Task.View
             }
             else
             {
+                listBox1.ForeColor = Color.Black;
                 string clientId = clientController.clientId;
 
                 LogTrace.WriteInLog("");
@@ -86,11 +91,11 @@ namespace Task.View
         public void CreateNewSite()
         {
             listBox1.Items.Add(
-                "     ===============================Cоздание сайта по Товарам===============================");
-            LogForClickers.WriteInLog("     ===============================Cоздание сайта по Товарам===============================");
-            LogForClickers.WriteInLog("     " + DateTime.Now.ToString());
-            LogTrace.WriteInLog("     ===============================Cоздание сайта по Товарам===============================");
-            LogTrace.WriteInLog("     " + DateTime.Now.ToString());
+                tab1 + "===============================Cоздание сайта по Товарам===============================");
+            LogForClickers.WriteInLog(tab1 + "===============================Cоздание сайта по Товарам===============================");
+            LogForClickers.WriteInLog(tab1 + DateTime.Now.ToString());
+            LogTrace.WriteInLog(tab1 + "===============================Cоздание сайта по Товарам===============================");
+            LogTrace.WriteInLog(tab1 + DateTime.Now.ToString());
 
             GoodsCreateSite_Controller siteController = new GoodsCreateSite_Controller();
             siteController.CreateSite(checkBox1.Checked, checkBox2.Checked);
@@ -99,14 +104,15 @@ namespace Task.View
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
+                listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
-                listBox1.Items.Add("     !!! Ошибки !!!");
+                listBox1.Items.Add(tab1 + "!!! Ошибки !!!");
 
                 LogForClickers.WriteInLog("");
-                LogForClickers.WriteInLog("     !!! Ошибки !!!");
+                LogForClickers.WriteInLog(tab1 + "!!! Ошибки !!!");
 
                 LogTrace.WriteInLog("");
-                LogTrace.WriteInLog("     !!! Ошибки !!!");
+                LogTrace.WriteInLog(tab1 + "!!! Ошибки !!!");
 
                 for (int i = 0; i < errors.Count; i++)
                 {
@@ -117,23 +123,24 @@ namespace Task.View
             }
             else
             {
+                listBox1.ForeColor = Color.Black;
                 string siteId = siteController.siteId;
                 string clientId = siteController.clientId;
                 string siteDomain = siteController.siteDomain;
                 //string siteName = siteController.siteName;
 
                 LogTrace.WriteInLog("");
-                LogForClickers.WriteInLog("     ID сайта: " + siteId);
-                LogTrace.WriteInLog("     ID сайта: " + siteId);
-                listBox1.Items.Add("     ID сайта: " + siteId);
+                LogForClickers.WriteInLog(tab1 + "ID сайта: " + siteId);
+                LogTrace.WriteInLog(tab1 + "ID сайта: " + siteId);
+                listBox1.Items.Add(tab1 + "ID сайта: " + siteId);
 
-                LogForClickers.WriteInLog("     ID клиента: " + clientId);
-                LogTrace.WriteInLog("     ID клиента: " + clientId);
-                listBox1.Items.Add("     ID клиента: " + clientId);
+                LogForClickers.WriteInLog(tab1 + "ID клиента: " + clientId);
+                LogTrace.WriteInLog(tab1 + "ID клиента: " + clientId);
+                listBox1.Items.Add(tab1 + "ID клиента: " + clientId);
 
-                LogForClickers.WriteInLog("     Домен:    " + siteDomain);
-                LogTrace.WriteInLog("     Домен:    " + siteDomain);
-                listBox1.Items.Add("     Домен:     " + siteDomain);
+                LogForClickers.WriteInLog(tab1 + "Домен:    " + siteDomain);
+                LogTrace.WriteInLog(tab1 + "Домен:    " + siteDomain);
+                listBox1.Items.Add(tab1 + "Домен:     " + siteDomain);
             }
 
             //listBox1.Items.Add("");
@@ -144,11 +151,11 @@ namespace Task.View
         public void CreateNewPk()
         {
             listBox1.Items.Add(
-                "     ===============================Cоздание РК по Товарам===============================");
-            LogForClickers.WriteInLog("     ===============================Cоздание РК по Товарам===============================");
-            LogForClickers.WriteInLog("     " + DateTime.Now.ToString());
-            LogTrace.WriteInLog("     ===============================Cоздание РК по Товарам===============================");
-            LogTrace.WriteInLog("     " + DateTime.Now.ToString());
+                tab1 + "===============================Cоздание РК по Товарам===============================");
+            LogForClickers.WriteInLog(tab1 + "===============================Cоздание РК по Товарам===============================");
+            LogForClickers.WriteInLog(tab1 + DateTime.Now.ToString());
+            LogTrace.WriteInLog(tab1 + "===============================Cоздание РК по Товарам===============================");
+            LogTrace.WriteInLog(tab1 + DateTime.Now.ToString());
 
             GoodsCreatePk_Controller pkController = new GoodsCreatePk_Controller();
             pkController.CreatePk(checkBox1.Checked, checkBox2.Checked);
@@ -157,14 +164,15 @@ namespace Task.View
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
+                listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
-                listBox1.Items.Add("     !!! Ошибки !!!");
+                listBox1.Items.Add(tab1 + "!!! Ошибки !!!");
 
                 LogForClickers.WriteInLog("");
-                LogForClickers.WriteInLog("     !!! Ошибки !!!");
+                LogForClickers.WriteInLog(tab1 + "!!! Ошибки !!!");
 
                 LogTrace.WriteInLog("");
-                LogTrace.WriteInLog("     !!! Ошибки !!!");
+                LogTrace.WriteInLog(tab1 + "!!! Ошибки !!!");
 
                 for (int i = 0; i < errors.Count; i++)
                 {
@@ -175,22 +183,23 @@ namespace Task.View
             }
             else
             {
+                listBox1.ForeColor = Color.Black;
                 string pkId = pkController.pkId;
                 string clientId = pkController.clientId;
                 string pkName = pkController.pkName;
 
                 LogTrace.WriteInLog("");
-                LogForClickers.WriteInLog("     ID РК:       " + pkId);
-                LogTrace.WriteInLog("     ID РК:       " + pkId);
-                listBox1.Items.Add("     ID РК: " + pkId);
+                LogForClickers.WriteInLog(tab1 + "ID РК:       " + pkId);
+                LogTrace.WriteInLog(tab1 + "ID РК:       " + pkId);
+                listBox1.Items.Add(tab1 + "ID РК: " + pkId);
 
-                LogForClickers.WriteInLog("     ID клиента: " + clientId);
-                LogTrace.WriteInLog("     ID клиента: " + clientId);
-                listBox1.Items.Add("     ID клиента: " + clientId);
+                LogForClickers.WriteInLog(tab1 + "ID клиента: " + clientId);
+                LogTrace.WriteInLog(tab1 + "ID клиента: " + clientId);
+                listBox1.Items.Add(tab1 + "ID клиента: " + clientId);
 
-                LogForClickers.WriteInLog("     Название РК: " + pkName);
-                LogTrace.WriteInLog("     Название РК: " + pkName);
-                listBox1.Items.Add("     Название РК:     " + pkName);
+                LogForClickers.WriteInLog(tab1 + "Название РК: " + pkName);
+                LogTrace.WriteInLog(tab1 + "Название РК: " + pkName);
+                listBox1.Items.Add(tab1 + "Название РК:     " + pkName);
             }
 
             //listBox1.Items.Add("");
@@ -201,11 +210,11 @@ namespace Task.View
         public void CreateNewTeaser()
         {
             listBox1.Items.Add(
-                "          ===============================Cоздание тизера по Товарам===============================");
-            LogForClickers.WriteInLog("     ===============================Cоздание тизера по Товарам===============================");
-            LogForClickers.WriteInLog("     " + DateTime.Now.ToString());
-            LogTrace.WriteInLog("     ===============================Cоздание тизера по Товарам===============================");
-            LogTrace.WriteInLog("     " + DateTime.Now.ToString());
+                tab2 + "===============================Cоздание тизера по Товарам===============================");
+            LogForClickers.WriteInLog(tab2 + "===============================Cоздание тизера по Товарам===============================");
+            LogForClickers.WriteInLog(tab2 + DateTime.Now.ToString());
+            LogTrace.WriteInLog(tab2 + "===============================Cоздание тизера по Товарам===============================");
+            LogTrace.WriteInLog(tab2 + DateTime.Now.ToString());
 
             GoodsCreateTeaser_Controller teaserController = new GoodsCreateTeaser_Controller();
             teaserController.CreateTeaser(checkBox1.Checked, checkBox2.Checked);
@@ -214,14 +223,15 @@ namespace Task.View
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
+                listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
-                listBox1.Items.Add("     !!! Ошибки !!!");
+                listBox1.Items.Add(tab2 + "!!! Ошибки !!!");
 
                 LogForClickers.WriteInLog("");
-                LogForClickers.WriteInLog("     !!! Ошибки !!!");
+                LogForClickers.WriteInLog(tab2 + "!!! Ошибки !!!");
 
                 LogTrace.WriteInLog("");
-                LogTrace.WriteInLog("     !!! Ошибки !!!");
+                LogTrace.WriteInLog(tab2 + "!!! Ошибки !!!");
 
                 for (int i = 0; i < errors.Count; i++)
                 {
@@ -232,27 +242,28 @@ namespace Task.View
             }
             else
             {
+                listBox1.ForeColor = Color.Black;
                 string teaserId = teaserController.teaserId;
                 string pkId = teaserController.pkId;
                 string clientId = teaserController.clientId;
                 string domain = teaserController.allowedDomain;
 
                 LogTrace.WriteInLog("");
-                LogForClickers.WriteInLog("     ID тизера: " + teaserId);
-                LogTrace.WriteInLog("     ID тизера: " + teaserId);
-                listBox1.Items.Add("          ID тизера: " + teaserId);
+                LogForClickers.WriteInLog(tab2 + "ID тизера: " + teaserId);
+                LogTrace.WriteInLog(tab2 + "ID тизера: " + teaserId);
+                listBox1.Items.Add(tab2 + "ID тизера: " + teaserId);
 
-                LogForClickers.WriteInLog("     ID клиента: " + clientId);
-                LogTrace.WriteInLog("     ID клиента: " + clientId);
-                listBox1.Items.Add("          ID клиента:     " + clientId);
-                
-                LogForClickers.WriteInLog("     ID РК:      " + pkId);
-                LogTrace.WriteInLog("     ID РК:      " + pkId);
-                listBox1.Items.Add("          ID РК:     " + pkId);
+                LogForClickers.WriteInLog(tab2 + "ID клиента: " + clientId);
+                LogTrace.WriteInLog(tab2 + "ID клиента: " + clientId);
+                listBox1.Items.Add(tab2 + "ID клиента:     " + clientId);
 
-                LogForClickers.WriteInLog("     Домен:      " + domain);
-                LogTrace.WriteInLog("     Домен:      " + domain);
-                listBox1.Items.Add("          Домен: " + domain);
+                LogForClickers.WriteInLog(tab2 + "ID РК:      " + pkId);
+                LogTrace.WriteInLog(tab2 + "ID РК:      " + pkId);
+                listBox1.Items.Add(tab2 + "ID РК:     " + pkId);
+
+                LogForClickers.WriteInLog(tab2 + "Домен:      " + domain);
+                LogTrace.WriteInLog(tab2 + "Домен:      " + domain);
+                listBox1.Items.Add(tab2 + "Домен: " + domain);
             }
 
             //listBox1.Items.Add("");
@@ -281,6 +292,7 @@ namespace Task.View
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
+                listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
                 listBox1.Items.Add("               !!! Ошибки !!!");
 
@@ -299,6 +311,7 @@ namespace Task.View
             }
             else
             {
+                listBox1.ForeColor = Color.Black;
                 listBox1.Items.Add("          Клиент успешно отредактирован");
 
                 listBox1.Items.Add(
@@ -358,6 +371,7 @@ namespace Task.View
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
+                listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
                 listBox1.Items.Add("               !!! Ошибки !!!");
 
@@ -376,6 +390,7 @@ namespace Task.View
             }
             else
             {
+                listBox1.ForeColor = Color.Black;
                 listBox1.Items.Add("          Сайт успешно отредактирован");
 
                 listBox1.Items.Add(
@@ -435,6 +450,7 @@ namespace Task.View
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
+                listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
                 listBox1.Items.Add("               !!! Ошибки !!!");
 
@@ -453,6 +469,7 @@ namespace Task.View
             }
             else
             {
+                listBox1.ForeColor = Color.Black;
                 listBox1.Items.Add("          РК успешно отредактирована");
 
                 listBox1.Items.Add(
@@ -488,9 +505,9 @@ namespace Task.View
             LogTrace.WriteInLog("");
         }
 
-
         private void Button1Click(object sender, EventArgs e)
         {
+            listBox1.ForeColor = Color.Black;
             int loopClient; //сколько создать клиентов
             int loopSite;//сколько создать сайтов
             int loopPK;//сколько создать РК
@@ -625,6 +642,7 @@ namespace Task.View
         private void button3_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
+            listBox1.ForeColor = Color.Black;
         }
     }
 }

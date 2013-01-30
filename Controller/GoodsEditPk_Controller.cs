@@ -78,11 +78,15 @@ namespace Task.Controller
 
                     //dateStartPk = pkEditModel.GenerateDate();
                     pkEditModel.StartPkDate = pkEditModel.GenerateDate();
+                    driver.FindElement(By.Id("when_autostart")).Click();//чтобы обновилось содержимое полей и к месяцам и дням < 10 добавились 0
+                    driver.FindElement(By.Id("editsite")).Click();
                     dateStartPk = pkEditModel.GetStartPkDate;
                     LogTrace.WriteInLog("          Заполняю поле Дата старта РК. Было введено: " + pkEditModel.StartPkDate);
 
                     //dateEndPk = pkEditModel.GenerateDate();
                     pkEditModel.EndPkDate = pkEditModel.GenerateDate();
+                    driver.FindElement(By.Id("limit_date")).Click();//чтобы обновилось содержимое полей и к месяцам и дням < 10 добавились 0
+                    driver.FindElement(By.Id("editsite")).Click();
                     dateEndPk = pkEditModel.GetEndPkDate;
                     LogTrace.WriteInLog("          Заполняю поле Дата окончания РК. Было введено: " + pkEditModel.EndPkDate);
                     List<string> instantErrorsDate = pkEditModel.ErrorsInFillFields();
@@ -1060,11 +1064,11 @@ namespace Task.Controller
                                 //pkEditModel.BrowserTargetingGoogleChromeMobileExpand = true;
                                 //pkEditModel.BrowserTargetingOtherAll = true;
 
-                                //if (!pkEditModel)
-                                //{
-                                //    pkEditModel.BrowserTargetingOtherChoseAll = true;
-                                //    LogTrace.WriteInLog("        Другие. Выбран checkbox Другие Все");
-                                //}
+                                if (!pkEditModel.GetBrowserTargetingOtherChoseAll)
+                                {
+                                    pkEditModel.BrowserTargetingOtherChoseAll = true;
+                                    LogTrace.WriteInLog("        Другие. Выбран checkbox Другие Все");
+                                }
                                 if (!pkEditModel.GetBrowserTargetingOtherAll)
                                 {
                                     pkEditModel.BrowserTargetingOtherAll = true;
@@ -1079,27 +1083,31 @@ namespace Task.Controller
                                         pkEditModel.BrowserTargetingOperaChoseAll = true;
                                         LogTrace.WriteInLog("             Опера. Выбран checkbox Все");
                                     }
-                                    //if (!pkEditModel) pkEditModel.BrowserTargetingOperaOther = true;
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingOpera10 = true;
-                                    //    LogTrace.WriteInLog("        Опера. Выбран checkbox 10");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingOpera11 = true;
-                                    //    LogTrace.WriteInLog("        Опера. Выбран checkbox 11");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingOperaMini = true;
-                                    //    LogTrace.WriteInLog("        Опера. Выбран checkbox Mini");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingOperaMobile = true;
-                                    //    LogTrace.WriteInLog("        Опера. Выбран checkbox Mobile");
-                                    //}
+                                    if (!pkEditModel.GetBrowserTargetingOperaOther)
+                                    {
+                                        pkEditModel.BrowserTargetingOperaOther = true;
+                                        LogTrace.WriteInLog("             Опера. Выбран checkbox Другие");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingOpera10)
+                                    {
+                                        pkEditModel.BrowserTargetingOpera10 = true;
+                                        LogTrace.WriteInLog("        Опера. Выбран checkbox 10");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingOpera11)
+                                    {
+                                        pkEditModel.BrowserTargetingOpera11 = true;
+                                        LogTrace.WriteInLog("        Опера. Выбран checkbox 11");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingOperaMini)
+                                    {
+                                        pkEditModel.BrowserTargetingOperaMini = true;
+                                        LogTrace.WriteInLog("        Опера. Выбран checkbox Mini");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingOperaMobile)
+                                    {
+                                        pkEditModel.BrowserTargetingOperaMobile = true;
+                                        LogTrace.WriteInLog("        Опера. Выбран checkbox Mobile");
+                                    }
                                 #endregion
 
                                 #region Chrome
@@ -1108,11 +1116,11 @@ namespace Task.Controller
                                         pkEditModel.BrowserTargetingChromeChoseAll = true;
                                         LogTrace.WriteInLog("             Chrome. Выбран checkbox Chrome Все");
                                     }
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingChromeAll = true;
-                                    //    LogTrace.WriteInLog("        Chrome. Выбран checkbox Все");
-                                    //}
+                                    if (!pkEditModel.GetBrowserTargetingChromeAll)
+                                    {
+                                        pkEditModel.BrowserTargetingChromeAll = true;
+                                        LogTrace.WriteInLog("        Chrome. Выбран checkbox Все");
+                                    }
                                 #endregion
 
                                 #region Firefox
@@ -1121,31 +1129,31 @@ namespace Task.Controller
                                         pkEditModel.BrowserTargetingFirefoxChoseAll = true;
                                         LogTrace.WriteInLog("             Firefox. Выбран checkbox Все");
                                     }
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingFirefox3 = true;
-                                    //    LogTrace.WriteInLog("        Firefox. Выбран checkbox 3");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingFirefox4 = true;
-                                    //    LogTrace.WriteInLog("        Firefox. Выбран checkbox 4");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingFirefox5 = true;
-                                    //    LogTrace.WriteInLog("        Firefox. Выбран checkbox 5");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingFirefox6 = true;
-                                    //    LogTrace.WriteInLog("        Firefox. Выбран checkbox 6");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingFirefoxOther = true;
-                                    //    LogTrace.WriteInLog("        Firefox. Выбран checkbox Другие");
-                                    //}
+                                    if (!pkEditModel.GetBrowserTargetingFirefox3)
+                                    {
+                                        pkEditModel.BrowserTargetingFirefox3 = true;
+                                        LogTrace.WriteInLog("        Firefox. Выбран checkbox 3");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingFirefox4)
+                                    {
+                                        pkEditModel.BrowserTargetingFirefox4 = true;
+                                        LogTrace.WriteInLog("        Firefox. Выбран checkbox 4");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingFirefox5)
+                                    {
+                                        pkEditModel.BrowserTargetingFirefox5 = true;
+                                        LogTrace.WriteInLog("        Firefox. Выбран checkbox 5");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingFirefox6)
+                                    {
+                                        pkEditModel.BrowserTargetingFirefox6 = true;
+                                        LogTrace.WriteInLog("        Firefox. Выбран checkbox 6");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingFirefoxOther)
+                                    {
+                                        pkEditModel.BrowserTargetingFirefoxOther = true;
+                                        LogTrace.WriteInLog("        Firefox. Выбран checkbox Другие");
+                                    }
                                 #endregion
 
                                 #region Safari
@@ -1154,11 +1162,11 @@ namespace Task.Controller
                                         pkEditModel.BrowserTargetingSafariChoseAll = true;
                                         LogTrace.WriteInLog("             Safari. Выбран checkbox Safari Все");
                                     }
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingSafariAll = true;
-                                    //    LogTrace.WriteInLog("        Safari. Выбран checkbox Все");
-                                    //}
+                                    if (!pkEditModel.GetBrowserTargetingSafariAll)
+                                    {
+                                        pkEditModel.BrowserTargetingSafariAll = true;
+                                        LogTrace.WriteInLog("        Safari. Выбран checkbox Все");
+                                    }
                                 #endregion
 
                                 #region MSIE
@@ -1167,31 +1175,31 @@ namespace Task.Controller
                                         pkEditModel.BrowserTargetingIeChoseAll = true;
                                         LogTrace.WriteInLog("             MSIE. Выбран checkbox Все");
                                     }
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingIe6 = true;
-                                    //    LogTrace.WriteInLog("        MSIE. Выбран checkbox 6");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingIe7 = true;
-                                    //    LogTrace.WriteInLog("        MSIE. Выбран checkbox 7");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingIe8 = true;
-                                    //    LogTrace.WriteInLog("        MSIE. Выбран checkbox 8");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingIe9 = true;
-                                    //    LogTrace.WriteInLog("        MSIE. Выбран checkbox 9");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.BrowserTargetingIeOther = true;
-                                    //    LogTrace.WriteInLog("        MSIE. Выбран checkbox Другие");
-                                    //}
+                                    if (!pkEditModel.GetBrowserTargetingIe6)
+                                    {
+                                        pkEditModel.BrowserTargetingIe6 = true;
+                                        LogTrace.WriteInLog("        MSIE. Выбран checkbox 6");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingIe7)
+                                    {
+                                        pkEditModel.BrowserTargetingIe7 = true;
+                                        LogTrace.WriteInLog("        MSIE. Выбран checkbox 7");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingIe8)
+                                    {
+                                        pkEditModel.BrowserTargetingIe8 = true;
+                                        LogTrace.WriteInLog("        MSIE. Выбран checkbox 8");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingIe9)
+                                    {
+                                        pkEditModel.BrowserTargetingIe9 = true;
+                                        LogTrace.WriteInLog("        MSIE. Выбран checkbox 9");
+                                    }
+                                    if (!pkEditModel.GetBrowserTargetingIeOther)
+                                    {
+                                        pkEditModel.BrowserTargetingIeOther = true;
+                                        LogTrace.WriteInLog("        MSIE. Выбран checkbox Другие");
+                                    }
                                 #endregion
 
                                 #region Google Chrome Mobile
@@ -1371,36 +1379,36 @@ namespace Task.Controller
                                         pkEditModel.GeoTargetingRussiaChoseAll = true;
                                         LogTrace.WriteInLog("             Россия. Выбран checkbox Все");
                                     }
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingRussiaEburg = true;
-                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Екатеринбург");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingRussiaMoscow = true;
-                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Москва");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingRussiaNovosibirsk = true;
-                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Новосибирск");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingRussiaOther = true;
-                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Прочие регионы");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingRussiaSpb = true;
-                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Санкт-Петербург");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingRussiaHabarovsk = true;
-                                    //    LogTrace.WriteInLog("        Россия. Выбран checkbox Хабаровск");
-                                    //}
+                                    if (!pkEditModel.GetGeoTargetingRussiaEburg)
+                                    {
+                                        pkEditModel.GeoTargetingRussiaEburg = true;
+                                        LogTrace.WriteInLog("        Россия. Выбран checkbox Екатеринбург");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingRussiaMoscow)
+                                    {
+                                        pkEditModel.GeoTargetingRussiaMoscow = true;
+                                        LogTrace.WriteInLog("        Россия. Выбран checkbox Москва");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingRussiaNovosibirsk)
+                                    {
+                                        pkEditModel.GeoTargetingRussiaNovosibirsk = true;
+                                        LogTrace.WriteInLog("        Россия. Выбран checkbox Новосибирск");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingRussiaOther)
+                                    {
+                                        pkEditModel.GeoTargetingRussiaOther = true;
+                                        LogTrace.WriteInLog("        Россия. Выбран checkbox Прочие регионы");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingRussiaSpb)
+                                    {
+                                        pkEditModel.GeoTargetingRussiaSpb = true;
+                                        LogTrace.WriteInLog("        Россия. Выбран checkbox Санкт-Петербург");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingRussiaHabarovsk)
+                                    {
+                                        pkEditModel.GeoTargetingRussiaHabarovsk = true;
+                                        LogTrace.WriteInLog("        Россия. Выбран checkbox Хабаровск");
+                                    }
                                 #endregion
 
                                 if (!pkEditModel.GetGeoTargetingUsa)
@@ -1415,71 +1423,71 @@ namespace Task.Controller
                                         pkEditModel.GeoTargetingUkraineChoseAll = true;
                                         LogTrace.WriteInLog("             Украина. Выбран checkbox Все");
                                     }
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineDnepr = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Днепропетровск");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineDonetzk = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Донецк");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineZakarpattya = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Закарпатье");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineKiev = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Киев");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineCrimea = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Крым");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineLvov = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Львов");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineNikolaev = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Николаев");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineOdessa = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Одесса");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineOther = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Прочие области");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineHarkov = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Харьков");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineHerson = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Херсон");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineCherkassy = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Черкассы");
-                                    //}
-                                    //if (!pkEditModel)
-                                    //{
-                                    //    pkEditModel.GeoTargetingUkraineChernovzi = true;
-                                    //    LogTrace.WriteInLog("        Украина. Выбран checkbox Черновцы");
-                                    //}
+                                    if (!pkEditModel.GetGeoTargetingUkraineDnepr)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineDnepr = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Днепропетровск");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineDonetzk)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineDonetzk = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Донецк");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineZakarpattya)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineZakarpattya = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Закарпатье");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineKiev)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineKiev = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Киев");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineCrimea)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineCrimea = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Крым");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineLvov)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineLvov = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Львов");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineNikolaev)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineNikolaev = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Николаев");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineOdessa)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineOdessa = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Одесса");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineOther)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineOther = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Прочие области");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineHarkov)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineHarkov = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Харьков");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineHerson)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineHerson = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Херсон");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineCherkassy)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineCherkassy = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Черкассы");
+                                    }
+                                    if (!pkEditModel.GetGeoTargetingUkraineChernovzi)
+                                    {
+                                        pkEditModel.GeoTargetingUkraineChernovzi = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Черновцы");
+                                    }
                                 #endregion
 
                                 if (!pkEditModel.GetGeoTargetingEstonia)
@@ -1496,8 +1504,8 @@ namespace Task.Controller
             string editPktUrl = driver.Url; //запоминаем url страницы
 
             pkEditModel.Submit(); //пытаемся сохранить форму
-            LogTrace.WriteInLog("               Нажал кнопку Сохранить");
-            LogTrace.WriteInLog("               " + driver.Url);
+            LogTrace.WriteInLog("          Нажал кнопку Сохранить");
+            LogTrace.WriteInLog("          " + driver.Url);
             LogTrace.WriteInLog("");
 
             string isEditedPkUrl = driver.Url; //запоминаем url страницы, открывшейся после нажатия "Сохранить"
@@ -1509,8 +1517,8 @@ namespace Task.Controller
             }
             else
             {
-                LogTrace.WriteInLog("               РК успешно отредактирована");
-                LogForClickers.WriteInLog("               РК успешно отредактирована");
+                LogTrace.WriteInLog("          РК успешно отредактирована");
+                LogForClickers.WriteInLog("          РК успешно отредактирована");
             }
             Registry.hashTable["driver"] = driver;
         }
@@ -1523,7 +1531,7 @@ namespace Task.Controller
                 //забираем из хештаблицы сохраненный при создании клиента драйвер
             driver.Navigate().GoToUrl(baseUrl); //заходим по ссылке
             driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
-            LogTrace.WriteInLog("               " + driver.Url);
+            LogTrace.WriteInLog("          " + driver.Url);
 
             #region Проверка заполнения
                 #region Разное
@@ -2534,8 +2542,8 @@ namespace Task.Controller
             LogTrace.WriteInLog("");
             if (!wasMismatch)
             {
-                LogTrace.WriteInLog("               ОК, всё ранее введенное совпадает с текущими значениями");
-                LogForClickers.WriteInLog("               ОК, всё ранее введенное совпадает с текущими значениями");
+                LogTrace.WriteInLog("          ОК, всё ранее введенное совпадает с текущими значениями");
+                LogForClickers.WriteInLog("          ОК, всё ранее введенное совпадает с текущими значениями");
             }
         }
 
