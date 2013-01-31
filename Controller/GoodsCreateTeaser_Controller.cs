@@ -173,6 +173,7 @@ namespace Task.Controller
                 
                 catch(Exception)
                 {
+                    errors.Add("ОШИБКА: Не удалось заблокировать тизер");
                     LogTrace.WriteInLog(Goods_View.tab3 + "ОШИБКА:");
                     LogTrace.WriteInLog(Goods_View.tab3 + "Не удалось заблокировать тизер");
                 }
