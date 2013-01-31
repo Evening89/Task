@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using Task.Utils;
 using Task.Model;
+using Task.View;
 
 namespace Task.Controller
 {
@@ -55,7 +56,7 @@ namespace Task.Controller
 
             pkEditModel.driver = driver;
 
-            LogTrace.WriteInLog("          " + driver.Url);
+            LogTrace.WriteInLog(Goods_View.tab2 + driver.Url);
 
             #region Редактирование полей
 
@@ -63,32 +64,32 @@ namespace Task.Controller
                     if (!pkEditModel.GetViewSensors) //если checkbox не выбран...
                     {
                         pkEditModel.ViewSensors = true; //...выбираем его
-                        LogTrace.WriteInLog("          Выбран checkbox Просмотр датчиков");
+                        LogTrace.WriteInLog(Goods_View.tab2 + "Выбран checkbox Просмотр датчиков");
                     }
 
                     if(!pkEditModel.GetViewConversion)
                     {
                         pkEditModel.ViewConversion = true;
-                        LogTrace.WriteInLog("          Выбран checkbox Просмотр конверсии");
+                        LogTrace.WriteInLog(Goods_View.tab2 + "Выбран checkbox Просмотр конверсии");
                     }
 
                     namePk = randoms.RandomString(15) + " " + randoms.RandomNumber(5);
                     pkEditModel.Name = namePk;
-                    LogTrace.WriteInLog("          Заполняю поле Название РК. Было введено: " + pkEditModel.Name);
+                    LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Название РК. Было введено: " + pkEditModel.Name);
 
                     //dateStartPk = pkEditModel.GenerateDate();
                     pkEditModel.StartPkDate = pkEditModel.GenerateDate();
                     driver.FindElement(By.Id("when_autostart")).Click();//чтобы обновилось содержимое полей и к месяцам и дням < 10 добавились 0
                     driver.FindElement(By.Id("editsite")).Click();
                     dateStartPk = pkEditModel.GetStartPkDate;
-                    LogTrace.WriteInLog("          Заполняю поле Дата старта РК. Было введено: " + pkEditModel.StartPkDate);
+                    LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Дата старта РК. Было введено: " + pkEditModel.StartPkDate);
 
                     //dateEndPk = pkEditModel.GenerateDate();
                     pkEditModel.EndPkDate = pkEditModel.GenerateDate();
                     driver.FindElement(By.Id("limit_date")).Click();//чтобы обновилось содержимое полей и к месяцам и дням < 10 добавились 0
                     driver.FindElement(By.Id("editsite")).Click();
                     dateEndPk = pkEditModel.GetEndPkDate;
-                    LogTrace.WriteInLog("          Заполняю поле Дата окончания РК. Было введено: " + pkEditModel.EndPkDate);
+                    LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Дата окончания РК. Было введено: " + pkEditModel.EndPkDate);
                     List<string> instantErrorsDate = pkEditModel.ErrorsInFillFields();
                     if (instantErrorsDate.Count != 0) //если список с ошибками заполнения полей даты непуст
                         errors = instantErrorsDate; //копируем в нас общий список ошибок errors
@@ -96,13 +97,13 @@ namespace Task.Controller
                     if(!pkEditModel.GetBlockTeasersAfterCreation)
                     {
                         pkEditModel.BlockTeasersAfterCreation = true;
-                        LogTrace.WriteInLog("          Выбран checkbox Блокировать тизеры после их создания");
+                        LogTrace.WriteInLog(Goods_View.tab2 + "Выбран checkbox Блокировать тизеры после их создания");
                     }
 
                     if(!pkEditModel.GetStoppedByManager)
                     {
                         pkEditModel.StoppedByManager = true;
-                        LogTrace.WriteInLog("          Выбран checkbox Остановлена менеджером");
+                        LogTrace.WriteInLog(Goods_View.tab2 + "Выбран checkbox Остановлена менеджером");
                     }
                 #endregion
 
@@ -1504,8 +1505,8 @@ namespace Task.Controller
             string editPktUrl = driver.Url; //запоминаем url страницы
 
             pkEditModel.Submit(); //пытаемся сохранить форму
-            LogTrace.WriteInLog("          Нажал кнопку Сохранить");
-            LogTrace.WriteInLog("          " + driver.Url);
+            LogTrace.WriteInLog(Goods_View.tab2 + "Нажал кнопку Сохранить");
+            LogTrace.WriteInLog(Goods_View.tab2 + driver.Url);
             LogTrace.WriteInLog("");
 
             string isEditedPkUrl = driver.Url; //запоминаем url страницы, открывшейся после нажатия "Сохранить"
@@ -1517,8 +1518,8 @@ namespace Task.Controller
             }
             else
             {
-                LogTrace.WriteInLog("          РК успешно отредактирована");
-                LogForClickers.WriteInLog("          РК успешно отредактирована");
+                LogTrace.WriteInLog(Goods_View.tab2 + "РК успешно отредактирована");
+                LogForClickers.WriteInLog(Goods_View.tab2 + "РК успешно отредактирована");
             }
             Registry.hashTable["driver"] = driver;
         }
@@ -2538,12 +2539,12 @@ namespace Task.Controller
             #endregion
             #endregion
 
-            LogTrace.WriteInLog("          " + driver.Url);
+            LogTrace.WriteInLog(Goods_View.tab2 + driver.Url);
             LogTrace.WriteInLog("");
             if (!wasMismatch)
             {
-                LogTrace.WriteInLog("          ОК, всё ранее введенное совпадает с текущими значениями");
-                LogForClickers.WriteInLog("          ОК, всё ранее введенное совпадает с текущими значениями");
+                LogTrace.WriteInLog(Goods_View.tab2 + "ОК, всё ранее введенное совпадает с текущими значениями");
+                LogForClickers.WriteInLog(Goods_View.tab2 + "ОК, всё ранее введенное совпадает с текущими значениями");
             }
         }
 

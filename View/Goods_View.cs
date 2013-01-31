@@ -27,8 +27,9 @@ namespace Task.View
 
         //public StreamWriter sw; //запись в файл
 
-        public string tab1 = "\t";
-        public string tab2 = "\t\t";
+        public static string tab1 = "\t";
+        public static string tab2 = "\t\t";
+        public static string tab3 = "\t\t\t";
 
         public void CreateNewClient()
         {
@@ -274,15 +275,15 @@ namespace Task.View
         public void EditAndCheckClient()
         {
             listBox1.Items.Add(
-                "          ===============================Редактирование клиента====================================");
-            LogForClickers.WriteInLog("          ===============================Редактирование клиента====================================");
-            LogForClickers.WriteInLog("          " + DateTime.Now.ToString());
-            LogTrace.WriteInLog("          ===============================Редактирование клиента====================================");
-            LogTrace.WriteInLog("          " + DateTime.Now.ToString());
+                tab2 + "===============================Редактирование клиента====================================");
+            LogForClickers.WriteInLog(tab2 + "===============================Редактирование клиента====================================");
+            LogForClickers.WriteInLog(tab2 + DateTime.Now.ToString());
+            LogTrace.WriteInLog(tab2 + "===============================Редактирование клиента====================================");
+            LogTrace.WriteInLog(tab2 + DateTime.Now.ToString());
 
-            listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
-            LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-            LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+            listBox1.Items.Add(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+            LogForClickers.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+            LogTrace.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
 
             GoodsEditClient_Controller editClientController = new GoodsEditClient_Controller();
 
@@ -294,13 +295,13 @@ namespace Task.View
             {
                 listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
-                listBox1.Items.Add("               !!! Ошибки !!!");
+                listBox1.Items.Add(tab3 + "!!! Ошибки !!!");
 
                 LogForClickers.WriteInLog("");
-                LogForClickers.WriteInLog("               !!! Ошибки !!!");
+                LogForClickers.WriteInLog(tab3 + "!!! Ошибки !!!");
 
                 LogTrace.WriteInLog("");
-                LogTrace.WriteInLog("               !!! Ошибки !!!");
+                LogTrace.WriteInLog(tab3 + "!!! Ошибки !!!");
 
                 for (int i = 0; i < errors.Count; i++)
                 {
@@ -312,34 +313,35 @@ namespace Task.View
             else
             {
                 listBox1.ForeColor = Color.Black;
-                listBox1.Items.Add("          Клиент успешно отредактирован");
+                listBox1.Items.Add(tab2 + "Клиент успешно отредактирован");
 
                 listBox1.Items.Add(
-                "          ===============================Проверка редактирования клиента===========================");
-                LogForClickers.WriteInLog("          ===============================Проверка редактирования клиента===========================");
-                LogTrace.WriteInLog("          ===============================Проверка редактирования клиента===========================");
+                tab2 + "===============================Проверка редактирования клиента===========================");
+                LogForClickers.WriteInLog(tab2 + "===============================Проверка редактирования клиента===========================");
+                LogTrace.WriteInLog(tab2 + "===============================Проверка редактирования клиента===========================");
 
-                listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
-                LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-                LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
+                listBox1.Items.Add(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+                LogForClickers.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+                LogTrace.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
 
                 editClientController.CheckEditingClient();
 
                 if (editClientController.wasMismatch)
                 {
+                    listBox1.ForeColor = Color.Red;
                     listBox1.Items.Add("");
-                    listBox1.Items.Add("          !!!   Обнаружены несовпадения. См. лог");
+                    listBox1.Items.Add(tab2 + "!!!   Обнаружены несовпадения. См. лог");
                     listBox1.Items.Add("");
                     LogForClickers.WriteInLog("");
-                    LogForClickers.WriteInLog("          !!!   Обнаружены несовпадения. См. лог");
+                    LogForClickers.WriteInLog(tab2 + "!!!   Обнаружены несовпадения. См. лог");
                     LogForClickers.WriteInLog("");
                     LogTrace.WriteInLog("");
-                    LogTrace.WriteInLog("          !!!   Обнаружены несовпадения");
+                    LogTrace.WriteInLog(tab2 + "!!!   Обнаружены несовпадения");
                     LogTrace.WriteInLog("");
                 }
                 else
                 {
-                    listBox1.Items.Add("          ОК, всё ранее введенное совпадает с текущими значениями");
+                    listBox1.Items.Add(tab2 + "ОК, всё ранее введенное совпадает с текущими значениями");
                 }
             }
 
@@ -350,18 +352,18 @@ namespace Task.View
         public void EditAndCheckSite()
         {
             listBox1.Items.Add(
-                "          ===============================Редактирование сайта====================================");
-            LogForClickers.WriteInLog("          ===============================Редактирование сайта====================================");
-            LogForClickers.WriteInLog("          " + DateTime.Now.ToString());
-            LogTrace.WriteInLog("          ===============================Редактирование сайта====================================");
-            LogTrace.WriteInLog("          " + DateTime.Now.ToString());
+                tab2 + "===============================Редактирование сайта====================================");
+            LogForClickers.WriteInLog(tab2 + "===============================Редактирование сайта====================================");
+            LogForClickers.WriteInLog(tab2 + DateTime.Now.ToString());
+            LogTrace.WriteInLog(tab2 + "===============================Редактирование сайта====================================");
+            LogTrace.WriteInLog(tab2 + DateTime.Now.ToString());
 
-            listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
-            LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-            LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-            listBox1.Items.Add("          ID сайта: " + Registry.hashTable["siteId"]);
-            LogForClickers.WriteInLog("          ID сайта: " + Registry.hashTable["siteId"]);
-            LogTrace.WriteInLog("          ID сайта: " + Registry.hashTable["siteId"]);
+            listBox1.Items.Add(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+            LogForClickers.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+            LogTrace.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+            listBox1.Items.Add(tab2 + "ID сайта: " + Registry.hashTable["siteId"]);
+            LogForClickers.WriteInLog(tab2 + "ID сайта: " + Registry.hashTable["siteId"]);
+            LogTrace.WriteInLog(tab2 + "ID сайта: " + Registry.hashTable["siteId"]);
 
             GoodsEditSite_Controller editSiteController = new GoodsEditSite_Controller();
 
@@ -373,13 +375,13 @@ namespace Task.View
             {
                 listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
-                listBox1.Items.Add("               !!! Ошибки !!!");
+                listBox1.Items.Add(tab3 + "!!! Ошибки !!!");
 
                 LogForClickers.WriteInLog("");
-                LogForClickers.WriteInLog("               !!! Ошибки !!!");
+                LogForClickers.WriteInLog(tab3 + "!!! Ошибки !!!");
 
                 LogTrace.WriteInLog("");
-                LogTrace.WriteInLog("               !!! Ошибки !!!");
+                LogTrace.WriteInLog(tab3 + "!!! Ошибки !!!");
 
                 for (int i = 0; i < errors.Count; i++)
                 {
@@ -391,34 +393,35 @@ namespace Task.View
             else
             {
                 listBox1.ForeColor = Color.Black;
-                listBox1.Items.Add("          Сайт успешно отредактирован");
+                listBox1.Items.Add(tab2 + "Сайт успешно отредактирован");
 
                 listBox1.Items.Add(
-                "          ===============================Проверка редактирования сайта===========================");
-                LogForClickers.WriteInLog("          ===============================Проверка редактирования сайта===========================");
-                LogTrace.WriteInLog("          ===============================Проверка редактирования сайта===========================");
+                tab2 + "===============================Проверка редактирования сайта===========================");
+                LogForClickers.WriteInLog(tab2 + "===============================Проверка редактирования сайта===========================");
+                LogTrace.WriteInLog(tab2 + "===============================Проверка редактирования сайта===========================");
 
-                listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
-                LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-                LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-                listBox1.Items.Add("          ID сайта: " + Registry.hashTable["siteId"]);
-                LogForClickers.WriteInLog("          ID сайта: " + Registry.hashTable["siteId"]);
-                LogTrace.WriteInLog("          ID сайта: " + Registry.hashTable["siteId"]);
+                listBox1.Items.Add(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+                LogForClickers.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+                LogTrace.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+                listBox1.Items.Add(tab2 + "ID сайта: " + Registry.hashTable["siteId"]);
+                LogForClickers.WriteInLog(tab2 + "ID сайта: " + Registry.hashTable["siteId"]);
+                LogTrace.WriteInLog(tab2 + "ID сайта: " + Registry.hashTable["siteId"]);
 
                 editSiteController.CheckEditingSite();
 
                 if (editSiteController.wasMismatch)
                 {
+                    listBox1.ForeColor = Color.Red;
                     listBox1.Items.Add("");
-                    listBox1.Items.Add("          !!!   Обнаружены несовпадения. См. лог");
+                    listBox1.Items.Add(tab2 + "!!!   Обнаружены несовпадения. См. лог");
                     listBox1.Items.Add("");
                     LogForClickers.WriteInLog("");
-                    LogForClickers.WriteInLog("          !!!   Обнаружены несовпадения. См. лог");
+                    LogForClickers.WriteInLog(tab2 + "!!!   Обнаружены несовпадения. См. лог");
                     LogForClickers.WriteInLog("");
                 }
                 else
                 {
-                    listBox1.Items.Add("          ОК, всё ранее введенное совпадает с текущими значениями");
+                    listBox1.Items.Add(tab2 + "ОК, всё ранее введенное совпадает с текущими значениями");
                 }
             }
 
@@ -429,18 +432,18 @@ namespace Task.View
         public void EditAndCheckPk()
         {
             listBox1.Items.Add(
-                "          ===============================Редактирование РК====================================");
-            LogForClickers.WriteInLog("          ===============================Редактирование РК====================================");
-            LogForClickers.WriteInLog("          " + DateTime.Now.ToString());
-            LogTrace.WriteInLog("          ===============================Редактирование РК====================================");
-            LogTrace.WriteInLog("          " + DateTime.Now.ToString());
+                tab2 + "===============================Редактирование РК====================================");
+            LogForClickers.WriteInLog(tab2 + "===============================Редактирование РК====================================");
+            LogForClickers.WriteInLog(tab2 + DateTime.Now.ToString());
+            LogTrace.WriteInLog(tab2 + "===============================Редактирование РК====================================");
+            LogTrace.WriteInLog(tab2 + DateTime.Now.ToString());
 
-            listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
-            LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-            LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-            listBox1.Items.Add("          ID РК: " + Registry.hashTable["pkId"]);
-            LogForClickers.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
-            LogTrace.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
+            listBox1.Items.Add(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+            LogForClickers.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+            LogTrace.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+            listBox1.Items.Add(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
+            LogForClickers.WriteInLog(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
+            LogTrace.WriteInLog(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
 
             GoodsEditPk_Controller editPkController = new GoodsEditPk_Controller();
 
@@ -452,13 +455,13 @@ namespace Task.View
             {
                 listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
-                listBox1.Items.Add("               !!! Ошибки !!!");
+                listBox1.Items.Add(tab3 + "!!! Ошибки !!!");
 
                 LogForClickers.WriteInLog("");
-                LogForClickers.WriteInLog("               !!! Ошибки !!!");
+                LogForClickers.WriteInLog(tab3 + "!!! Ошибки !!!");
 
                 LogTrace.WriteInLog("");
-                LogTrace.WriteInLog("               !!! Ошибки !!!");
+                LogTrace.WriteInLog(tab3 + "!!! Ошибки !!!");
 
                 for (int i = 0; i < errors.Count; i++)
                 {
@@ -470,34 +473,35 @@ namespace Task.View
             else
             {
                 listBox1.ForeColor = Color.Black;
-                listBox1.Items.Add("          РК успешно отредактирована");
+                listBox1.Items.Add(tab2 + "РК успешно отредактирована");
 
                 listBox1.Items.Add(
-                "          ===============================Проверка редактирования РК===========================");
-                LogForClickers.WriteInLog("          ===============================Проверка редактирования РК===========================");
-                LogTrace.WriteInLog("          ===============================Проверка редактирования РК===========================");
+                tab2 + "===============================Проверка редактирования РК===========================");
+                LogForClickers.WriteInLog(tab2 + "===============================Проверка редактирования РК===========================");
+                LogTrace.WriteInLog(tab2 + "===============================Проверка редактирования РК===========================");
 
-                listBox1.Items.Add("          ID клиента: " + Registry.hashTable["clientId"]);
-                LogForClickers.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-                LogTrace.WriteInLog("          ID клиента: " + Registry.hashTable["clientId"]);
-                listBox1.Items.Add("          ID РК: " + Registry.hashTable["pkId"]);
-                LogForClickers.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
-                LogTrace.WriteInLog("          ID РК: " + Registry.hashTable["pkId"]);
+                listBox1.Items.Add(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+                LogForClickers.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+                LogTrace.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+                listBox1.Items.Add(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
+                LogForClickers.WriteInLog(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
+                LogTrace.WriteInLog(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
 
                 editPkController.CheckEditingPk();
 
                 if (editPkController.wasMismatch)
                 {
+                    listBox1.ForeColor = Color.Red;
                     listBox1.Items.Add("");
-                    listBox1.Items.Add("          !!!   Обнаружены несовпадения. См. лог");
+                    listBox1.Items.Add(tab2 + "!!!   Обнаружены несовпадения. См. лог");
                     listBox1.Items.Add("");
                     LogForClickers.WriteInLog("");
-                    LogForClickers.WriteInLog("          !!!   Обнаружены несовпадения. См. лог");
+                    LogForClickers.WriteInLog(tab2 + "!!!   Обнаружены несовпадения. См. лог");
                     LogForClickers.WriteInLog("");
                 }
                 else
                 {
-                    listBox1.Items.Add("          ОК, всё ранее введенное совпадает с текущими значениями");
+                    listBox1.Items.Add(tab2 + "ОК, всё ранее введенное совпадает с текущими значениями");
                 }
             }
 
