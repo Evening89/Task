@@ -19,7 +19,7 @@ namespace Task.Model
 
         public string locatorStartSection = "#start_section option";
 
-        #region Заполнение полей
+        #region Редактирование полей
 
             #region Контакты по направлению
 

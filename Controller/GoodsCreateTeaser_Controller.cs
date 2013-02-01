@@ -152,7 +152,8 @@ namespace Task.Controller
 
                 split = new[] { ":" };
                 string[] idFinderMas = idFinder.Split(split, StringSplitOptions.RemoveEmptyEntries);//разбиваем строку по :
-                teaserId = idFinderMas[1]; //отбрасываем 0й эл-т (фразу "ID тизера") и берем только 1й эл-т (цифры)
+                teaserId = idFinderMas[1].Trim(); //отбрасываем 0й эл-т (фразу "ID тизера") и берем только 1й эл-т (цифры)
+                Registry.hashTable["teaserId"] = teaserId;
                 clientId = Registry.hashTable["clientId"].ToString(); //берется для вывода в listBox и логи
                 pkId = Registry.hashTable["pkId"].ToString(); //берется для вывода в listBox и логи
 

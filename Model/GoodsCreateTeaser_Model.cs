@@ -39,7 +39,7 @@ namespace Task.Model
                 }
             }
 
-        public string chosenCategory = null;
+            public string chosenCategory = null;
             protected int SelectCategory;
             public int Category
             {
@@ -410,7 +410,7 @@ namespace Task.Model
             }
         #endregion
 
-            public List<string> GetErrors()
+        public List<string> GetErrors()
         {
             List<IWebElement> list = driver.FindElements(By.CssSelector(".error > li")).ToList(); //проверка, есть ли на странице ошибки заполнения _обязательных_ полей
             List<string> result = new List<string>();

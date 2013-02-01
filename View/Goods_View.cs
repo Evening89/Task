@@ -22,7 +22,7 @@ namespace Task.View
         public Goods_View()
         {
             InitializeComponent();
-            textBox1.Text = "Auth.csv";
+            //textBox1.Text = "Auth.csv";
         }
 
         //public StreamWriter sw; //запись в файл
@@ -509,6 +509,89 @@ namespace Task.View
             LogTrace.WriteInLog("");
         }
 
+        public void EditAndCheckTeaser()
+        {
+            listBox1.Items.Add(
+                tab2 + "===============================Редактирование тизера====================================");
+            LogForClickers.WriteInLog(tab2 + "===============================Редактирование тизера====================================");
+            LogForClickers.WriteInLog(tab2 + DateTime.Now.ToString());
+            LogTrace.WriteInLog(tab2 + "===============================Редактирование тизера====================================");
+            LogTrace.WriteInLog(tab2 + DateTime.Now.ToString());
+
+            listBox1.Items.Add(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+            LogForClickers.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+            LogTrace.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+            listBox1.Items.Add(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
+            LogForClickers.WriteInLog(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
+            LogTrace.WriteInLog(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
+            listBox1.Items.Add(tab2 + "ID тизера: " + Registry.hashTable["teaserId"]);
+            LogForClickers.WriteInLog(tab2 + "ID тизера: " + Registry.hashTable["teaserId"]);
+            LogTrace.WriteInLog(tab2 + "ID тизера: " + Registry.hashTable["teaserId"]);
+
+            GoodsEditTeaser_Controller editTeaserController = new GoodsEditTeaser_Controller();
+
+            editTeaserController.EditTeaser();
+
+            List<string> errors = editTeaserController.errors;
+
+            if (errors.Count != 0) //список непустой -- ошибки есть
+            {
+                listBox1.ForeColor = Color.Red;
+                listBox1.Items.Add("");
+                listBox1.Items.Add(tab3 + "!!! Ошибки !!!");
+
+                LogForClickers.WriteInLog("");
+                LogForClickers.WriteInLog(tab3 + "!!! Ошибки !!!");
+
+                LogTrace.WriteInLog("");
+                LogTrace.WriteInLog(tab3 + "!!! Ошибки !!!");
+
+                for (int i = 0; i < errors.Count; i++)
+                {
+                    listBox1.Items.Add(errors[i]);
+                    LogForClickers.WriteInLog(errors[i]);
+                    LogTrace.WriteInLog(errors[i]);
+                }
+            }
+            else
+            {
+                listBox1.ForeColor = Color.Black;
+                listBox1.Items.Add(tab2 + "Тизер успешно отредактирован");
+
+                //listBox1.Items.Add(
+                //tab2 + "===============================Проверка редактирования РК===========================");
+                //LogForClickers.WriteInLog(tab2 + "===============================Проверка редактирования РК===========================");
+                //LogTrace.WriteInLog(tab2 + "===============================Проверка редактирования РК===========================");
+
+                //listBox1.Items.Add(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+                //LogForClickers.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+                //LogTrace.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
+                //listBox1.Items.Add(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
+                //LogForClickers.WriteInLog(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
+                //LogTrace.WriteInLog(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
+
+                //editPkController.CheckEditingPk();
+
+                //if (editPkController.wasMismatch)
+                //{
+                //    listBox1.ForeColor = Color.Red;
+                //    listBox1.Items.Add("");
+                //    listBox1.Items.Add(tab2 + "!!!   Обнаружены несовпадения. См. лог");
+                //    listBox1.Items.Add("");
+                //    LogForClickers.WriteInLog("");
+                //    LogForClickers.WriteInLog(tab2 + "!!!   Обнаружены несовпадения. См. лог");
+                //    LogForClickers.WriteInLog("");
+                //}
+                //else
+                //{
+                //    listBox1.Items.Add(tab2 + "ОК, всё ранее введенное совпадает с текущими значениями");
+                //}
+            }
+
+            LogForClickers.WriteInLog("");
+            LogTrace.WriteInLog("");
+        }
+
         private void Button1Click(object sender, EventArgs e)
         {
             listBox1.ForeColor = Color.Black;
@@ -575,7 +658,11 @@ namespace Task.View
                                 if (newTeaserCheckbox.Checked)
                                 {
                                     for (int z = loopTeaser; z > 0; z--)
+                                    {
                                         CreateNewTeaser();
+                                        if (editTeaserCheckBox.Checked)
+                                            EditAndCheckTeaser();
+                                    }
                                 }
                             }
                         }
