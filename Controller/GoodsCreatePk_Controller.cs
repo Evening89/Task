@@ -67,11 +67,11 @@ namespace Task.Controller
                         if (instantErrorsDate.Count != 0) //если список с ошибками заполнения полей даты непуст
                             errors = instantErrorsDate; //копируем в нас общий список ошибок errors
                     }
-                    if (needSetCheckBox())
-                    {
-                        pkModel.BlockTeasersAfterCreation = true;
-                        LogTrace.WriteInLog("     Выбран checkbox Блокировать тизеры после их создания");
-                    }
+                    //if (needSetCheckBox())
+                    //{
+                    //    pkModel.BlockTeasersAfterCreation = true;
+                    //    LogTrace.WriteInLog("     Выбран checkbox Блокировать тизеры после их создания");
+                    //}
                     if (needSetCheckBox())
                     {
                         pkModel.StoppedByManager = true;

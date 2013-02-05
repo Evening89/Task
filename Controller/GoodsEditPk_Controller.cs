@@ -94,11 +94,11 @@ namespace Task.Controller
                     if (instantErrorsDate.Count != 0) //если список с ошибками заполнения полей даты непуст
                         errors = instantErrorsDate; //копируем в нас общий список ошибок errors
 
-                    if(!pkEditModel.GetBlockTeasersAfterCreation)
-                    {
-                        pkEditModel.BlockTeasersAfterCreation = true;
-                        LogTrace.WriteInLog(Goods_View.tab2 + "Выбран checkbox Блокировать тизеры после их создания");
-                    }
+                    //if(!pkEditModel.GetBlockTeasersAfterCreation)
+                    //{
+                    //    pkEditModel.BlockTeasersAfterCreation = true;
+                    //    LogTrace.WriteInLog(Goods_View.tab2 + "Выбран checkbox Блокировать тизеры после их создания");
+                    //}
 
                     if(!pkEditModel.GetStoppedByManager)
                     {
@@ -1571,12 +1571,12 @@ namespace Task.Controller
                         wasMismatch = true;
                     }
 
-                    if (pkEditModel.GetBlockTeasersAfterCreation) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Блокировать тизеры после их создания' и выбранное при редактировании"); }
-                    else
-                    {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Блокировать тизеры после их создания' и выбранное при редактировании");
-                        wasMismatch = true;
-                    }
+                    //if (pkEditModel.GetBlockTeasersAfterCreation) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Блокировать тизеры после их создания' и выбранное при редактировании"); }
+                    //else
+                    //{
+                    //    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: состояние checkbox 'Блокировать тизеры после их создания' и выбранное при редактировании");
+                    //    wasMismatch = true;
+                    //}
 
                     if (pkEditModel.GetStoppedByManager) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Остановлена менеджером' и выбранное при редактировании"); }
                     else

@@ -15,6 +15,7 @@ namespace Task.Controller
     public class GoodsEditTeaser_Controller
     {
         IWebDriver driver;
+        //public string baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
         public string baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
 
         public List<string> errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
@@ -62,9 +63,10 @@ namespace Task.Controller
                     LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Рекламный текст. Было введено: " + teaserEditModel.AdvertText);
 
                     string dir = Directory.GetCurrentDirectory();
-                    attachFile = teaserEditModel.AttachFile = dir + @"\zaj.jpg";
+                    teaserEditModel.AttachFile = dir + @"\zaj.jpg";
                     Thread.Sleep(5000);
                     LogTrace.WriteInLog(Goods_View.tab2 + "Работаю с полем загрузки Фото. Было загружено: " + teaserEditModel.AttachFile);
+                    attachFile = driver.FindElement(By.Id("imageLink")).GetAttribute("value");
                 #endregion
 
                 #region Unrequired fields
@@ -99,6 +101,88 @@ namespace Task.Controller
             }
             else
             {
+                LogTrace.WriteInLog("\n        Тизер успешно отредактирован");
+                LogForClickers.WriteInLog("\n        Тизер успешно отредактирован");
+            }
+            Registry.hashTable["driver"] = driver;
+        }
+
+        public bool wasMismatch = false;
+
+        public void CheckEditingTeaser()
+        {
+            driver = (IWebDriver) Registry.hashTable["driver"];
+                //забираем из хештаблицы сохраненный при создании клиента драйвер
+            driver.Navigate().GoToUrl(baseUrl); //заходим по ссылке
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+            LogTrace.WriteInLog("          " + driver.Url);
+
+            #region Проверка заполнения
+
+                #region Проверить обязательные поля
+                    LogTrace.WriteInLog("          ...Проверка: Обязательные поля...");
+
+                    if (link == teaserEditModel.GetLink) { LogTrace.WriteInLog("          Совпадают: содержимое поля Ссылка и введенное при редактировании"); }
+                    else
+                    {
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Ссылка и введенное при редактировании");
+                        wasMismatch = true;
+                    }
+
+                    if (title == teaserEditModel.GetTitle) { LogTrace.WriteInLog("          Совпадают: содержимое поля Заголовок и введенное при редактировании"); }
+                    else
+                    {
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Заголовок и введенное при редактировании");
+                        wasMismatch = true;
+                    }
+
+                    if (teaserEditModel.chosenCategory == teaserEditModel.GetCategory) { LogTrace.WriteInLog("          Совпадают: содержимое поля Категория и введенное при редактировании"); }
+                    else
+                    {
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Категория и введенное при редактировании");
+                        wasMismatch = true;
+                    }
+
+                    if (advertText == teaserEditModel.GetAdvertText) { LogTrace.WriteInLog("          Совпадают: содержимое поля Рекламный текст и введенное при редактировании"); }
+                    else
+                    {
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Рекламный текст и введенное при редактировании");
+                        wasMismatch = true;
+                    }
+
+                    if (attachFile == teaserEditModel.GetAttachFile) { LogTrace.WriteInLog("          Совпадают: содержимое поля Фото и введенное при редактировании"); }
+                    else
+                    {
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Фото и введенное при редактировании");
+                        wasMismatch = true;
+                    }
+                #endregion
+
+                #region Проверить необязательные поля
+                    LogTrace.WriteInLog("          ...Проверка: Необязательные поля...");
+
+                    if (teaserEditModel.chosenCurrency == teaserEditModel.GetCurrency) { LogTrace.WriteInLog("          Совпадают: содержимое поля Валюта и введенное при редактировании"); }
+                    else
+                    {
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Валюта и введенное при редактировании");
+                        wasMismatch = true;
+                    }
+
+                    if (priceForGoodsService == teaserEditModel.GetPriceForGoodsService) { LogTrace.WriteInLog("          Совпадают: содержимое поля Цена товара/услуги и введенное при редактировании"); }
+                    else
+                    {
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Цена товара/услуги и введенное при редактировании");
+                        wasMismatch = true;
+                    }
+                #endregion
+            #endregion
+
+            LogTrace.WriteInLog("          " + driver.Url);
+            LogTrace.WriteInLog("");
+            if (!wasMismatch)
+            {
+                LogTrace.WriteInLog("        ОК, всё ранее введенное совпадает с текущими значениями");
+                LogForClickers.WriteInLog("        ОК, всё ранее введенное совпадает с текущими значениями");
             }
         }
 

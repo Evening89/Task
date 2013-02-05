@@ -260,7 +260,7 @@ namespace Task.Model
                 {
                     ActionAttachFile = value;
                     IWebElement webelement = driver.FindElement(By.Id("imageFile"));
-                    webelement.Clear();
+                    //webelement.Clear();
                     webelement.SendKeys(value);
                 }
             }
@@ -429,7 +429,7 @@ namespace Task.Model
                 {
                     get
                     {
-                        IWebElement webelement = driver.FindElement(By.Id("imageFile"));
+                        IWebElement webelement = driver.FindElement(By.Id("imageLink"));
                         GetActionAttachFile = webelement.GetAttribute("value");
                         return GetActionAttachFile;
                     }

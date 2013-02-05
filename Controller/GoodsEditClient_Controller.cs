@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
@@ -190,6 +191,12 @@ namespace Task.Controller
                     LogTrace.WriteInLog("               Выбран checkbox Новости в кабинете");
 
                     limitPkQuantity = randoms.RandomNumber(3);
+                    if(limitPkQuantity.StartsWith("0"))
+                    {
+                        Regex regex = new Regex(@"^[0]*");
+                        Match match = regex.Match(limitPkQuantity);
+                        if (match.Success) limitPkQuantity = regex.Replace(limitPkQuantity, "");
+                    }
                     clientEditModel.LimitPkQuantity = limitPkQuantity;
                     LogTrace.WriteInLog("               Заполняю поле 'Ограничение по количеству кампаний'. Было введено: " + clientEditModel.LimitPkQuantity);
 
@@ -197,6 +204,12 @@ namespace Task.Controller
                     LogTrace.WriteInLog("               Выбран checkbox Разрешен просмотр фильтра по площадкам");
 
                     limitTeasersQuantity = randoms.RandomNumber(3);
+                    if (limitTeasersQuantity.StartsWith("0"))
+                    {
+                        Regex regex = new Regex(@"^[0]*");
+                        Match match = regex.Match(limitTeasersQuantity);
+                        if (match.Success) limitTeasersQuantity = regex.Replace(limitTeasersQuantity, "");
+                    }
                     clientEditModel.LimitTeasersQuantityPerDay = limitTeasersQuantity;
                     LogTrace.WriteInLog("               Заполняю поле 'Ограничение на кол-во создаваемых тизеров в сутки каждой РК'. Было введено: " + clientEditModel.LimitTeasersQuantityPerDay);
 
