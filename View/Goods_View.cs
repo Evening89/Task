@@ -211,11 +211,11 @@ namespace Task.View
         public void CreateNewTeaser()
         {
             listBox1.Items.Add(
-                tab2 + "===============================Cоздание тизера по Товарам===============================");
-            LogForClickers.WriteInLog(tab2 + "===============================Cоздание тизера по Товарам===============================");
-            LogForClickers.WriteInLog(tab2 + DateTime.Now.ToString());
-            LogTrace.WriteInLog(tab2 + "===============================Cоздание тизера по Товарам===============================");
-            LogTrace.WriteInLog(tab2 + DateTime.Now.ToString());
+                tab1 + "===============================Cоздание тизера по Товарам===============================");
+            LogForClickers.WriteInLog(tab1 + "===============================Cоздание тизера по Товарам===============================");
+            LogForClickers.WriteInLog(tab1 + DateTime.Now.ToString());
+            LogTrace.WriteInLog(tab1 + "===============================Cоздание тизера по Товарам===============================");
+            LogTrace.WriteInLog(tab1 + DateTime.Now.ToString());
 
             GoodsCreateTeaser_Controller teaserController = new GoodsCreateTeaser_Controller();
             teaserController.CreateTeaser(checkBox1.Checked, checkBox2.Checked);
@@ -226,13 +226,13 @@ namespace Task.View
             {
                 listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
-                listBox1.Items.Add(tab2 + "!!! Ошибки !!!");
+                listBox1.Items.Add(tab1 + "!!! Ошибки !!!");
 
                 LogForClickers.WriteInLog("");
-                LogForClickers.WriteInLog(tab2 + "!!! Ошибки !!!");
+                LogForClickers.WriteInLog(tab1 + "!!! Ошибки !!!");
 
                 LogTrace.WriteInLog("");
-                LogTrace.WriteInLog(tab2 + "!!! Ошибки !!!");
+                LogTrace.WriteInLog(tab1 + "!!! Ошибки !!!");
 
                 for (int i = 0; i < errors.Count; i++)
                 {
@@ -250,21 +250,21 @@ namespace Task.View
                 string domain = teaserController.allowedDomain;
 
                 LogTrace.WriteInLog("");
-                LogForClickers.WriteInLog(tab2 + "ID тизера: " + teaserId);
-                LogTrace.WriteInLog(tab2 + "ID тизера: " + teaserId);
-                listBox1.Items.Add(tab2 + "ID тизера: " + teaserId);
+                LogForClickers.WriteInLog(tab1 + "ID тизера: " + teaserId);
+                LogTrace.WriteInLog(tab1 + "ID тизера: " + teaserId);
+                listBox1.Items.Add(tab1 + "ID тизера: " + teaserId);
 
-                LogForClickers.WriteInLog(tab2 + "ID клиента: " + clientId);
-                LogTrace.WriteInLog(tab2 + "ID клиента: " + clientId);
-                listBox1.Items.Add(tab2 + "ID клиента:     " + clientId);
+                LogForClickers.WriteInLog(tab1 + "ID клиента: " + clientId);
+                LogTrace.WriteInLog(tab1 + "ID клиента: " + clientId);
+                listBox1.Items.Add(tab1 + "ID клиента:     " + clientId);
 
-                LogForClickers.WriteInLog(tab2 + "ID РК:      " + pkId);
-                LogTrace.WriteInLog(tab2 + "ID РК:      " + pkId);
-                listBox1.Items.Add(tab2 + "ID РК:     " + pkId);
+                LogForClickers.WriteInLog(tab1 + "ID РК:      " + pkId);
+                LogTrace.WriteInLog(tab1 + "ID РК:      " + pkId);
+                listBox1.Items.Add(tab1 + "ID РК:     " + pkId);
 
-                LogForClickers.WriteInLog(tab2 + "Домен:      " + domain);
-                LogTrace.WriteInLog(tab2 + "Домен:      " + domain);
-                listBox1.Items.Add(tab2 + "Домен: " + domain);
+                LogForClickers.WriteInLog(tab1 + "Домен:      " + domain);
+                LogTrace.WriteInLog(tab1 + "Домен:      " + domain);
+                listBox1.Items.Add(tab1 + "Домен: " + domain);
             }
 
             //listBox1.Items.Add("");
@@ -544,13 +544,13 @@ namespace Task.View
             {
                 listBox1.ForeColor = Color.Red;
                 listBox1.Items.Add("");
-                listBox1.Items.Add(tab3 + "!!! Ошибки !!!");
+                listBox1.Items.Add(tab2 + "!!! Ошибки !!!");
 
                 LogForClickers.WriteInLog("");
-                LogForClickers.WriteInLog(tab3 + "!!! Ошибки !!!");
+                LogForClickers.WriteInLog(tab2 + "!!! Ошибки !!!");
 
                 LogTrace.WriteInLog("");
-                LogTrace.WriteInLog(tab3 + "!!! Ошибки !!!");
+                LogTrace.WriteInLog(tab2 + "!!! Ошибки !!!");
 
                 for (int i = 0; i < errors.Count; i++)
                 {

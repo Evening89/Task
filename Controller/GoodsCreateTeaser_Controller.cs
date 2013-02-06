@@ -38,66 +38,66 @@ namespace Task.Controller
             GoodsCreateTeaser_Model teaserModel = new GoodsCreateTeaser_Model();
             teaserModel.driver = driver;
 
-            LogTrace.WriteInLog(Goods_View.tab2 + driver.Url);
+            LogTrace.WriteInLog(Goods_View.tab1 + driver.Url);
             
             #region Required fields
                 if (setNecessaryFields) //выбрано заполнение обязательных полей
                 {
                     Thread.Sleep(5000);
 
-                    LogTrace.WriteInLog(Goods_View.tab2 + "...Заполняю обязательные поля...");
+                    LogTrace.WriteInLog(Goods_View.tab1 + "...Заполняю обязательные поля...");
 
                     teaserModel.Link = allowedDomain;
-                    LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Ссылка. Было введено: " + teaserModel.Link);
+                    LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю поле Ссылка. Было введено: " + teaserModel.Link);
 
                     teaserModel.Title = randoms.RandomString(10);
-                    LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Заголовок. Было введено: " + teaserModel.Title);
+                    LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю поле Заголовок. Было введено: " + teaserModel.Title);
 
                     Random rnd=new Random();
                     int category = rnd.Next(1, 31);
                     teaserModel.Category = category;
-                    LogTrace.WriteInLog(Goods_View.tab2 + "Работаю с выпадающим списком Категория. Было выбрано: " + teaserModel.chosenCategory);
+                    LogTrace.WriteInLog(Goods_View.tab1 + "Работаю с выпадающим списком Категория. Было выбрано: " + teaserModel.chosenCategory);
 
                     teaserModel.AdvertText = randoms.RandomString(20);
-                    LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Рекламный текст. Было введено: " + teaserModel.AdvertText);
+                    LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю поле Рекламный текст. Было введено: " + teaserModel.AdvertText);
 
                     rnd = new Random();
                     int price = rnd.Next(5, 11);
                     teaserModel.PriceForClick = price.ToString();
-                    LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Цена за клик, центы. Было введено: " + teaserModel.PriceForClick);
+                    LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю поле Цена за клик, центы. Было введено: " + teaserModel.PriceForClick);
 
                     string dir = Directory.GetCurrentDirectory();
                     teaserModel.AttachFile = dir + @"\hare.jpg";
                     Thread.Sleep(8000);
-                    LogTrace.WriteInLog(Goods_View.tab2 + "Работаю с полем загрузки Фото. Было загружено: " + teaserModel.AttachFile);
+                    LogTrace.WriteInLog(Goods_View.tab1 + "Работаю с полем загрузки Фото. Было загружено: " + teaserModel.AttachFile);
                 }
             #endregion
 
             #region Unrequired fields
                 if(setUnnecessaryFields) //выбрано заполнение необязательных полей
                 {
-                    LogTrace.WriteInLog(Goods_View.tab2 + "...Заполняю необязательные поля...");
+                    LogTrace.WriteInLog(Goods_View.tab1 + "...Заполняю необязательные поля...");
 
                     if (needSet())
                     {
                         teaserModel.ScrewBeginsAt = true;
                         //Thread.Sleep(5000);
-                        LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю всплывающее окно 'Открутка начнется с'");
+                        LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю всплывающее окно 'Открутка начнется с'");
                         teaserModel.Date = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day;
-                        LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Дата. Было введено: " + teaserModel.Date);
+                        LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю поле Дата. Было введено: " + teaserModel.Date);
                         //Thread.Sleep(5000);
                         teaserModel.Time = DateTime.Now.Hour + ":" + DateTime.Now.Minute;
                         teaserModel.Time = DateTime.Now.Hour + ":" + DateTime.Now.Minute;
-                        LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Время. Было введено: " + teaserModel.Time);
+                        LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю поле Время. Было введено: " + teaserModel.Time);
                         //Thread.Sleep(5000);
                         teaserModel.ButtonApply = true;
-                        LogTrace.WriteInLog(Goods_View.tab2 + "Жму кнопку Применить");
+                        LogTrace.WriteInLog(Goods_View.tab1 + "Жму кнопку Применить");
                     }
 
                     if (needSet())
                     {
                         teaserModel.TeaserWomen = true;
-                        LogTrace.WriteInLog(Goods_View.tab2 + "Выбран checkbox Тизер женской тематики (если таковая есть для выбранной Категории)");
+                        LogTrace.WriteInLog(Goods_View.tab1 + "Выбран checkbox Тизер женской тематики (если таковая есть для выбранной Категории)");
                     }
 
                     if (needSet())
@@ -105,7 +105,7 @@ namespace Task.Controller
                         Random rnd = new Random();
                         int currency = rnd.Next(0, 6);
                         teaserModel.Currency = currency;
-                        LogTrace.WriteInLog(Goods_View.tab2 + "Работаю с выпадающим списком Валюта. Было выбрано: " + teaserModel.chosenCurrency);
+                        LogTrace.WriteInLog(Goods_View.tab1 + "Работаю с выпадающим списком Валюта. Было выбрано: " + teaserModel.chosenCurrency);
                     }
 
                     if (needSet())
@@ -113,7 +113,7 @@ namespace Task.Controller
                         Random rnd = new Random();
                         int price = rnd.Next(1, 11);
                         teaserModel.PriceForGoodsService = price.ToString();
-                        LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Цена товара/услуги. Было введено: " + teaserModel.PriceForGoodsService);
+                        LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю поле Цена товара/услуги. Было введено: " + teaserModel.PriceForGoodsService);
                     }
                 }
             #endregion
@@ -122,7 +122,7 @@ namespace Task.Controller
             //Thread.Sleep(5000);
             teaserModel.Submit(); //пытаемся сохранить форму
             //Thread.Sleep(5000);
-            LogTrace.WriteInLog(Goods_View.tab2 + "Нажал кнопку Сохранить");
+            LogTrace.WriteInLog(Goods_View.tab1 + "Нажал кнопку Сохранить");
             string isCreatedTeaserUrl = driver.Url; //запоминаем url страницы, открывшейся после нажатия "Cохранить"
             //если createSitetUrl и isCreatedSiteUrl совпали - мы никуда не перешли и значит есть ошибки заполнения полей
             //если createSitetUrl и isCreatedSiteUrl не совпали - сайт создался и ошибки искать не надо
@@ -164,7 +164,7 @@ namespace Task.Controller
                 {
                     webElement = driver.FindElement(By.Id(ban)); //находим зеленый кружок
                     webElement.Click(); //блокируем кликом на зеленый кружок
-                    LogTrace.WriteInLog(Goods_View.tab2 + "Блокирую тизер. id элемента: " + ban);
+                    LogTrace.WriteInLog(Goods_View.tab1 + "Блокирую тизер. id элемента: " + ban);
 
                     WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5)); //явное ожидание
                     string banned = string.Concat("buttonUnblock", teaserId);
@@ -180,7 +180,7 @@ namespace Task.Controller
                 }
             }
             Registry.hashTable["driver"] = driver;
-            LogTrace.WriteInLog(Goods_View.tab2 + driver.Url);
+            LogTrace.WriteInLog(Goods_View.tab1 + driver.Url);
         }
 
         protected bool needSet() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем
