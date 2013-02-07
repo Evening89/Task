@@ -31,6 +31,8 @@ namespace Task.View
         public static string tab2 = "\t\t";
         public static string tab3 = "\t\t\t";
 
+        private string _pathToCredentials = "Auth.csv";
+
         public void CreateNewClient()
         {
             listBox1.Items.Add(
@@ -40,11 +42,11 @@ namespace Task.View
             LogTrace.WriteInLog("===============================Cоздание клиента по Товарам===============================");
             LogTrace.WriteInLog(DateTime.Now.ToString());
 
-            GoodsCreateClient_Controller clientController = new GoodsCreateClient_Controller();
+            GoodsCreateClientController clientController = new GoodsCreateClientController();
             //clientController.CreateClient(openFileDialog1.FileName, checkBox2.Checked);
-            clientController.CreateClient("Auth.csv", checkBox1.Checked, checkBox2.Checked);
+            clientController.CreateClient(_pathToCredentials, checkBox1.Checked, checkBox2.Checked);
 
-            List<string> errors = clientController.errors;
+            List<string> errors = clientController.Errors;
             
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
@@ -68,20 +70,20 @@ namespace Task.View
             else
             {
                 //listBox1.ForeColor = Color.Black;
-                string clientId = clientController.clientId;
+                string clientId = clientController.ClientId;
 
                 LogTrace.WriteInLog("");
                 LogForClickers.WriteInLog("ID клиента: " + clientId);
                 LogTrace.WriteInLog("ID клиента: " + clientId);
                 listBox1.Items.Add("ID клиента: " + clientId);
 
-                LogForClickers.WriteInLog("Логин:      " + clientController.login);
-                LogTrace.WriteInLog("Логин:      " + clientController.login);
-                listBox1.Items.Add("Логин:         " + clientController.login);
+                LogForClickers.WriteInLog("Логин:      " + clientController.Login);
+                LogTrace.WriteInLog("Логин:      " + clientController.Login);
+                listBox1.Items.Add("Логин:         " + clientController.Login);
 
-                LogForClickers.WriteInLog("Пароль:     " + clientController.password);
-                LogTrace.WriteInLog("Пароль:     " + clientController.password);
-                listBox1.Items.Add("Пароль:         " + clientController.password);
+                LogForClickers.WriteInLog("Пароль:     " + clientController.Password);
+                LogTrace.WriteInLog("Пароль:     " + clientController.Password);
+                listBox1.Items.Add("Пароль:         " + clientController.Password);
             }
 
             //listBox1.Items.Add("");
@@ -98,10 +100,10 @@ namespace Task.View
             LogTrace.WriteInLog(tab1 + "===============================Cоздание сайта по Товарам===============================");
             LogTrace.WriteInLog(tab1 + DateTime.Now.ToString());
 
-            GoodsCreateSite_Controller siteController = new GoodsCreateSite_Controller();
+            GoodsCreateSiteController siteController = new GoodsCreateSiteController();
             siteController.CreateSite(checkBox1.Checked, checkBox2.Checked);
 
-            List<string> errors = siteController.errors; //парсим со страницы список ошибок
+            List<string> errors = siteController.Errors; //парсим со страницы список ошибок
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
@@ -125,9 +127,9 @@ namespace Task.View
             else
             {
                 //listBox1.ForeColor = Color.Black;
-                string siteId = siteController.siteId;
-                string clientId = siteController.clientId;
-                string siteDomain = siteController.siteDomain;
+                string siteId = siteController.SiteId;
+                string clientId = siteController.ClientId;
+                string siteDomain = siteController.SiteDomain;
                 //string siteName = siteController.siteName;
 
                 LogTrace.WriteInLog("");
@@ -158,10 +160,10 @@ namespace Task.View
             LogTrace.WriteInLog(tab1 + "===============================Cоздание РК по Товарам===============================");
             LogTrace.WriteInLog(tab1 + DateTime.Now.ToString());
 
-            GoodsCreatePk_Controller pkController = new GoodsCreatePk_Controller();
+            GoodsCreatePkController pkController = new GoodsCreatePkController();
             pkController.CreatePk(checkBox1.Checked, checkBox2.Checked);
 
-            List<string> errors = pkController.errors; //парсим со страницы список ошибок
+            List<string> errors = pkController.Errors; //парсим со страницы список ошибок
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
@@ -185,9 +187,9 @@ namespace Task.View
             else
             {
                 //listBox1.ForeColor = Color.Black;
-                string pkId = pkController.pkId;
-                string clientId = pkController.clientId;
-                string pkName = pkController.pkName;
+                string pkId = pkController.PkId;
+                string clientId = pkController.ClientId;
+                string pkName = pkController.PkName;
 
                 LogTrace.WriteInLog("");
                 LogForClickers.WriteInLog(tab1 + "ID РК:       " + pkId);
@@ -217,10 +219,10 @@ namespace Task.View
             LogTrace.WriteInLog(tab1 + "===============================Cоздание тизера по Товарам===============================");
             LogTrace.WriteInLog(tab1 + DateTime.Now.ToString());
 
-            GoodsCreateTeaser_Controller teaserController = new GoodsCreateTeaser_Controller();
+            GoodsCreateTeaserController teaserController = new GoodsCreateTeaserController();
             teaserController.CreateTeaser(checkBox1.Checked, checkBox2.Checked);
 
-            List<string> errors = teaserController.errors; //парсим со страницы список ошибок
+            List<string> errors = teaserController.Errors; //парсим со страницы список ошибок
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
@@ -244,10 +246,10 @@ namespace Task.View
             else
             {
                 //listBox1.ForeColor = Color.Black;
-                string teaserId = teaserController.teaserId;
-                string pkId = teaserController.pkId;
-                string clientId = teaserController.clientId;
-                string domain = teaserController.allowedDomain;
+                string teaserId = teaserController.TeaserId;
+                string pkId = teaserController.PkId;
+                string clientId = teaserController.ClientId;
+                string domain = teaserController.AllowedDomain;
 
                 LogTrace.WriteInLog("");
                 LogForClickers.WriteInLog(tab1 + "ID тизера: " + teaserId);

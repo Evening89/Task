@@ -9,42 +9,44 @@ using OpenQA.Selenium;
 
 namespace Task.Controller
 {
-    public class GoodsCreatePk_Controller
+    public class GoodsCreatePkController
     {
-        public IWebDriver driver;
+        private IWebDriver _driver;
+        private GoodsCreatePK_Model _pkModel;
         //берем сохраненный ранее 
         //(при создании клиента Task.Controller.GoodsCreateClient_Controller) ID клиента
         //и дописываем в URL
-        public string baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/clients-new-campaign/client_id/" + Registry.hashTable["clientId"];
-        public List<string> errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
-        public string pkId; //переменная для хранения ID только что созданной РК
-        public string clientId;
-        public string pkName; //переменная для хранения названия только что созданной РК
-        Randoms randoms = new Randoms(); //класс генерации случайных строк
+        private readonly string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/clients-new-campaign/client_id/" + Registry.hashTable["clientId"];
+
+        public List<string> Errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
+        public string PkId; //переменная для хранения ID только что созданной РК
+        public string ClientId;
+        public string PkName; //переменная для хранения названия только что созданной РК
+        readonly Randoms _randoms = new Randoms(); //класс генерации случайных строк
 
         public void CreatePk(bool setNecessaryFields, bool setUnnecessaryFields)
         {
-            driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
-            driver.Navigate().GoToUrl(baseUrl); //заходим по ссылке
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+            _driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
+            _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
+            _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             //ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
 
-            GoodsCreatePK_Model pkModel = new GoodsCreatePK_Model();
-            pkModel.driver = driver;
+            _pkModel = new GoodsCreatePK_Model();
+            _pkModel.driver = _driver;
 
-            LogTrace.WriteInLog("     " + driver.Url);
+            LogTrace.WriteInLog("     " + _driver.Url);
 
             #region Required fields
                 if (setNecessaryFields) //выбрано заполнение обязательных полей
                 {
                     LogTrace.WriteInLog("     ...Заполняю обязательные поля...");
                     //Название РК
-                    pkName = randoms.RandomString(15) + " " + randoms.RandomNumber(5);
-                    pkModel.Name = pkName;
-                    LogTrace.WriteInLog("     Заполняю поле Название РК. Было введено: " + pkModel.Name);
+                    PkName = _randoms.RandomString(15) + " " + _randoms.RandomNumber(5);
+                    _pkModel.Name = PkName;
+                    LogTrace.WriteInLog("     Заполняю поле Название РК. Было введено: " + _pkModel.Name);
 
                     //Геотаргетинг выбран по умолчанию при открытии страницы - делаем выбор "не использовать"
-                    pkModel.GeoTargeting = "0";
+                    _pkModel.GeoTargeting = "0";
                     LogTrace.WriteInLog("     Выбираю radiobutton Геотаргетинг. Выбрано: не использовать");
                 }
             #endregion
@@ -55,17 +57,17 @@ namespace Task.Controller
                     LogTrace.WriteInLog("     ...Заполняю необязательные поля...");
                     if (needSetCheckBox())
                     {
-                        pkModel.StartPkDate = pkModel.GenerateDate();
-                        LogTrace.WriteInLog("     Заполняю поле Дата старта РК. Было введено: " + pkModel.StartPkDate);
+                        _pkModel.StartPkDate = _pkModel.GenerateDate();
+                        LogTrace.WriteInLog("     Заполняю поле Дата старта РК. Было введено: " + _pkModel.StartPkDate);
                     }
 
                     if (needSetCheckBox())
                     {
-                        pkModel.EndPkDate = pkModel.GenerateDate();
-                        LogTrace.WriteInLog("     Заполняю поле Дата окончания РК. Было введено: " + pkModel.EndPkDate);
-                        List<string> instantErrorsDate = pkModel.ErrorsInFillFields();
+                        _pkModel.EndPkDate = _pkModel.GenerateDate();
+                        LogTrace.WriteInLog("     Заполняю поле Дата окончания РК. Было введено: " + _pkModel.EndPkDate);
+                        List<string> instantErrorsDate = _pkModel.ErrorsInFillFields();
                         if (instantErrorsDate.Count != 0) //если список с ошибками заполнения полей даты непуст
-                            errors = instantErrorsDate; //копируем в нас общий список ошибок errors
+                            Errors = instantErrorsDate; //копируем в нас общий список ошибок errors
                     }
                     //if (needSetCheckBox())
                     //{
@@ -74,13 +76,13 @@ namespace Task.Controller
                     //}
                     if (needSetCheckBox())
                     {
-                        pkModel.StoppedByManager = true;
+                        _pkModel.StoppedByManager = true;
                         LogTrace.WriteInLog("     Выбран checkbox Остановлена менеджером");
                     }
 
                     #region Radiobutton Ограничения рекламной кампании
                         string variant = needSetRadioButton(3).ToString();
-                        pkModel.LimitsOfPk = variant;
+                        _pkModel.LimitsOfPk = variant;
                         switch (variant)
                         {
                             case "0":
@@ -93,22 +95,22 @@ namespace Task.Controller
                                     int num2;
                                     do
                                     {
-                                        num2 = int.Parse(randoms.RandomNumber(2));
+                                        num2 = int.Parse(_randoms.RandomNumber(2));
                                     } while (num2 < 5); //суточный лимит должен быть не менее 5
                                     LogTrace.WriteInLog("     Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по бюджету");
-                                    pkModel.DayLimitByBudget = num2.ToString();//суточный лимит должен быть не менее 5
-                                    LogTrace.WriteInLog("        Заполняю поле Суточный лимит РК. Было введено: " + pkModel.DayLimitByBudget);
-                                    pkModel.GeneralLimitByBudget = randoms.RandomNumber(3);
-                                    LogTrace.WriteInLog("        Заполняю поле Общий лимит РК. Было введено: " + pkModel.GeneralLimitByBudget);
+                                    _pkModel.DayLimitByBudget = num2.ToString();//суточный лимит должен быть не менее 5
+                                    LogTrace.WriteInLog("        Заполняю поле Суточный лимит РК. Было введено: " + _pkModel.DayLimitByBudget);
+                                    _pkModel.GeneralLimitByBudget = _randoms.RandomNumber(3);
+                                    LogTrace.WriteInLog("        Заполняю поле Общий лимит РК. Было введено: " + _pkModel.GeneralLimitByBudget);
                                     break;
                                 }
                             case "2":
                                 {
                                     LogTrace.WriteInLog("     Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по количеству кликов");
-                                    pkModel.DayLimitByClicks = randoms.RandomNumber(3);
-                                    LogTrace.WriteInLog("        Заполняю поле Суточный лимит кликов РК. Было введено: " + pkModel.DayLimitByClicks);
-                                    pkModel.GeneralLimitByClicks = randoms.RandomNumber(3);
-                                    LogTrace.WriteInLog("        Заполняю поле Общий лимит кликов РК. Было введено: " + pkModel.GeneralLimitByClicks);
+                                    _pkModel.DayLimitByClicks = _randoms.RandomNumber(3);
+                                    LogTrace.WriteInLog("        Заполняю поле Суточный лимит кликов РК. Было введено: " + _pkModel.DayLimitByClicks);
+                                    _pkModel.GeneralLimitByClicks = _randoms.RandomNumber(3);
+                                    LogTrace.WriteInLog("        Заполняю поле Общий лимит кликов РК. Было введено: " + _pkModel.GeneralLimitByClicks);
                                     break;
                                 }
                         }
@@ -117,43 +119,43 @@ namespace Task.Controller
                     #region Checkbox UTM-разметка рекламной кампании для Google Analytics
                         if (needSetCheckBox())
                         {
-                            pkModel.UtmPkForGoogleAnalytics = true;
+                            _pkModel.UtmPkForGoogleAnalytics = true;
                             LogTrace.WriteInLog("     Выбран checkbox UTM-разметка рекламной кампании для Google Analytics");
-                            pkModel.UtmMedium = randoms.RandomString(5);
-                            LogTrace.WriteInLog("        Заполняю поле utm_medium (средство кампании). Было введено: " + pkModel.UtmMedium);
-                            pkModel.UtmSource = randoms.RandomString(5);
-                            LogTrace.WriteInLog("        Заполняю поле utm_source (источник кампании). Было введено: " + pkModel.UtmSource);
-                            pkModel.UtmCampaign = randoms.RandomString(5);
-                            LogTrace.WriteInLog("        Заполняю поле utm_campaign (название кампании). Было введено: " + pkModel.UtmCampaign);
+                            _pkModel.UtmMedium = _randoms.RandomString(5);
+                            LogTrace.WriteInLog("        Заполняю поле utm_medium (средство кампании). Было введено: " + _pkModel.UtmMedium);
+                            _pkModel.UtmSource = _randoms.RandomString(5);
+                            LogTrace.WriteInLog("        Заполняю поле utm_source (источник кампании). Было введено: " + _pkModel.UtmSource);
+                            _pkModel.UtmCampaign = _randoms.RandomString(5);
+                            LogTrace.WriteInLog("        Заполняю поле utm_campaign (название кампании). Было введено: " + _pkModel.UtmCampaign);
                         }
                     #endregion
 
                     #region Checkbox UTM-разметка пользователя
                         if (needSetCheckBox())
                         {
-                            pkModel.UtmUser = true;
+                            _pkModel.UtmUser = true;
                             LogTrace.WriteInLog("     Выбран checkbox UTM-разметка пользователя");
-                            pkModel.UtmUserStr = randoms.RandomString(5);
-                            LogTrace.WriteInLog("        Заполняю поле UTM-разметка пользователя. Было введено: " + pkModel.UtmUserStr);
+                            _pkModel.UtmUserStr = _randoms.RandomString(5);
+                            LogTrace.WriteInLog("        Заполняю поле UTM-разметка пользователя. Было введено: " + _pkModel.UtmUserStr);
                         }
                     #endregion
 
                     if (needSetCheckBox())
                     {
                         LogTrace.WriteInLog("     Выбран checkbox Крутить в сети Товарро");
-                        pkModel.ScrewInTovarro = true;
+                        _pkModel.ScrewInTovarro = true;
                     }
 
                     #region Checkbox Блокировка по расписанию
                         if (needSetCheckBox())
                         {
-                            pkModel.BlockBySchedule = true;
+                            _pkModel.BlockBySchedule = true;
                             LogTrace.WriteInLog("     Выбран checkbox Блокировка по расписанию");
-                            if (needSetCheckBox()) pkModel.Weekends = true;
+                            if (needSetCheckBox()) _pkModel.Weekends = true;
                             LogTrace.WriteInLog("        Выбран checkbox Выходные");
-                            if (needSetCheckBox()) pkModel.Weekdays = true;
+                            if (needSetCheckBox()) _pkModel.Weekdays = true;
                             LogTrace.WriteInLog("        Выбран checkbox Будни");
-                            if (needSetCheckBox()) pkModel.WorkingTime = true;
+                            if (needSetCheckBox()) _pkModel.WorkingTime = true;
                             LogTrace.WriteInLog("        Выбран checkbox Рабочее время (9-18 по будням)");
                         }
                     #endregion
@@ -161,237 +163,237 @@ namespace Task.Controller
                     #region Checkbox Передавать id площадки в ссылке
                         if (needSetCheckBox())
                         {
-                            pkModel.IdOfPlatformInLink = true;
+                            _pkModel.IdOfPlatformInLink = true;
                             LogTrace.WriteInLog("     Выбран checkbox Передавать id площадки в ссылке");
-                            pkModel.IdOfPlatformInLinkStr = randoms.RandomString(5);
-                            LogTrace.WriteInLog("        Заполняю поле Передавать id площадки в ссылке. Было введено: " + pkModel.IdOfPlatformInLinkStr);
+                            _pkModel.IdOfPlatformInLinkStr = _randoms.RandomString(5);
+                            LogTrace.WriteInLog("        Заполняю поле Передавать id площадки в ссылке. Было введено: " + _pkModel.IdOfPlatformInLinkStr);
                         }
                     #endregion
 
                     if (needSetCheckBox())
                     {
-                        pkModel.AddIdOfTeaserInLink = true;
+                        _pkModel.AddIdOfTeaserInLink = true;
                         LogTrace.WriteInLog("     Выбран checkbox Добавлять id тизера в конец ссылки");
                     }
 
                     if (needSetCheckBox())
                     {
-                        pkModel.CommentsForPk = randoms.RandomString(20) + " " + randoms.RandomString(10);
-                        LogTrace.WriteInLog("     Заполняю textarea Комментарий к кампании. Было введено: " + pkModel.CommentsForPk);
+                        _pkModel.CommentsForPk = _randoms.RandomString(20) + " " + _randoms.RandomString(10);
+                        LogTrace.WriteInLog("     Заполняю textarea Комментарий к кампании. Было введено: " + _pkModel.CommentsForPk);
                     }
 
                     #region Checkbox Площадки
                         if (needSetCheckBox())
                         {
-                            pkModel.Platforms = true;
+                            _pkModel.Platforms = true;
                             LogTrace.WriteInLog("     Выбран checkbox Площадки");
-                            pkModel.PlatformsNotSpecified = true;
+                            _pkModel.PlatformsNotSpecified = true;
                             LogTrace.WriteInLog("        Выбран checkbox Не определено");
                             //if (needSetCheckBox()) pkModel.PlatformsNotSpecified = true;
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsPolitics = true;
+                                _pkModel.PlatformsPolitics = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Политика, общество, происшествия, религия");
                             }
                         
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsEconomics = true;
+                                _pkModel.PlatformsEconomics = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Экономика, финансы, недвижимость, работа и карьера");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsCelebrities = true;
+                                _pkModel.PlatformsCelebrities = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Знаменитости, шоу-бизнес, кино, музыка");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsScience = true;
+                                _pkModel.PlatformsScience = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Наука и технологии");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsConnection = true;
+                                _pkModel.PlatformsConnection = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Связь, компьютеры, программы");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsSports = true;
+                                _pkModel.PlatformsSports = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Спорт");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsAuto = true;
+                                _pkModel.PlatformsAuto = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Авто-вело-мото");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsFashion = true;
+                                _pkModel.PlatformsFashion = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Мода и стиль, здоровье и красота, фитнес и диета, кулинария");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsMedicine = true;
+                                _pkModel.PlatformsMedicine = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Медицина");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsTourism = true;
+                                _pkModel.PlatformsTourism = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Туризм и отдых (путевки, отели, рестораны)");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsGlobalPortals = true;
+                                _pkModel.PlatformsGlobalPortals = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Глобальные порталы с множеством подпроектов");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsHumor = true;
+                                _pkModel.PlatformsHumor = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Юмор (приколы, картинки, обои), каталог фотографий, блоги");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsFileshares = true;
+                                _pkModel.PlatformsFileshares = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Файлообменники, файлокачалки (кино, музыка, игры, программы)");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsSocialNetworks = true;
+                                _pkModel.PlatformsSocialNetworks = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Социальные сети, сайты знакомства, личные дневники");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsAnimals = true;
+                                _pkModel.PlatformsAnimals = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Животный и растительный мир");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsReligion = true;
+                                _pkModel.PlatformsReligion = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Религия");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsChildren = true;
+                                _pkModel.PlatformsChildren = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Дети и родители");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsBuilding = true;
+                                _pkModel.PlatformsBuilding = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Строительство, ремонт, дача, огород");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsCookery = true;
+                                _pkModel.PlatformsCookery = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Кулинария");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsJob = true;
+                                _pkModel.PlatformsJob = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Работа и карьера. Поиск работы, поиск персонала");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsNotSites = true;
+                                _pkModel.PlatformsNotSites = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Не сайты (программы, тулбары, таскбары)");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsSitesStartPagesBrowsers = true;
+                                _pkModel.PlatformsSitesStartPagesBrowsers = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Сайты, размещенные на стартовых страницах браузеров");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsSearchSystems = true;
+                                _pkModel.PlatformsSearchSystems = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Поисковые системы");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsEmail = true;
+                                _pkModel.PlatformsEmail = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Почта");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsPhotoCatalogues = true;
+                                _pkModel.PlatformsPhotoCatalogues = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Каталоги фотографий");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsVarez = true;
+                                _pkModel.PlatformsVarez = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Варезники");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsOnlineVideo = true;
+                                _pkModel.PlatformsOnlineVideo = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Онлайн видео, телевидение, радио");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsOnlineLibraries = true;
+                                _pkModel.PlatformsOnlineLibraries = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Онлайн-библиотеки");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsInternet = true;
+                                _pkModel.PlatformsInternet = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Интернет, поисковые сайты, электронная почта, интернет-магазины, аукционы, каталоги ресурсов, фирм и предприятий");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsOnlineGames = true;
+                                _pkModel.PlatformsOnlineGames = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Онлайн игры");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsInternetRepresentatives = true;
+                                _pkModel.PlatformsInternetRepresentatives = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Интернет-представительства бизнеса.");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsProgramms = true;
+                                _pkModel.PlatformsProgramms = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Программы, прошивки, игры для КПК и мобильных устройств");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsCataloguesInternetResources = true;
+                                _pkModel.PlatformsCataloguesInternetResources = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Каталоги Интернет - ресурсов, фирм и предприятий");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsForWagesInInternet = true;
+                                _pkModel.PlatformsForWagesInInternet = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Для заработка в Интернете. Партнерские программы");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsHobbies = true;
+                                _pkModel.PlatformsHobbies = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Хобби и увлечения");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsMarketgid = true;
+                                _pkModel.PlatformsMarketgid = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Маркетгид");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsShock = true;
+                                _pkModel.PlatformsShock = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Шокодром");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsEsoteric = true;
+                                _pkModel.PlatformsEsoteric = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Эзотерика. Непознанное, астрология, гороскопы, гадания");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsPsychology = true;
+                                _pkModel.PlatformsPsychology = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Психология, мужчина и женщина");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsHistory = true;
+                                _pkModel.PlatformsHistory = true;
                                 LogTrace.WriteInLog("        Выбран checkbox История, образование, культура");
                             }
                             if (needSetCheckBox())
                             {
-                                pkModel.PlatformsMarketgidWomenNet = true;
+                                _pkModel.PlatformsMarketgidWomenNet = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Маркетгид ЖС");
                             }
                         }
@@ -399,7 +401,7 @@ namespace Task.Controller
 
                     #region Radiobutton Демографический таргетинг
                         variant = needSetRadioButton(2).ToString();
-                        pkModel.DemoTargeting = variant;
+                        _pkModel.DemoTargeting = variant;
                         switch (variant)
                         {
                             case "0":
@@ -411,42 +413,42 @@ namespace Task.Controller
                                 {
                                     LogTrace.WriteInLog("     Выбираю radiobutton Демографический таргетинг. Выбрано: использовать");
                                     //развернуть все пункты (Мужчины, Женщины, Пол не определен)
-                                    pkModel.DemoTargetingMenExpand = true;
-                                    pkModel.DemoTargetingWomenExpand = true;
-                                    pkModel.DemoTargetingHermaphroditeExpand = true;
+                                    _pkModel.DemoTargetingMenExpand = true;
+                                    _pkModel.DemoTargetingWomenExpand = true;
+                                    _pkModel.DemoTargetingHermaphroditeExpand = true;
 
                                     #region Мужчины
-                                        pkModel.DemoTargetingMenNotSpecified = true;
+                                        _pkModel.DemoTargetingMenNotSpecified = true;
                                         LogTrace.WriteInLog("        Мужчины. Выбран checkbox Не определен");
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingMenChoseAll = true;
+                                            _pkModel.DemoTargetingMenChoseAll = true;
                                             LogTrace.WriteInLog("        Мужчины. Выбран checkbox Все");
                                         }
                                         //if (needSetCheckBox()) pkModel.DemoTargetingMenNotSpecified = true;
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingMen618 = true;
+                                            _pkModel.DemoTargetingMen618 = true;
                                             LogTrace.WriteInLog("        Мужчины. Выбран checkbox 6-18");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingMen1924 = true;
+                                            _pkModel.DemoTargetingMen1924 = true;
                                             LogTrace.WriteInLog("        Мужчины. Выбран checkbox 19-24");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingMen2534 = true;
+                                            _pkModel.DemoTargetingMen2534 = true;
                                             LogTrace.WriteInLog("        Мужчины. Выбран checkbox 25-34");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingMen3544 = true;
+                                            _pkModel.DemoTargetingMen3544 = true;
                                             LogTrace.WriteInLog("        Мужчины. Выбран checkbox 35-44");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingMen4590 = true;
+                                            _pkModel.DemoTargetingMen4590 = true;
                                             LogTrace.WriteInLog("        Мужчины. Выбран checkbox 45-90");
                                         }
                                     #endregion
@@ -454,37 +456,37 @@ namespace Task.Controller
                                     #region Женщины
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingWomenChoseAll = true;
+                                            _pkModel.DemoTargetingWomenChoseAll = true;
                                             LogTrace.WriteInLog("        Женщины. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingWomenNotSpecified = true;
+                                            _pkModel.DemoTargetingWomenNotSpecified = true;
                                             LogTrace.WriteInLog("        Женщины. Выбран checkbox Не определен");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingWomen618 = true;
+                                            _pkModel.DemoTargetingWomen618 = true;
                                             LogTrace.WriteInLog("        Женщины. Выбран checkbox 6-18");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingWomen1924 = true;
+                                            _pkModel.DemoTargetingWomen1924 = true;
                                             LogTrace.WriteInLog("        Женщины. Выбран checkbox 19-24");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingWomen2534 = true;
+                                            _pkModel.DemoTargetingWomen2534 = true;
                                             LogTrace.WriteInLog("        Женщины. Выбран checkbox 25-34");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingWomen3544 = true;
+                                            _pkModel.DemoTargetingWomen3544 = true;
                                             LogTrace.WriteInLog("        Женщины. Выбран checkbox 35-44");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingWomen4590 = true;
+                                            _pkModel.DemoTargetingWomen4590 = true;
                                             LogTrace.WriteInLog("        Женщины. Выбран checkbox 45-90");
                                         }
                                     #endregion
@@ -492,32 +494,32 @@ namespace Task.Controller
                                     #region Пол не определен
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingHermaphroditeChoseAll = true;
+                                            _pkModel.DemoTargetingHermaphroditeChoseAll = true;
                                             LogTrace.WriteInLog("        Пол не определен. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingHermaphrodite618 = true;
+                                            _pkModel.DemoTargetingHermaphrodite618 = true;
                                             LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 6-18");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingHermaphrodite1924 = true;
+                                            _pkModel.DemoTargetingHermaphrodite1924 = true;
                                             LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 19-24");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingHermaphrodite2534 = true;
+                                            _pkModel.DemoTargetingHermaphrodite2534 = true;
                                             LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 25-34");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingHermaphrodite3544 = true;
+                                            _pkModel.DemoTargetingHermaphrodite3544 = true;
                                             LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 35-44");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.DemoTargetingHermaphrodite4590 = true;
+                                            _pkModel.DemoTargetingHermaphrodite4590 = true;
                                             LogTrace.WriteInLog("        Пол не определен. Выбран checkbox 45-90");
                                         }
                                     #endregion
@@ -529,7 +531,7 @@ namespace Task.Controller
 
                     #region Radiobutton Таргетинг по интересам
                         variant = needSetRadioButton(2).ToString();
-                        pkModel.InterestsTargeting = variant;
+                        _pkModel.InterestsTargeting = variant;
                         switch (variant)
                         {
                             case "0":
@@ -540,51 +542,51 @@ namespace Task.Controller
                             case "1":
                                 {
                                     LogTrace.WriteInLog("     Выбираю radiobutton Таргетинг по интересам. Выбрано: использовать");
-                                    pkModel.InterestsTargetingBusinessExpand = true;
-                                    pkModel.InterestsTargetingRealtyExpand = true;
-                                    pkModel.InterestsTargetingEducationExpand = true;
-                                    pkModel.InterestsTargetingRestExpand = true;
-                                    pkModel.InterestsTargetingTelephonesExpand = true;
-                                    pkModel.InterestsTargetingMedicineExpand = true;
-                                    pkModel.InterestsTargetingHouseExpand = true;
-                                    pkModel.InterestsTargetingFinanceExpand = true;
-                                    pkModel.InterestsTargetingComputersExpand = true;
-                                    pkModel.InterestsTargetingAutoExpand = true;
-                                    pkModel.InterestsTargetingAudioExpand = true;
+                                    _pkModel.InterestsTargetingBusinessExpand = true;
+                                    _pkModel.InterestsTargetingRealtyExpand = true;
+                                    _pkModel.InterestsTargetingEducationExpand = true;
+                                    _pkModel.InterestsTargetingRestExpand = true;
+                                    _pkModel.InterestsTargetingTelephonesExpand = true;
+                                    _pkModel.InterestsTargetingMedicineExpand = true;
+                                    _pkModel.InterestsTargetingHouseExpand = true;
+                                    _pkModel.InterestsTargetingFinanceExpand = true;
+                                    _pkModel.InterestsTargetingComputersExpand = true;
+                                    _pkModel.InterestsTargetingAutoExpand = true;
+                                    _pkModel.InterestsTargetingAudioExpand = true;
 
-                                    pkModel.InterestsTargetingOther = true;
+                                    _pkModel.InterestsTargetingOther = true;
                                     LogTrace.WriteInLog("        Выбран checkbox Прочее");
                                     //if (needSetCheckBox()) pkModel.InterestsTargetingOther = true;
 
                                     #region Бизнес
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingBusinessChoseAll = true;
+                                            _pkModel.InterestsTargetingBusinessChoseAll = true;
                                             LogTrace.WriteInLog("        Бизнес. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingBusinessAcoountancy = true;
+                                            _pkModel.InterestsTargetingBusinessAcoountancy = true;
                                             LogTrace.WriteInLog("        Бизнес. Выбран checkbox Бухгалтерия");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingBusinessPlacement = true;
+                                            _pkModel.InterestsTargetingBusinessPlacement = true;
                                             LogTrace.WriteInLog("        Бизнес. Выбран checkbox Трудоустройство, персонал");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingBusinessAudit = true;
+                                            _pkModel.InterestsTargetingBusinessAudit = true;
                                             LogTrace.WriteInLog("        Бизнес. Выбран checkbox Аудит, консалтинг");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingBusinessAdverts = true;
+                                            _pkModel.InterestsTargetingBusinessAdverts = true;
                                             LogTrace.WriteInLog("        Бизнес. Выбран checkbox Реклама");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingBusinessMiscellanea = true;
+                                            _pkModel.InterestsTargetingBusinessMiscellanea = true;
                                             LogTrace.WriteInLog("        Бизнес. Выбран checkbox Разное");
                                         }
                                     #endregion
@@ -592,86 +594,86 @@ namespace Task.Controller
                                     #region Недвижимость
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRealtyChoseAll = true;
+                                            _pkModel.InterestsTargetingRealtyChoseAll = true;
                                             LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRealtyMiscelanea = true;
+                                            _pkModel.InterestsTargetingRealtyMiscelanea = true;
                                             LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Разное");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRealtyGarages = true;
+                                            _pkModel.InterestsTargetingRealtyGarages = true;
                                             LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Гаражи");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRealtyFlats = true;
+                                            _pkModel.InterestsTargetingRealtyFlats = true;
                                             LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Квартиры");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRealtyAbroad = true;
+                                            _pkModel.InterestsTargetingRealtyAbroad = true;
                                             LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Зарубежная недвижимость");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRealtyLand = true;
+                                            _pkModel.InterestsTargetingRealtyLand = true;
                                             LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Земля");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRealtySuburban = true;
+                                            _pkModel.InterestsTargetingRealtySuburban = true;
                                             LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Загородная недвижимость");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRealtyHypothec = true;
+                                            _pkModel.InterestsTargetingRealtyHypothec = true;
                                             LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Ипотека");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRealtyCommerce = true;
+                                            _pkModel.InterestsTargetingRealtyCommerce = true;
                                             LogTrace.WriteInLog("        Недвижимость. Выбран checkbox Коммерческая недвижимость");
                                         }
                                     #endregion
 
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.InterestsTargetingExhibitions = true;
+                                        _pkModel.InterestsTargetingExhibitions = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Выставки, концерты, театры, кино");
                                     }
 
                                     #region Образование
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingEducationChoseAll = true;
+                                            _pkModel.InterestsTargetingEducationChoseAll = true;
                                             LogTrace.WriteInLog("        Образование. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingEducationForeignLanguages = true;
+                                            _pkModel.InterestsTargetingEducationForeignLanguages = true;
                                             LogTrace.WriteInLog("        Образование. Выбран checkbox Иностранные языки");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingEducationAbroad = true;
+                                            _pkModel.InterestsTargetingEducationAbroad = true;
                                             LogTrace.WriteInLog("        Образование. Выбран checkbox Образование за рубежом");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingEducationHigh = true;
+                                            _pkModel.InterestsTargetingEducationHigh = true;
                                             LogTrace.WriteInLog("        Образование. Выбран checkbox Образование высшее");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingEducationMiscelanea = true;
+                                            _pkModel.InterestsTargetingEducationMiscelanea = true;
                                             LogTrace.WriteInLog("        Образование. Выбран checkbox Разное");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingEducationChildren = true;
+                                            _pkModel.InterestsTargetingEducationChildren = true;
                                             LogTrace.WriteInLog("        Образование. Выбран checkbox Образование для детей");
                                         }
                                     #endregion
@@ -679,22 +681,22 @@ namespace Task.Controller
                                     #region Отдых, туризм, путешествия
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRestChoseAll = true;
+                                            _pkModel.InterestsTargetingRestChoseAll = true;
                                             LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRestMiscellanea = true;
+                                            _pkModel.InterestsTargetingRestMiscellanea = true;
                                             LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Разное");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRestRuUa = true;
+                                            _pkModel.InterestsTargetingRestRuUa = true;
                                             LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Отдых в России и Украине");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingRestAbroad = true;
+                                            _pkModel.InterestsTargetingRestAbroad = true;
                                             LogTrace.WriteInLog("        Отдых, туризм, путешествия. Выбран checkbox Отдых за рубежом");
                                         }
                                     #endregion
@@ -702,78 +704,78 @@ namespace Task.Controller
                                     #region Телефоны, связь
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingTelephonesChoseAll = true;
+                                            _pkModel.InterestsTargetingTelephonesChoseAll = true;
                                             LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingTelephonesMiscellanea = true;
+                                            _pkModel.InterestsTargetingTelephonesMiscellanea = true;
                                             LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Разное");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingTelephonesNavigation = true;
+                                            _pkModel.InterestsTargetingTelephonesNavigation = true;
                                             LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Навигация");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingTelephonesMobileApps = true;
+                                            _pkModel.InterestsTargetingTelephonesMobileApps = true;
                                             LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Мобильные приложения и услуги");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingTelephonesMobile = true;
+                                            _pkModel.InterestsTargetingTelephonesMobile = true;
                                             LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Мобильные телефоны");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingTelephonesStationary = true;
+                                            _pkModel.InterestsTargetingTelephonesStationary = true;
                                             LogTrace.WriteInLog("        Телефоны, связь. Выбран checkbox Стационарная связь");
                                         }
                                     #endregion
 
-                                    if (needSetCheckBox()) pkModel.InterestsTargetingHouseAplliances = true;
+                                    if (needSetCheckBox()) _pkModel.InterestsTargetingHouseAplliances = true;
                                     LogTrace.WriteInLog("        Выбран checkbox Бытовая техника");
 
                                     #region Медицина, здоровье
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingMedicineChoseAll = true;
+                                            _pkModel.InterestsTargetingMedicineChoseAll = true;
                                             LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingMedicineSport = true;
+                                            _pkModel.InterestsTargetingMedicineSport = true;
                                             LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Спорт, фитнес, йога");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingMedicineEyesight = true;
+                                            _pkModel.InterestsTargetingMedicineEyesight = true;
                                             LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Зрение");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingMedicineMiscellanea = true;
+                                            _pkModel.InterestsTargetingMedicineMiscellanea = true;
                                             LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Разное");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingMedicineDiets = true;
+                                            _pkModel.InterestsTargetingMedicineDiets = true;
                                             LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Диеты");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingMedicineExtraWeight = true;
+                                            _pkModel.InterestsTargetingMedicineExtraWeight = true;
                                             LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Лишний вес");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingMedicinePregnancy = true;
+                                            _pkModel.InterestsTargetingMedicinePregnancy = true;
                                             LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Беременность и роды");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingMedicineStomatology = true;
+                                            _pkModel.InterestsTargetingMedicineStomatology = true;
                                             LogTrace.WriteInLog("        Медицина, здоровье. Выбран checkbox Стоматология");
                                         }
                                     #endregion
@@ -781,37 +783,37 @@ namespace Task.Controller
                                     #region Дом и семья
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingHouseChoseAll = true;
+                                            _pkModel.InterestsTargetingHouseChoseAll = true;
                                             LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingHouseChildren = true;
+                                            _pkModel.InterestsTargetingHouseChildren = true;
                                             LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Маленькие дети");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingHouseDogs = true;
+                                            _pkModel.InterestsTargetingHouseDogs = true;
                                             LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Собаки");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingHouseMiscellanea = true;
+                                            _pkModel.InterestsTargetingHouseMiscellanea = true;
                                             LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Разное");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingHouseCats = true;
+                                            _pkModel.InterestsTargetingHouseCats = true;
                                             LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Кошки");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingHouseCookery = true;
+                                            _pkModel.InterestsTargetingHouseCookery = true;
                                             LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Кулинария, рецепты");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingHouseKindergartens = true;
+                                            _pkModel.InterestsTargetingHouseKindergartens = true;
                                             LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Детские сады");
                                         }
                                     #endregion
@@ -819,42 +821,42 @@ namespace Task.Controller
                                     #region Финансы
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingFinanceChoseAll = true;
+                                            _pkModel.InterestsTargetingFinanceChoseAll = true;
                                             LogTrace.WriteInLog("        Финансы. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingFinanceStockMarket = true;
+                                            _pkModel.InterestsTargetingFinanceStockMarket = true;
                                             LogTrace.WriteInLog("        Финансы. Выбран checkbox Фондовый рынок");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingFinanceCurrency = true;
+                                            _pkModel.InterestsTargetingFinanceCurrency = true;
                                             LogTrace.WriteInLog("        Финансы. Выбран checkbox Валюта");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingFinanceInsurence = true;
+                                            _pkModel.InterestsTargetingFinanceInsurence = true;
                                             LogTrace.WriteInLog("        Финансы. Выбран checkbox Страхование");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingFinanceMoneyTransfers = true;
+                                            _pkModel.InterestsTargetingFinanceMoneyTransfers = true;
                                             LogTrace.WriteInLog("        Финансы. Выбран checkbox Денежные переводы");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingFinanceCredits = true;
+                                            _pkModel.InterestsTargetingFinanceCredits = true;
                                             LogTrace.WriteInLog("        Финансы. Выбран checkbox Кредиты");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingFinanceMiscellanea = true;
+                                            _pkModel.InterestsTargetingFinanceMiscellanea = true;
                                             LogTrace.WriteInLog("        Финансы. Выбран checkbox Разное");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingFinanceDeposits = true;
+                                            _pkModel.InterestsTargetingFinanceDeposits = true;
                                             LogTrace.WriteInLog("        Финансы. Выбран checkbox Вклады, депозиты");
                                         }
                                     #endregion
@@ -862,37 +864,37 @@ namespace Task.Controller
                                     #region Компьютеры, оргтехника
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingComputersChoseAll = true;
+                                            _pkModel.InterestsTargetingComputersChoseAll = true;
                                             LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingComputersLaptops = true;
+                                            _pkModel.InterestsTargetingComputersLaptops = true;
                                             LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Ноутбуки");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingComputersParts = true;
+                                            _pkModel.InterestsTargetingComputersParts = true;
                                             LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Компьютерные комплектующие");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingComputersPrinters = true;
+                                            _pkModel.InterestsTargetingComputersPrinters = true;
                                             LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Принтеры");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingComputersTablets = true;
+                                            _pkModel.InterestsTargetingComputersTablets = true;
                                             LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Планшетные ПК");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingComputersMonitors = true;
+                                            _pkModel.InterestsTargetingComputersMonitors = true;
                                             LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Мониторы");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingComputersMiscellanea = true;
+                                            _pkModel.InterestsTargetingComputersMiscellanea = true;
                                             LogTrace.WriteInLog("        Компьютеры, оргтехника. Выбран checkbox Разное");
                                         }
                                     #endregion
@@ -900,37 +902,37 @@ namespace Task.Controller
                                     #region Авто
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAutoChoseAll = true;
+                                            _pkModel.InterestsTargetingAutoChoseAll = true;
                                             LogTrace.WriteInLog("        Авто. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAutoInsurence = true;
+                                            _pkModel.InterestsTargetingAutoInsurence = true;
                                             LogTrace.WriteInLog("        Авто. Выбран checkbox Автострахование");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAutoMiscellanea = true;
+                                            _pkModel.InterestsTargetingAutoMiscellanea = true;
                                             LogTrace.WriteInLog("        Авто. Выбран checkbox Разное");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAutoNational = true;
+                                            _pkModel.InterestsTargetingAutoNational = true;
                                             LogTrace.WriteInLog("        Авто. Выбран checkbox Отечественные");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAutoWheels = true;
+                                            _pkModel.InterestsTargetingAutoWheels = true;
                                             LogTrace.WriteInLog("        Авто. Выбран checkbox Колёса, Шины");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAutoImported = true;
+                                            _pkModel.InterestsTargetingAutoImported = true;
                                             LogTrace.WriteInLog("        Авто. Выбран checkbox Иномарки");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAutoMoto = true;
+                                            _pkModel.InterestsTargetingAutoMoto = true;
                                             LogTrace.WriteInLog("        Авто. Выбран checkbox Мото-, Квадроциклы, Снегоходы");
                                         }
                                     #endregion
@@ -938,32 +940,32 @@ namespace Task.Controller
                                     #region Аудио, Видео, Фото
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAudioChoseAll = true;
+                                            _pkModel.InterestsTargetingAudioChoseAll = true;
                                             LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAudioVideoEquips = true;
+                                            _pkModel.InterestsTargetingAudioVideoEquips = true;
                                             LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Видеоаппаратура");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAudioMiscellanea = true;
+                                            _pkModel.InterestsTargetingAudioMiscellanea = true;
                                             LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Разное");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAudioTech = true;
+                                            _pkModel.InterestsTargetingAudioTech = true;
                                             LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Аудио-техника");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAudioCameras = true;
+                                            _pkModel.InterestsTargetingAudioCameras = true;
                                             LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Фотоаппараты");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.InterestsTargetingAudioTvs = true;
+                                            _pkModel.InterestsTargetingAudioTvs = true;
                                             LogTrace.WriteInLog("        Аудио, Видео, Фото. Выбран checkbox Телевизоры, DVD-проигрыватели");
                                         }
                                     #endregion
@@ -974,7 +976,7 @@ namespace Task.Controller
 
                     #region Radiobutton Браузеры
                         variant = needSetRadioButton(2).ToString();
-                        pkModel.BrowserTargeting = variant;
+                        _pkModel.BrowserTargeting = variant;
                         switch (variant)
                         {
                             case "0":
@@ -986,15 +988,15 @@ namespace Task.Controller
                                 {
                                     LogTrace.WriteInLog("     Выбираю radiobutton Браузеры. Выбрано: использовать");
                                     //развернуть все пункты
-                                    pkModel.BrowserTargetingOtherExpand = true;
-                                    pkModel.BrowserTargetingOperaExpand = true;
-                                    pkModel.BrowserTargetingChromeExpand = true;
-                                    pkModel.BrowserTargetingFirefoxExpand = true;
-                                    pkModel.BrowserTargetingSafariExpand = true;
-                                    pkModel.BrowserTargetingIeExpand = true;
+                                    _pkModel.BrowserTargetingOtherExpand = true;
+                                    _pkModel.BrowserTargetingOperaExpand = true;
+                                    _pkModel.BrowserTargetingChromeExpand = true;
+                                    _pkModel.BrowserTargetingFirefoxExpand = true;
+                                    _pkModel.BrowserTargetingSafariExpand = true;
+                                    _pkModel.BrowserTargetingIeExpand = true;
                                     //pkModel.BrowserTargetingGoogleChromeMobileExpand = true;
 
-                                    pkModel.BrowserTargetingOtherAll = true;
+                                    _pkModel.BrowserTargetingOtherAll = true;
 
                                     //if (needSetCheckBox())
                                     //{
@@ -1008,32 +1010,32 @@ namespace Task.Controller
                                     //}
 
                                     #region Опера
-                                        pkModel.BrowserTargetingOperaOther = true;
+                                        _pkModel.BrowserTargetingOperaOther = true;
                                         LogTrace.WriteInLog("        Опера. Выбран checkbox Другие");
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingOperaChoseAll = true;
+                                            _pkModel.BrowserTargetingOperaChoseAll = true;
                                             LogTrace.WriteInLog("        Опера. Выбран checkbox Все");
                                         }
                                         //if (needSetCheckBox()) pkModel.BrowserTargetingOperaOther = true;
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingOpera10 = true;
+                                            _pkModel.BrowserTargetingOpera10 = true;
                                             LogTrace.WriteInLog("        Опера. Выбран checkbox 10");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingOpera11 = true;
+                                            _pkModel.BrowserTargetingOpera11 = true;
                                             LogTrace.WriteInLog("        Опера. Выбран checkbox 11");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingOperaMini = true;
+                                            _pkModel.BrowserTargetingOperaMini = true;
                                             LogTrace.WriteInLog("        Опера. Выбран checkbox Mini");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingOperaMobile = true;
+                                            _pkModel.BrowserTargetingOperaMobile = true;
                                             LogTrace.WriteInLog("        Опера. Выбран checkbox Mobile");
                                         }
                                     #endregion
@@ -1041,12 +1043,12 @@ namespace Task.Controller
                                     #region Chrome
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingChromeChoseAll = true;
+                                            _pkModel.BrowserTargetingChromeChoseAll = true;
                                             LogTrace.WriteInLog("        Chrome. Выбран checkbox Chrome Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingChromeAll = true;
+                                            _pkModel.BrowserTargetingChromeAll = true;
                                             LogTrace.WriteInLog("        Chrome. Выбран checkbox Все");
                                         }
                                     #endregion
@@ -1054,32 +1056,32 @@ namespace Task.Controller
                                     #region Firefox
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingFirefoxChoseAll = true;
+                                            _pkModel.BrowserTargetingFirefoxChoseAll = true;
                                             LogTrace.WriteInLog("        Firefox. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingFirefox3 = true;
+                                            _pkModel.BrowserTargetingFirefox3 = true;
                                             LogTrace.WriteInLog("        Firefox. Выбран checkbox 3");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingFirefox4 = true;
+                                            _pkModel.BrowserTargetingFirefox4 = true;
                                             LogTrace.WriteInLog("        Firefox. Выбран checkbox 4");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingFirefox5 = true;
+                                            _pkModel.BrowserTargetingFirefox5 = true;
                                             LogTrace.WriteInLog("        Firefox. Выбран checkbox 5");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingFirefox6 = true;
+                                            _pkModel.BrowserTargetingFirefox6 = true;
                                             LogTrace.WriteInLog("        Firefox. Выбран checkbox 6");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingFirefoxOther = true;
+                                            _pkModel.BrowserTargetingFirefoxOther = true;
                                             LogTrace.WriteInLog("        Firefox. Выбран checkbox Другие");
                                         }
                                     #endregion
@@ -1087,12 +1089,12 @@ namespace Task.Controller
                                     #region Safari
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingSafariChoseAll = true;
+                                            _pkModel.BrowserTargetingSafariChoseAll = true;
                                             LogTrace.WriteInLog("        Safari. Выбран checkbox Safari Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingSafariAll = true;
+                                            _pkModel.BrowserTargetingSafariAll = true;
                                             LogTrace.WriteInLog("        Safari. Выбран checkbox Все");
                                         }
                                     #endregion
@@ -1100,32 +1102,32 @@ namespace Task.Controller
                                     #region MSIE
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingIeChoseAll = true;
+                                            _pkModel.BrowserTargetingIeChoseAll = true;
                                             LogTrace.WriteInLog("        MSIE. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingIe6 = true;
+                                            _pkModel.BrowserTargetingIe6 = true;
                                             LogTrace.WriteInLog("        MSIE. Выбран checkbox 6");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingIe7 = true;
+                                            _pkModel.BrowserTargetingIe7 = true;
                                             LogTrace.WriteInLog("        MSIE. Выбран checkbox 7");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingIe8 = true;
+                                            _pkModel.BrowserTargetingIe8 = true;
                                             LogTrace.WriteInLog("        MSIE. Выбран checkbox 8");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingIe9 = true;
+                                            _pkModel.BrowserTargetingIe9 = true;
                                             LogTrace.WriteInLog("        MSIE. Выбран checkbox 9");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.BrowserTargetingIeOther = true;
+                                            _pkModel.BrowserTargetingIeOther = true;
                                             LogTrace.WriteInLog("        MSIE. Выбран checkbox Другие");
                                         }
                                     #endregion
@@ -1150,7 +1152,7 @@ namespace Task.Controller
 
                     #region Radiobutton OC таргетинг
                         variant = needSetRadioButton(2).ToString();
-                        pkModel.OsTargeting = variant;
+                        _pkModel.OsTargeting = variant;
                         switch (variant)
                         {
                             case "0":
@@ -1161,42 +1163,42 @@ namespace Task.Controller
                             case "1":
                                 {
                                     LogTrace.WriteInLog("     Выбираю radiobutton OC таргетинг. Выбрано: использовать");
-                                    pkModel.OsTargetingOther = true;
+                                    _pkModel.OsTargetingOther = true;
                                     LogTrace.WriteInLog("        Выбран checkbox Другие");
                                     //if (needSetCheckBox()) pkModel.OsTargetingOther = true;
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.OsTargetingMacOs = true;
+                                        _pkModel.OsTargetingMacOs = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Mac OS");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.OsTargetingOtherMobileOs = true;
+                                        _pkModel.OsTargetingOtherMobileOs = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Прочие мобильные ОС");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.OsTargetingWindows = true;
+                                        _pkModel.OsTargetingWindows = true;
                                         LogTrace.WriteInLog("        Выбран checkbox WIndows");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.OsTargetingOtherIoS = true;
+                                        _pkModel.OsTargetingOtherIoS = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Прочие iOS системы");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.OsTargetingIpad = true;
+                                        _pkModel.OsTargetingIpad = true;
                                         LogTrace.WriteInLog("        Выбран checkbox iPAD");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.OsTargetingIphone = true;
+                                        _pkModel.OsTargetingIphone = true;
                                         LogTrace.WriteInLog("        Выбран checkbox IPHONE");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.OsTargetingAndroid = true;
+                                        _pkModel.OsTargetingAndroid = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Android");
                                     }
                                     break;
@@ -1206,7 +1208,7 @@ namespace Task.Controller
 
                     #region Radiobutton Провайдеры
                         variant = needSetRadioButton(2).ToString();
-                        pkModel.ProviderTargeting = variant;
+                        _pkModel.ProviderTargeting = variant;
                         switch (variant)
                         {
                             case "0":
@@ -1217,17 +1219,17 @@ namespace Task.Controller
                             case "1":
                                 {
                                     LogTrace.WriteInLog("     Выбираю radiobutton Провайдеры. Выбрано: использовать");
-                                    pkModel.ProviderTargetingOther = true;
+                                    _pkModel.ProviderTargetingOther = true;
                                     LogTrace.WriteInLog("        Выбран checkbox Другие");
                                     //if (needSetCheckBox()) pkModel.ProviderTargetingOther = true;
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.ProviderTargetingMegafon = true;
+                                        _pkModel.ProviderTargetingMegafon = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Мегафон");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.ProviderTargetingMtc = true;
+                                        _pkModel.ProviderTargetingMtc = true;
                                         LogTrace.WriteInLog("        Выбран checkbox МТС Россия");
                                     }
                                     break;
@@ -1237,7 +1239,7 @@ namespace Task.Controller
 
                     #region Radiobutton Геотаргетинг
                         variant = needSetRadioButton(2).ToString();
-                        pkModel.GeoTargeting = variant;
+                        _pkModel.GeoTargeting = variant;
                         switch (variant)
                         {
                             case "0":
@@ -1248,173 +1250,173 @@ namespace Task.Controller
                             case "1":
                                 {
                                     LogTrace.WriteInLog("     Выбираю radiobutton Геотаргетинг. Выбрано: использовать");
-                                    pkModel.GeoTargetingRussiaExpand = true;
-                                    pkModel.GeoTargetingUkraineExpand = true;
+                                    _pkModel.GeoTargetingRussiaExpand = true;
+                                    _pkModel.GeoTargetingUkraineExpand = true;
 
-                                    pkModel.GeoTargetingOther = true;
+                                    _pkModel.GeoTargetingOther = true;
                                     LogTrace.WriteInLog("        Выбран checkbox Прочие страны");
                                     //if (needSetCheckBox()) pkModel.GeoTargetingOther = true;
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.GeoTargetingAustria = true;
+                                        _pkModel.GeoTargetingAustria = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Австрия");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.GeoTargetingBelorussia = true;
+                                        _pkModel.GeoTargetingBelorussia = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Белоруссия");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.GeoTargetingUk = true;
+                                        _pkModel.GeoTargetingUk = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Великобритания");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.GeoTargetingGermany = true;
+                                        _pkModel.GeoTargetingGermany = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Германия");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.GeoTargetingIsrael = true;
+                                        _pkModel.GeoTargetingIsrael = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Израиль");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.GeoTargetingKazakhstan = true;
+                                        _pkModel.GeoTargetingKazakhstan = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Казахстан");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.GeoTargetingLatvia = true;
+                                        _pkModel.GeoTargetingLatvia = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Латвия");
                                     }
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.GeoTargetingLithuania = true;
+                                        _pkModel.GeoTargetingLithuania = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Литва");
                                     }
 
                                     #region Россия
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingRussiaChoseAll = true;
+                                            _pkModel.GeoTargetingRussiaChoseAll = true;
                                             LogTrace.WriteInLog("        Россия. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingRussiaEburg = true;
+                                            _pkModel.GeoTargetingRussiaEburg = true;
                                             LogTrace.WriteInLog("        Россия. Выбран checkbox Екатеринбург");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingRussiaMoscow = true;
+                                            _pkModel.GeoTargetingRussiaMoscow = true;
                                             LogTrace.WriteInLog("        Россия. Выбран checkbox Москва");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingRussiaNovosibirsk = true;
+                                            _pkModel.GeoTargetingRussiaNovosibirsk = true;
                                             LogTrace.WriteInLog("        Россия. Выбран checkbox Новосибирск");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingRussiaOther = true;
+                                            _pkModel.GeoTargetingRussiaOther = true;
                                             LogTrace.WriteInLog("        Россия. Выбран checkbox Прочие регионы");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingRussiaSpb = true;
+                                            _pkModel.GeoTargetingRussiaSpb = true;
                                             LogTrace.WriteInLog("        Россия. Выбран checkbox Санкт-Петербург");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingRussiaHabarovsk = true;
+                                            _pkModel.GeoTargetingRussiaHabarovsk = true;
                                             LogTrace.WriteInLog("        Россия. Выбран checkbox Хабаровск");
                                         }
                                     #endregion
 
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.GeoTargetingUsa = true;
+                                        _pkModel.GeoTargetingUsa = true;
                                         LogTrace.WriteInLog("        Выбран checkbox США");
                                     }
 
                                     #region Украина
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineChoseAll = true;
+                                            _pkModel.GeoTargetingUkraineChoseAll = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Все");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineDnepr = true;
+                                            _pkModel.GeoTargetingUkraineDnepr = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Днепропетровск");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineDonetzk = true;
+                                            _pkModel.GeoTargetingUkraineDonetzk = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Донецк");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineZakarpattya = true;
+                                            _pkModel.GeoTargetingUkraineZakarpattya = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Закарпатье");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineKiev = true;
+                                            _pkModel.GeoTargetingUkraineKiev = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Киев");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineCrimea = true;
+                                            _pkModel.GeoTargetingUkraineCrimea = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Крым");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineLvov = true;
+                                            _pkModel.GeoTargetingUkraineLvov = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Львов");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineNikolaev = true;
+                                            _pkModel.GeoTargetingUkraineNikolaev = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Николаев");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineOdessa = true;
+                                            _pkModel.GeoTargetingUkraineOdessa = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Одесса");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineOther = true;
+                                            _pkModel.GeoTargetingUkraineOther = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Прочие области");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineHarkov = true;
+                                            _pkModel.GeoTargetingUkraineHarkov = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Харьков");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineHerson = true;
+                                            _pkModel.GeoTargetingUkraineHerson = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Херсон");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineCherkassy = true;
+                                            _pkModel.GeoTargetingUkraineCherkassy = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Черкассы");
                                         }
                                         if (needSetCheckBox())
                                         {
-                                            pkModel.GeoTargetingUkraineChernovzi = true;
+                                            _pkModel.GeoTargetingUkraineChernovzi = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Черновцы");
                                         }
                                     #endregion
 
                                     if (needSetCheckBox())
                                     {
-                                        pkModel.GeoTargetingEstonia = true;
+                                        _pkModel.GeoTargetingEstonia = true;
                                         LogTrace.WriteInLog("        Выбран checkbox Эстония");
                                     }
                                     break;
@@ -1425,18 +1427,24 @@ namespace Task.Controller
 
             #endregion
 
+            CreationIsSuccessful();
+            Registry.hashTable["pkId"] = PkId; //запомнили глобально ID созданной РК
+            Registry.hashTable["driver"] = _driver;
+        }
 
-            string parentWindow = driver.CurrentWindowHandle;//запоминаем текущее (родительское окно)
+        private void CreationIsSuccessful()
+        {
+            string parentWindow = _driver.CurrentWindowHandle;//запоминаем текущее (родительское окно)
 
-            string createPkUrl = driver.Url; //запоминаем url страницы "Добавление РК"
-            pkModel.Submit(); //пытаемся сохранить форму
+            string createPkUrl = _driver.Url; //запоминаем url страницы "Добавление РК"
+            _pkModel.Submit(); //пытаемся сохранить форму
             LogTrace.WriteInLog("     Нажал кнопку Завершить");
-            string isCreatedPkUrl = driver.Url; //запоминаем url страницы, открывшейся после нажатия "Завершить"
+            string isCreatedPkUrl = _driver.Url; //запоминаем url страницы, открывшейся после нажатия "Завершить"
             //если createPkUrl и isCreatedPkUrl совпали - мы никуда не перешли и значит есть ошибки заполнения полей
             //если createPkUrl и isCreatedPkUrl не совпали - РК создалась и ошибки искать не надо
             if (createPkUrl == isCreatedPkUrl)
             {
-                errors.Add(pkModel.GetErrors().ToString()); //проверяем, появились ли на форме ошибки заполнения полей
+                Errors.Add(_pkModel.GetErrors().ToString()); //проверяем, появились ли на форме ошибки заполнения полей
             }
             else
             {
@@ -1445,29 +1453,27 @@ namespace Task.Controller
                 // и переходим по этому названию-ссылке на страницу РК
                 // открывается новое окно с РК - мы должны на него переключиться
                 // и там получаем ID РК из URL
-                if(driver.PageSource.Contains(pkName))
+                if (_driver.PageSource.Contains(PkName))
                 {
-                    IWebElement webelement = driver.FindElement(By.LinkText(pkName));
+                    IWebElement webelement = _driver.FindElement(By.LinkText(PkName));
                     string href = webelement.GetAttribute("href");
-                    
+
                     char[] slash = new char[] { '/' };
                     string[] url = href.Split(slash); //разбиваем URL по /
-                    pkId = url[url.Length - 1]; //берем последний элемент массива - это id новой РК
-                    clientId = Registry.hashTable["clientId"].ToString(); //берется для вывода в listBox и логи
-                    LogTrace.WriteInLog("     " + driver.Url);
+                    PkId = url[url.Length - 1]; //берем последний элемент массива - это id новой РК
+                    ClientId = Registry.hashTable["clientId"].ToString(); //берется для вывода в listBox и логи
+                    LogTrace.WriteInLog("     " + _driver.Url);
                 }
             }
-            Registry.hashTable["pkId"] = pkId; //запомнили глобально ID созданной РК
-            Registry.hashTable["driver"] = driver;
         }
 
-        protected bool needSetCheckBox() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем
+        private bool needSetCheckBox() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем
         {
             Random rnd = new Random();
             return rnd.Next(0, 2) == 1 ? true : false;
         }
 
-        protected int needSetRadioButton(int variants) //генерируем номер варианта выбора для needSetRadioButton. variants - кол-во вариантов выбора
+        private int needSetRadioButton(int variants) //генерируем номер варианта выбора для needSetRadioButton. variants - кол-во вариантов выбора
         {
             Random rnd = new Random();
             return rnd.Next(0, variants);

@@ -12,17 +12,19 @@ using Task.Utils;
 
 namespace Task.Controller
 {
-    public class GoodsCreateClient_Controller
+    public class GoodsCreateClientController
     {
-        IWebDriver driver;
-        public string baseUrl = "https://admin.dt00.net/cab/goodhits/clients-new";
-        public List<string> errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
-        public string clientId; //переменная для хранения ID только что созданного клиента
-        public string login; //переменная для хранения логина только что созданного клиента
-        public string password; //переменная для хранения пароля только что созданного клиента
-        Randoms randoms = new Randoms();//класс генерации случайных строк
+        private IWebDriver _driver;
+        private GoodsCreateClient_Model _clientModel;
+        private const string BaseUrl = "https://admin.dt00.net/cab/goodhits/clients-new";
 
-        public void InitDriver()
+        public List<string> Errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
+        public string ClientId; //переменная для хранения ID только что созданного клиента
+        public string Login; //переменная для хранения логина только что созданного клиента
+        public string Password; //переменная для хранения пароля только что созданного клиента
+        readonly Randoms _randoms = new Randoms();//класс генерации случайных строк
+        
+        private void InitDriver()
         {
             //FirefoxBinary FireBin = new FirefoxBinary("C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
             //FireBin.TimeoutInMilliseconds = 130000;
@@ -30,65 +32,55 @@ namespace Task.Controller
             //FireProfile.Port = 9966;
             //driver = new FirefoxDriver(FireBin, FireProfile);
 
-            driver = new FirefoxDriver();
+            _driver = new FirefoxDriver();
         }
 
         public void CloseDriver()
         {
             try
             {
-                driver.Close();
+                _driver.Close();
             }
             catch (Exception)
             {
                 // Ignore errors if unable to close the browser
             }
-            //Assert.AreEqual("", verificationErrors.ToString());
         }
 
-        public void CreateClient(string FileName, bool setNecessaryFields, bool setUnnecessaryFields)
+        public void CreateClient(string fileName, bool setNecessaryFields, bool setUnnecessaryFields)
         {
-            List<FileData> CsvStruct = new List<FileData>();
-            CsvStruct = FileData.ReadFile(FileName);
-
             InitDriver();
-            driver.Navigate().GoToUrl(baseUrl); //заходим по ссылке
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+            _driver.Navigate().GoToUrl(BaseUrl); //заходим по ссылке
+            _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             //ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
-
-            Authorization auth = new Authorization();
-            auth.driver = driver;
-            auth.Login = CsvStruct[0].item;
-            auth.Password = CsvStruct[1].item;
-            Registry.hashTable["Login"] = CsvStruct[0].item;
-            Registry.hashTable["Password"] = CsvStruct[1].item;
-            auth.Submit();
             
-            GoodsCreateClient_Model clientModel = new GoodsCreateClient_Model();
-            clientModel.driver = driver;
+            Authorization(fileName); //проходим авторизацию (доступы берутся из файла)
 
-            LogTrace.WriteInLog(driver.Url);
+            _clientModel = new GoodsCreateClient_Model();
+            _clientModel.driver = _driver;
+
+            LogTrace.WriteInLog(_driver.Url);
 
             #region Necessary fields
                 if (setNecessaryFields) //выбрано заполнение обязательных полей
                 {
                     LogTrace.WriteInLog("...Заполняю обязательные поля...");
 
-                    password = randoms.RandomString(10);
-                    clientModel.Password = password;
-                    LogTrace.WriteInLog("Заполняю поле Пароль. Было введено: " + clientModel.Password);
+                    Password = _randoms.RandomString(10);
+                    _clientModel.Password = Password;
+                    LogTrace.WriteInLog("Заполняю поле Пароль. Было введено: " + _clientModel.Password);
 
-                    login = "SOK_auto_aded_client_" + randoms.RandomString(5);
-                    clientModel.Login = login;
-                    LogTrace.WriteInLog("Заполняю поле Логин. Было введено: " + clientModel.Login);
+                    Login = "SOK_auto_aded_client_" + _randoms.RandomString(5);
+                    _clientModel.Login = Login;
+                    LogTrace.WriteInLog("Заполняю поле Логин. Было введено: " + _clientModel.Login);
 
-                    clientModel.UserName = randoms.RandomString(10);
-                    LogTrace.WriteInLog("Заполняю поле ФИО. Было введено: " + clientModel.UserName);
+                    _clientModel.UserName = _randoms.RandomString(10);
+                    LogTrace.WriteInLog("Заполняю поле ФИО. Было введено: " + _clientModel.UserName);
 
-                    clientModel.Email = randoms.RandomString(5) + "@" + randoms.RandomString(5) + "." + "com";
-                    LogTrace.WriteInLog("Заполняю поле E-Mail. Было введено: " + clientModel.Email);
+                    _clientModel.Email = _randoms.RandomString(5) + "@" + _randoms.RandomString(5) + "." + "com";
+                    LogTrace.WriteInLog("Заполняю поле E-Mail. Было введено: " + _clientModel.Email);
 
-                    clientModel.TestClient = true;
+                    _clientModel.TestClient = true;
                     LogTrace.WriteInLog("Выбран checkbox Тестовый клиент");
                 }
 
@@ -102,80 +94,94 @@ namespace Task.Controller
 
                     if (needSet())
                     {
-                        clientModel.Phone = randoms.RandomNumber(10);
-                        LogTrace.WriteInLog("Заполняю поле Телефон. Было введено: " + clientModel.Phone);
+                        _clientModel.Phone = _randoms.RandomNumber(10);
+                        LogTrace.WriteInLog("Заполняю поле Телефон. Было введено: " + _clientModel.Phone);
                     }
                     if(needSet())
                     {
-                        clientModel.Skype = randoms.RandomString(5) + randoms.RandomNumber(5);
-                        LogTrace.WriteInLog("Заполняю поле Skype. Было введено: " + clientModel.Skype);
+                        _clientModel.Skype = _randoms.RandomString(5) + _randoms.RandomNumber(5);
+                        LogTrace.WriteInLog("Заполняю поле Skype. Было введено: " + _clientModel.Skype);
                     }
                     if(needSet())
                     {
-                        clientModel.Icq = randoms.RandomNumber(5);
-                        LogTrace.WriteInLog("Заполняю поле ICQ. Было введено: " + clientModel.Icq);
+                        _clientModel.Icq = _randoms.RandomNumber(5);
+                        LogTrace.WriteInLog("Заполняю поле ICQ. Было введено: " + _clientModel.Icq);
                     }
                     if(needSet())
                     {
-                        clientModel.ExchangeInCabinet = true;
+                        _clientModel.ExchangeInCabinet = true;
                         LogTrace.WriteInLog("Выбран checkbox Обмен в кабинете");
                     }
                     if(needSet())
                     {
-                        clientModel.NewsInCabinet = true;
+                        _clientModel.NewsInCabinet = true;
                         LogTrace.WriteInLog("Выбран checkbox Новости в кабинете");
                     }
                     
                     if(needSet())
                     {
-                        clientModel.LimitNumOfCampaigns = randoms.RandomNumber(2);
+                        _clientModel.LimitNumOfCampaigns = _randoms.RandomNumber(2);
                         LogTrace.WriteInLog("Заполняю поле Ограничение по количеству кампаний");
                     }
                     if(needSet())
                     {
-                        clientModel.AllowViewFilterByPlatform = true;
+                        _clientModel.AllowViewFilterByPlatform = true;
                         LogTrace.WriteInLog("Выбран checkbox Разрешен просмотр фильтра по площадкам");
                     }
                     if(needSet())
                     {
-                        clientModel.Comments = randoms.RandomString(20);
+                        _clientModel.Comments = _randoms.RandomString(20);
                         LogTrace.WriteInLog("Заполняю поле Комментарий");
                     }
                 }
                 //пропущены поля "Ограничение на кол-во создаваемых тизеров в сутки каждой РК", "Отображение сводной статистики трат", "Подсеть"
             #endregion
 
-            string createClientUrl = driver.Url; //запоминаем url страницы "Добавление клиента"
-            clientModel.Submit(); //пытаемся сохранить форму
+            CreationIsSuccessful();
+            Registry.hashTable["driver"] = _driver;
+            LogTrace.WriteInLog(_driver.Url);
+        }
+
+        private void CreationIsSuccessful()
+        {
+            string createClientUrl = _driver.Url; //запоминаем url страницы "Добавление клиента"
+            _clientModel.Submit(); //пытаемся сохранить форму
             LogTrace.WriteInLog("Нажал кнопку Сохранить");
-            string isCreatedClientUrl = driver.Url; //запоминаем url страницы, открывшейся после нажатия "Завершить"
+
+            string isCreatedClientUrl = _driver.Url; //запоминаем url страницы, открывшейся после нажатия "Завершить"
             //если createClientUrl и isCreatedClientUrl совпали - мы никуда не перешли и значит есть ошибки заполнения полей
             //если createClientUrl и isCreatedClientUrl не совпали - клиент создался и ошибки искать не надо
             if (createClientUrl == isCreatedClientUrl)
             {
-                errors.Add(clientModel.GetErrors().ToString()); //проверяем, появились ли на форме ошибки заполнения полей
+                Errors.Add(_clientModel.GetErrors().ToString()); //проверяем, появились ли на форме ошибки заполнения полей
             }
             else
             {
-                //if (errors.Count == 0)
-                //если нет ошибок - значит клиент успешно создался и мы перешли на страницу с инфо о созданном клиенте
-                //{
                 char[] slash = new char[] { '/' };
-                string[] url = driver.Url.Split(slash); //разбиваем URL по /
-                clientId = url[url.Length - 1]; //берем последний элемент массива - это id нового клиента
-                Registry.hashTable["clientId"] = clientId; //глобально запомнили ID клиента
-                //}
+                string[] url = _driver.Url.Split(slash); //разбиваем URL по /
+                ClientId = url[url.Length - 1]; //берем последний элемент массива - это id нового клиента
+                Registry.hashTable["clientId"] = ClientId; //глобально запомнили ID клиента
             }
-            //Registry.hashTable.Add("driver", driver); //записываем в хештаблицу driver и его состояние, чтобы потом извлечь и использовать его при создании сайта/РК
-            Registry.hashTable["driver"] = driver;
-            LogTrace.WriteInLog(driver.Url);
         }
 
-        protected bool needSet() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем
+        private void Authorization(string fileName)
+        {
+            List<FileData> CsvStruct = new List<FileData>();
+            CsvStruct = FileData.ReadFile(fileName); //читаем доступы из файла
+
+            Authorization auth = new Authorization();
+            auth.driver = _driver;
+            auth.Login = CsvStruct[0].item;
+            auth.Password = CsvStruct[1].item;
+            Registry.hashTable["Login"] = CsvStruct[0].item;
+            Registry.hashTable["Password"] = CsvStruct[1].item;
+            auth.Submit();
+        }
+
+        private bool needSet() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем
         {
             Random rnd = new Random();
             return rnd.Next(0, 2) == 1 ? true : false;
         }
     }
-
 }
