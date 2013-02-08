@@ -81,6 +81,7 @@
     <Compile Include="Model\GoodsEditPK_Model.cs" />
     <Compile Include="Model\GoodsEditSite_Model.cs" />
     <Compile Include="Model\GoodsEditTeaser_Model.cs" />
+    <Compile Include="Utils\Credentials.cs" />
     <Compile Include="Utils\LogTrace.cs" />
     <Compile Include="Utils\FileData.cs" />
     <Compile Include="Utils\LogForClickers.cs" />

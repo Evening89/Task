@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
+using Task.Utils;
 
 namespace Task.Model
 {
@@ -11,11 +12,11 @@ namespace Task.Model
     {
         private IWebDriver _driver;
 
-        public Authorization(IWebDriver driver, string login, string password)
+        public Authorization(IWebDriver driver, Credentials credentials)
         {
             _driver = driver;
-            Login = login;
-            Password = password;
+            Login = credentials.Login;
+            Password = credentials.Password;
         }
 
         protected string FieldLogin;

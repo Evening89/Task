@@ -17,17 +17,6 @@ namespace Task.Controller
         private IWebDriver _driver;
         private GoodsCreateClient_Model _clientModel;
         private const string BaseUrl = "https://admin.dt00.net/cab/goodhits/clients-new";
-        private struct Credentials
-        {
-            public string _login;
-            public string _password;
-
-            public Credentials(string login, string password)
-            {
-                _login = login;
-                _password = password;
-            }
-        }
 
         public List<string> Errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
         public string ClientId; //переменная для хранения ID только что созданного клиента
@@ -76,8 +65,8 @@ namespace Task.Controller
         private void Authorization(string fileName)
         {
             Credentials credentials = GetUserCredentialFromFile(fileName);//читаем доступы из файла
-            Authorization auth = new Authorization(_driver, credentials._login, credentials._password);
-            PushAttributesToHash(credentials);
+            Authorization auth = new Authorization(_driver, credentials);
+            PushCredentialsToHash(credentials);
             auth.Submit();
         }
 
@@ -88,10 +77,10 @@ namespace Task.Controller
             return credentials;
         }
 
-        private void PushAttributesToHash(Credentials credentials)
+        private void PushCredentialsToHash(Credentials credentials)
         {
-            Registry.hashTable["Login"] = credentials._login;
-            Registry.hashTable["Password"] = credentials._password;
+            Registry.hashTable["Login"] = credentials.Login;
+            Registry.hashTable["Password"] = credentials.Password;
         }
 
         private void SetUpFields(bool setNecessaryFields, bool setUnnecessaryFields)
@@ -182,23 +171,23 @@ namespace Task.Controller
             _clientModel.Submit(); //пытаемся сохранить форму
             LogTrace.WriteInLog("Нажал кнопку Сохранить");
 
-            string isCreatedClientUrl = _driver.Url; //запоминаем url страницы, открывшейся после нажатия "Завершить"
-            //если createClientUrl и isCreatedClientUrl совпали - мы никуда не перешли и значит есть ошибки заполнения полей
-            //если createClientUrl и isCreatedClientUrl не совпали - клиент создался и ошибки искать не надо
-            if (createClientUrl == isCreatedClientUrl)
-            {
+            //если текущий и createClientUrl совпали - мы никуда не перешли и значит есть ошибки заполнения полей
+            //если текущий и createClientUrl не совпали - клиент создался и ошибки искать не надо
+            if (_driver.Url == createClientUrl)
                 Errors.Add(_clientModel.GetErrors().ToString()); //проверяем, появились ли на форме ошибки заполнения полей
-            }
             else
-            {
-                char[] slash = new char[] { '/' };
-                string[] url = _driver.Url.Split(slash); //разбиваем URL по /
-                ClientId = url[url.Length - 1]; //берем последний элемент массива - это id нового клиента
-                Registry.hashTable["clientId"] = ClientId; //глобально запомнили ID клиента
-            }
+                GetClientIdFromUrl();
 
             Registry.hashTable["driver"] = _driver;
             LogTrace.WriteInLog(_driver.Url);
+        }
+
+        private void GetClientIdFromUrl()
+        {
+            char[] slash = new char[] { '/' };
+            string[] url = _driver.Url.Split(slash); //разбиваем URL по /
+            ClientId = url[url.Length - 1]; //берем последний элемент массива - это id нового клиента
+            Registry.hashTable["clientId"] = ClientId; //глобально запомнили ID клиента
         }
         
         private bool needSet() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем
