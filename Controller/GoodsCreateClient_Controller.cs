@@ -75,19 +75,23 @@ namespace Task.Controller
 
         private void Authorization(string fileName)
         {
-            Credentials accesses = GetUserCredentialFromFile(fileName);//читаем доступы из файла
-            Authorization auth = new Authorization(_driver, accesses._login, accesses._password);
-            Registry.hashTable["Login"] = accesses._login;
-            Registry.hashTable["Password"] = accesses._password;
+            Credentials credentials = GetUserCredentialFromFile(fileName);//читаем доступы из файла
+            Authorization auth = new Authorization(_driver, credentials._login, credentials._password);
+            PushAttributesToHash(credentials);
             auth.Submit();
         }
 
         private Credentials GetUserCredentialFromFile(string fileName)
         {
-            List<FileData> CsvStruct = new List<FileData>();
-            CsvStruct = FileData.ReadFile(fileName); //читаем доступы из файла
-            Credentials credentials = new Credentials(CsvStruct[0].item, CsvStruct[1].item);
+            List<FileData> csvStruct = FileData.ReadFile(fileName);
+            Credentials credentials = new Credentials(csvStruct[0].item, csvStruct[1].item);
             return credentials;
+        }
+
+        private void PushAttributesToHash(Credentials credentials)
+        {
+            Registry.hashTable["Login"] = credentials._login;
+            Registry.hashTable["Password"] = credentials._password;
         }
 
         private void SetUpFields(bool setNecessaryFields, bool setUnnecessaryFields)
