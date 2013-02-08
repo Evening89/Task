@@ -9,9 +9,14 @@ namespace Task.Model
 {
     public class Authorization
     {
-        //protected string URL = "https://admin.dt00.net/cab/";
+        private IWebDriver _driver;
 
-        public IWebDriver driver;
+        public Authorization(IWebDriver driver, string login, string password)
+        {
+            _driver = driver;
+            Login = login;
+            Password = password;
+        }
 
         protected string FieldLogin;
         public string Login
@@ -19,7 +24,7 @@ namespace Task.Model
             get { return FieldLogin; }
             set
             {
-                IWebElement webelement = driver.FindElement(By.Id("signinLogin"));
+                IWebElement webelement = _driver.FindElement(By.Id("signinLogin"));
                 webelement.SendKeys(value);
                 FieldLogin = value;
             }
@@ -31,7 +36,7 @@ namespace Task.Model
             get { return FieldPassword; }
             set
             {
-                IWebElement webelement = driver.FindElement(By.Id("signinPassword"));
+                IWebElement webelement = _driver.FindElement(By.Id("signinPassword"));
                 webelement.SendKeys(value);
                 FieldPassword = value;
             }
@@ -39,7 +44,7 @@ namespace Task.Model
 
         public void Submit()
         {
-            IWebElement webelement = driver.FindElement(By.Id("signin"));
+            IWebElement webelement = _driver.FindElement(By.Id("signin"));
             webelement.Click();
         }
     }

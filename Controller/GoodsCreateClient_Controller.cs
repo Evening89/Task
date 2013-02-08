@@ -76,11 +76,7 @@ namespace Task.Controller
         private void Authorization(string fileName)
         {
             Credentials accesses = GetUserCredentialFromFile(fileName);//читаем доступы из файла
-
-            Authorization auth = new Authorization();
-            auth.driver = _driver;
-            auth.Login = accesses._login;
-            auth.Password = accesses._password;
+            Authorization auth = new Authorization(_driver, accesses._login, accesses._password);
             Registry.hashTable["Login"] = accesses._login;
             Registry.hashTable["Password"] = accesses._password;
             auth.Submit();
