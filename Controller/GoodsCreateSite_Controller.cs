@@ -27,57 +27,63 @@ namespace Task.Controller
 
         public void CreateSite(bool setNecessaryFields, bool setUnnecessaryFields)
         {
+            GetDriver();
+            SetUpFields(setNecessaryFields, setUnnecessaryFields);
+            CreationIsSuccessful();
+        }
+
+        private void GetDriver()
+        {
             _driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный при создании клиента драйвер
             _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             //ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
-            
+        }
+
+        private void SetUpFields(bool setNecessaryFields, bool setUnnecessaryFields)
+        {
             _siteModel = new GoodsCreateSite_Model();
             _siteModel.driver = _driver;
 
             LogTrace.WriteInLog("     " + _driver.Url);
 
-            #region Necessary fields
-            if (setNecessaryFields) //выбрано заполнение обязательных полей
-            {
-                LogTrace.WriteInLog("     ...Заполняю обязательные поля...");
-                SiteDomain = _randoms.RandomString(7) + "." + "ru";
-                _siteModel.Domain = SiteDomain;
-                LogTrace.WriteInLog("     Заполняю поле Домен. Было введено: " + _siteModel.Domain);
-            }
-            #endregion
-            
-            #region Not necessary fields
-            if (setUnnecessaryFields) //выбрано заполнение также необязательных полей
-            {
-                LogTrace.WriteInLog("     ...Заполняю необязательные поля...");
-                if (needSet())
+            #region Required fields
+                if (setNecessaryFields) //выбрано заполнение обязательных полей
                 {
-                    SiteName = _randoms.RandomString(10);
-                    _siteModel.Name = SiteName;
-                    LogTrace.WriteInLog("     Заполняю поле Название. Было введено: " + _siteModel.Name);
+                    LogTrace.WriteInLog("     ...Заполняю обязательные поля...");
+                    SiteDomain = _randoms.RandomString(7) + "." + "ru";
+                    _siteModel.Domain = SiteDomain;
+                    LogTrace.WriteInLog("     Заполняю поле Домен. Было введено: " + _siteModel.Domain);
                 }
-                if (needSet())
-                {
-                    _siteModel.Comments = _randoms.RandomString(30);
-                    LogTrace.WriteInLog("     Заполняю поле Комментарии. Было введено: " + _siteModel.Comments);
-                }
-                if (needSet())
-                {
-                    _siteModel.AddTeasersInSubdomains = true;
-                    LogTrace.WriteInLog("     Выбран checkbox Добавлять тизеры на поддомены");
-                }
-                if (needSet())
-                {
-                    _siteModel.AllowAddSiteOtherClients = true;
-                    LogTrace.WriteInLog("     Выбран checkbox Разрешить добавлять сайт другим клиентам");
-                }
-            }
             #endregion
 
-            CreationIsSuccessful();
-            Registry.hashTable["driver"] = _driver;
-            LogTrace.WriteInLog("     " + _driver.Url);
+            #region Unrequired fields
+                if (setUnnecessaryFields) //выбрано заполнение также необязательных полей
+                {
+                    LogTrace.WriteInLog("     ...Заполняю необязательные поля...");
+                    if (needSet())
+                    {
+                        SiteName = _randoms.RandomString(10);
+                        _siteModel.Name = SiteName;
+                        LogTrace.WriteInLog("     Заполняю поле Название. Было введено: " + _siteModel.Name);
+                    }
+                    if (needSet())
+                    {
+                        _siteModel.Comments = _randoms.RandomString(30);
+                        LogTrace.WriteInLog("     Заполняю поле Комментарии. Было введено: " + _siteModel.Comments);
+                    }
+                    if (needSet())
+                    {
+                        _siteModel.AddTeasersInSubdomains = true;
+                        LogTrace.WriteInLog("     Выбран checkbox Добавлять тизеры на поддомены");
+                    }
+                    if (needSet())
+                    {
+                        _siteModel.AllowAddSiteOtherClients = true;
+                        LogTrace.WriteInLog("     Выбран checkbox Разрешить добавлять сайт другим клиентам");
+                    }
+                }
+            #endregion
         }
 
         private void CreationIsSuccessful()
@@ -100,6 +106,8 @@ namespace Task.Controller
                 ClientId = Registry.hashTable["clientId"].ToString(); //берется для вывода в listBox и логи
                 Registry.hashTable["siteId"] = SiteId;
             }
+            Registry.hashTable["driver"] = _driver;
+            LogTrace.WriteInLog("     " + _driver.Url);
         }
 
         private bool needSet() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем

@@ -12,10 +12,9 @@ namespace Task.Controller
     public class GoodsCreatePkController
     {
         private IWebDriver _driver;
-        private GoodsCreatePK_Model _pkModel;
-        //берем сохраненный ранее 
-        //(при создании клиента Task.Controller.GoodsCreateClient_Controller) ID клиента
-        //и дописываем в URL
+        private GoodsCreatePK_Model _pkModel;//берем сохраненный ранее 
+                                            //(при создании клиента Task.Controller.GoodsCreateClient_Controller) ID клиента
+                                            //и дописываем в URL
         private readonly string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/clients-new-campaign/client_id/" + Registry.hashTable["clientId"];
 
         public List<string> Errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
@@ -26,11 +25,21 @@ namespace Task.Controller
 
         public void CreatePk(bool setNecessaryFields, bool setUnnecessaryFields)
         {
+            GetDriver();
+            SetUpFields(setNecessaryFields, setUnnecessaryFields);
+            CreationIsSuccessful();
+        }
+
+        private void GetDriver()
+        {
             _driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
             _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             //ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
+        }
 
+        private void SetUpFields(bool setNecessaryFields, bool setUnnecessaryFields)
+        {
             _pkModel = new GoodsCreatePK_Model();
             _pkModel.driver = _driver;
 
@@ -195,7 +204,7 @@ namespace Task.Controller
                                 _pkModel.PlatformsPolitics = true;
                                 LogTrace.WriteInLog("        Выбран checkbox Политика, общество, происшествия, религия");
                             }
-                        
+
                             if (needSetCheckBox())
                             {
                                 _pkModel.PlatformsEconomics = true;
@@ -817,7 +826,7 @@ namespace Task.Controller
                                             LogTrace.WriteInLog("        Дом и семья. Выбран checkbox Детские сады");
                                         }
                                     #endregion
-                                    
+
                                     #region Финансы
                                         if (needSetCheckBox())
                                         {
@@ -1005,8 +1014,8 @@ namespace Task.Controller
                                     //}
                                     //if (needSetCheckBox())
                                     //{
-                                        //pkModel.BrowserTargetingOtherAll = true;
-                                        //LogTrace.WriteInLog("        Другие. Выбран checkbox Все");
+                                    //pkModel.BrowserTargetingOtherAll = true;
+                                    //LogTrace.WriteInLog("        Другие. Выбран checkbox Все");
                                     //}
 
                                     #region Опера
@@ -1133,16 +1142,16 @@ namespace Task.Controller
                                     #endregion
 
                                     #region Google Chrome Mobile
-                                        //if (needSetCheckBox())
-                                        //{
-                                        //    pkModel.BrowserTargetingGoogleChromeMobileChoseAll = true;
-                                        //    LogTrace.WriteInLog("        Google Chrome Mobile. Выбран checkbox Google Chrome Mobile");
-                                        //}
-                                        //if (needSetCheckBox())
-                                        //{
-                                        //    pkModel.BrowserTargetingGoogleChromeMobile = true;
-                                        //    LogTrace.WriteInLog("        Google Chrome Mobile. Выбран checkbox Mobile");
-                                        //}
+                                    //if (needSetCheckBox())
+                                    //{
+                                    //    pkModel.BrowserTargetingGoogleChromeMobileChoseAll = true;
+                                    //    LogTrace.WriteInLog("        Google Chrome Mobile. Выбран checkbox Google Chrome Mobile");
+                                    //}
+                                    //if (needSetCheckBox())
+                                    //{
+                                    //    pkModel.BrowserTargetingGoogleChromeMobile = true;
+                                    //    LogTrace.WriteInLog("        Google Chrome Mobile. Выбран checkbox Mobile");
+                                    //}
                                     #endregion
 
                                     break;
@@ -1424,12 +1433,7 @@ namespace Task.Controller
                         }
                     #endregion
                 }
-
             #endregion
-
-            CreationIsSuccessful();
-            Registry.hashTable["pkId"] = PkId; //запомнили глобально ID созданной РК
-            Registry.hashTable["driver"] = _driver;
         }
 
         private void CreationIsSuccessful()
@@ -1465,6 +1469,8 @@ namespace Task.Controller
                     LogTrace.WriteInLog("     " + _driver.Url);
                 }
             }
+            Registry.hashTable["pkId"] = PkId; //запомнили глобально ID созданной РК
+            Registry.hashTable["driver"] = _driver;
         }
 
         private bool needSetCheckBox() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем

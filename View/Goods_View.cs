@@ -31,7 +31,7 @@ namespace Task.View
         public static string tab2 = "\t\t";
         public static string tab3 = "\t\t\t";
 
-        private string _pathToCredentials = "Auth.csv";
+        private const string _pathToCredentials = "Auth.csv";
 
         public void CreateNewClient()
         {

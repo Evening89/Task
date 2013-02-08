@@ -31,17 +31,27 @@ namespace Task.Controller
 
         public void CreateTeaser(bool setNecessaryFields, bool setUnnecessaryFields)
         {
-            _driver = (IWebDriver) Registry.hashTable["driver"];//забираем из хештаблицы сохраненный при создании РК драйвер
+            GetDriver();
+            SetUpFields(setNecessaryFields, setUnnecessaryFields);
+            CreationIsSuccessful();
+        }
+
+        private void GetDriver()
+        {
+            _driver = (IWebDriver)Registry.hashTable["driver"];//забираем из хештаблицы сохраненный при создании РК драйвер
             AllowedDomain = GetAnyAllowedDomain();//сначала выбираем 1 из разрешенных доменов
             _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             //ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
+        }
 
+        private void SetUpFields(bool setNecessaryFields, bool setUnnecessaryFields)
+        {
             _teaserModel = new GoodsCreateTeaser_Model();
             _teaserModel.driver = _driver;
 
             LogTrace.WriteInLog(Goods_View.tab1 + _driver.Url);
-            
+
             #region Required fields
                 if (setNecessaryFields) //выбрано заполнение обязательных полей
                 {
@@ -55,7 +65,7 @@ namespace Task.Controller
                     _teaserModel.Title = _randoms.RandomString(10);
                     LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю поле Заголовок. Было введено: " + _teaserModel.Title);
 
-                    Random rnd=new Random();
+                    Random rnd = new Random();
                     int category = rnd.Next(1, 31);
                     _teaserModel.Category = category;
                     LogTrace.WriteInLog(Goods_View.tab1 + "Работаю с выпадающим списком Категория. Было выбрано: " + _teaserModel.chosenCategory);
@@ -76,7 +86,7 @@ namespace Task.Controller
             #endregion
 
             #region Unrequired fields
-                if(setUnnecessaryFields) //выбрано заполнение необязательных полей
+                if (setUnnecessaryFields) //выбрано заполнение необязательных полей
                 {
                     LogTrace.WriteInLog(Goods_View.tab1 + "...Заполняю необязательные поля...");
 
@@ -119,8 +129,6 @@ namespace Task.Controller
                     }
                 }
             #endregion
-
-            CreationIsSuccessful();
         }
 
         private void CreationIsSuccessful()

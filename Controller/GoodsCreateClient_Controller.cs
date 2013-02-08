@@ -49,19 +49,41 @@ namespace Task.Controller
 
         public void CreateClient(string fileName, bool setNecessaryFields, bool setUnnecessaryFields)
         {
+            LoginAdminPanel(fileName);
+            SetUpFields(setNecessaryFields, setUnnecessaryFields);
+            CreationIsSuccessful();
+        }
+
+        private void LoginAdminPanel(string fileName)
+        {
             InitDriver();
             _driver.Navigate().GoToUrl(BaseUrl); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             //ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
-            
             Authorization(fileName); //проходим авторизацию (доступы берутся из файла)
+        }
 
+        private void Authorization(string fileName)
+        {
+            List<FileData> CsvStruct = new List<FileData>();
+            CsvStruct = FileData.ReadFile(fileName); //читаем доступы из файла
+
+            Authorization auth = new Authorization();
+            auth.driver = _driver;
+            auth.Login = CsvStruct[0].item;
+            auth.Password = CsvStruct[1].item;
+            Registry.hashTable["Login"] = CsvStruct[0].item;
+            Registry.hashTable["Password"] = CsvStruct[1].item;
+            auth.Submit();
+        }
+
+        private void SetUpFields(bool setNecessaryFields, bool setUnnecessaryFields)
+        {
             _clientModel = new GoodsCreateClient_Model();
             _clientModel.driver = _driver;
-
             LogTrace.WriteInLog(_driver.Url);
 
-            #region Necessary fields
+            #region Required fields
                 if (setNecessaryFields) //выбрано заполнение обязательных полей
                 {
                     LogTrace.WriteInLog("...Заполняю обязательные поля...");
@@ -83,10 +105,9 @@ namespace Task.Controller
                     _clientModel.TestClient = true;
                     LogTrace.WriteInLog("Выбран checkbox Тестовый клиент");
                 }
-
             #endregion
 
-            #region Not necessary fields
+            #region Unrequired fields
                 if (setUnnecessaryFields) //выбрано заполнение также необязательных полей
                 {
                     LogTrace.WriteInLog("...Заполняю необязательные поля...");
@@ -97,38 +118,38 @@ namespace Task.Controller
                         _clientModel.Phone = _randoms.RandomNumber(10);
                         LogTrace.WriteInLog("Заполняю поле Телефон. Было введено: " + _clientModel.Phone);
                     }
-                    if(needSet())
+                    if (needSet())
                     {
                         _clientModel.Skype = _randoms.RandomString(5) + _randoms.RandomNumber(5);
                         LogTrace.WriteInLog("Заполняю поле Skype. Было введено: " + _clientModel.Skype);
                     }
-                    if(needSet())
+                    if (needSet())
                     {
                         _clientModel.Icq = _randoms.RandomNumber(5);
                         LogTrace.WriteInLog("Заполняю поле ICQ. Было введено: " + _clientModel.Icq);
                     }
-                    if(needSet())
+                    if (needSet())
                     {
                         _clientModel.ExchangeInCabinet = true;
                         LogTrace.WriteInLog("Выбран checkbox Обмен в кабинете");
                     }
-                    if(needSet())
+                    if (needSet())
                     {
                         _clientModel.NewsInCabinet = true;
                         LogTrace.WriteInLog("Выбран checkbox Новости в кабинете");
                     }
-                    
-                    if(needSet())
+
+                    if (needSet())
                     {
                         _clientModel.LimitNumOfCampaigns = _randoms.RandomNumber(2);
                         LogTrace.WriteInLog("Заполняю поле Ограничение по количеству кампаний");
                     }
-                    if(needSet())
+                    if (needSet())
                     {
                         _clientModel.AllowViewFilterByPlatform = true;
                         LogTrace.WriteInLog("Выбран checkbox Разрешен просмотр фильтра по площадкам");
                     }
-                    if(needSet())
+                    if (needSet())
                     {
                         _clientModel.Comments = _randoms.RandomString(20);
                         LogTrace.WriteInLog("Заполняю поле Комментарий");
@@ -136,10 +157,6 @@ namespace Task.Controller
                 }
                 //пропущены поля "Ограничение на кол-во создаваемых тизеров в сутки каждой РК", "Отображение сводной статистики трат", "Подсеть"
             #endregion
-
-            CreationIsSuccessful();
-            Registry.hashTable["driver"] = _driver;
-            LogTrace.WriteInLog(_driver.Url);
         }
 
         private void CreationIsSuccessful()
@@ -162,22 +179,11 @@ namespace Task.Controller
                 ClientId = url[url.Length - 1]; //берем последний элемент массива - это id нового клиента
                 Registry.hashTable["clientId"] = ClientId; //глобально запомнили ID клиента
             }
+
+            Registry.hashTable["driver"] = _driver;
+            LogTrace.WriteInLog(_driver.Url);
         }
-
-        private void Authorization(string fileName)
-        {
-            List<FileData> CsvStruct = new List<FileData>();
-            CsvStruct = FileData.ReadFile(fileName); //читаем доступы из файла
-
-            Authorization auth = new Authorization();
-            auth.driver = _driver;
-            auth.Login = CsvStruct[0].item;
-            auth.Password = CsvStruct[1].item;
-            Registry.hashTable["Login"] = CsvStruct[0].item;
-            Registry.hashTable["Password"] = CsvStruct[1].item;
-            auth.Submit();
-        }
-
+        
         private bool needSet() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем
         {
             Random rnd = new Random();
