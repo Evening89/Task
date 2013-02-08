@@ -17,6 +17,17 @@ namespace Task.Controller
         private IWebDriver _driver;
         private GoodsCreateClient_Model _clientModel;
         private const string BaseUrl = "https://admin.dt00.net/cab/goodhits/clients-new";
+        private struct Credentials
+        {
+            public string _login;
+            public string _password;
+
+            public Credentials(string login, string password)
+            {
+                _login = login;
+                _password = password;
+            }
+        }
 
         public List<string> Errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
         public string ClientId; //переменная для хранения ID только что созданного клиента
@@ -64,16 +75,23 @@ namespace Task.Controller
 
         private void Authorization(string fileName)
         {
-            List<FileData> CsvStruct = new List<FileData>();
-            CsvStruct = FileData.ReadFile(fileName); //читаем доступы из файла
+            Credentials accesses = GetUserCredentialFromFile(fileName);//читаем доступы из файла
 
             Authorization auth = new Authorization();
             auth.driver = _driver;
-            auth.Login = CsvStruct[0].item;
-            auth.Password = CsvStruct[1].item;
-            Registry.hashTable["Login"] = CsvStruct[0].item;
-            Registry.hashTable["Password"] = CsvStruct[1].item;
+            auth.Login = accesses._login;
+            auth.Password = accesses._password;
+            Registry.hashTable["Login"] = accesses._login;
+            Registry.hashTable["Password"] = accesses._password;
             auth.Submit();
+        }
+
+        private Credentials GetUserCredentialFromFile(string fileName)
+        {
+            List<FileData> CsvStruct = new List<FileData>();
+            CsvStruct = FileData.ReadFile(fileName); //читаем доступы из файла
+            Credentials credentials = new Credentials(CsvStruct[0].item, CsvStruct[1].item);
+            return credentials;
         }
 
         private void SetUpFields(bool setNecessaryFields, bool setUnnecessaryFields)
