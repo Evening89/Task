@@ -32,7 +32,9 @@ namespace Task.Controller
             //FireProfile.Port = 9966;
             //driver = new FirefoxDriver(FireBin, FireProfile);
 
-            _driver = new FirefoxDriver();
+            _driver = new FirefoxDriver(); 
+            _driver.Navigate().GoToUrl(BaseUrl); //заходим по ссылке
+            _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));//ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
         }
 
         public void CloseDriver()
@@ -57,9 +59,6 @@ namespace Task.Controller
         private void LoginAdminPanel(string fileName)
         {
             InitDriver();
-            _driver.Navigate().GoToUrl(BaseUrl); //заходим по ссылке
-            _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
-            //ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
             Authorization(fileName); //проходим авторизацию (доступы берутся из файла)
         }
 
