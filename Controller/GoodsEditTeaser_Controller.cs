@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
@@ -82,7 +83,14 @@ namespace Task.Controller
                     
                     rnd = new Random();
                     int price = rnd.Next(1, 11);
-                    priceForGoodsService = teaserEditModel.PriceForGoodsService = price.ToString();
+                    priceForGoodsService = price.ToString();
+                    if (priceForGoodsService.StartsWith("0"))
+                    {
+                        Regex regex = new Regex(@"^[0]*");
+                        Match match = regex.Match(priceForGoodsService);
+                        if (match.Success) priceForGoodsService = regex.Replace(priceForGoodsService, "");
+                    }
+                    teaserEditModel.PriceForGoodsService = priceForGoodsService;
                     LogTrace.WriteInLog(Goods_View.tab3 + "Заполняю поле Цена товара/услуги. Было введено: " + teaserEditModel.PriceForGoodsService);
                 #endregion
             #endregion
@@ -122,38 +130,38 @@ namespace Task.Controller
                 #region Проверить обязательные поля
                     LogTrace.WriteInLog(Goods_View.tab3 + "...Проверка: Обязательные поля...");
 
-                    if (link == teaserEditModel.GetLink) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Ссылка и введенное при редактировании"); }
+                    if (link == teaserEditModel.GetLink) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Ссылка (" + teaserEditModel.GetLink + ") и введенное при редактировании (" + link + ")" ); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Ссылка и введенное при редактировании");
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Ссылка (" + teaserEditModel.GetLink + ") и введенное при редактировании (" + link + ")");
                         wasMismatch = true;
                     }
 
-                    if (title == teaserEditModel.GetTitle) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Заголовок и введенное при редактировании"); }
+                    if (title == teaserEditModel.GetTitle) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Заголовок (" + teaserEditModel.GetTitle + ") и введенное при редактировании (" + title + ")"); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Заголовок и введенное при редактировании");
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Заголовок (" + teaserEditModel.GetTitle + ") и введенное при редактировании (" + title + ")");
                         wasMismatch = true;
                     }
 
-                    if (teaserEditModel.chosenCategory == teaserEditModel.GetCategory) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Категория и введенное при редактировании"); }
+                    if (teaserEditModel.chosenCategory == teaserEditModel.GetCategory) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Категория (" + teaserEditModel.GetCategory + ") и введенное при редактировании (" + teaserEditModel.chosenCategory + ")"); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Категория и введенное при редактировании");
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Категория (" + teaserEditModel.GetCategory + ") и введенное при редактировании (" + teaserEditModel.chosenCategory + ")");
                         wasMismatch = true;
                     }
 
-                    if (advertText == teaserEditModel.GetAdvertText) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Рекламный текст и введенное при редактировании"); }
+                    if (advertText == teaserEditModel.GetAdvertText) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Рекламный текст (" + teaserEditModel.GetAdvertText + ") и введенное при редактировании (" + advertText + ")"); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Рекламный текст и введенное при редактировании");
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Рекламный текст (" + teaserEditModel.GetAdvertText + ") и введенное при редактировании (" + advertText + ")");
                         wasMismatch = true;
                     }
 
-                    if (attachFile == teaserEditModel.GetAttachFile) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Фото и введенное при редактировании"); }
+                    if (attachFile == teaserEditModel.GetAttachFile) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Фото (" + teaserEditModel.GetAttachFile + ") и введенное при редактировании (" + attachFile + ")"); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Фото и введенное при редактировании");
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Фото (" + teaserEditModel.GetAttachFile + ") и введенное при редактировании (" + advertText + ")");
                         wasMismatch = true;
                     }
                 #endregion
@@ -161,17 +169,17 @@ namespace Task.Controller
                 #region Проверить необязательные поля
                     LogTrace.WriteInLog(Goods_View.tab3 + "...Проверка: Необязательные поля...");
 
-                    if (teaserEditModel.chosenCurrency == teaserEditModel.GetCurrency) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Валюта и введенное при редактировании"); }
+                    if (teaserEditModel.chosenCurrency == teaserEditModel.GetCurrency) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Валюта (" + teaserEditModel.GetCurrency + ") и введенное при редактировании (" + teaserEditModel.chosenCurrency + ")"); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Валюта и введенное при редактировании");
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Валюта (" + teaserEditModel.GetCurrency + ") и введенное при редактировании (" + teaserEditModel.chosenCurrency + ")");
                         wasMismatch = true;
                     }
 
-                    if (priceForGoodsService == teaserEditModel.GetPriceForGoodsService) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Цена товара/услуги и введенное при редактировании"); }
+                    if (priceForGoodsService == teaserEditModel.GetPriceForGoodsService) { LogTrace.WriteInLog(Goods_View.tab3 + "Совпадают: содержимое поля Цена товара/услуги (" + teaserEditModel.GetPriceForGoodsService + ") и введенное при редактировании (" + priceForGoodsService + ")"); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Цена товара/услуги и введенное при редактировании");
+                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Цена товара/услуги (" + teaserEditModel.GetPriceForGoodsService + ") и введенное при редактировании (" + priceForGoodsService + ")");
                         wasMismatch = true;
                     }
                 #endregion

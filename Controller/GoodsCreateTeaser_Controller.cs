@@ -144,7 +144,6 @@ namespace Task.Controller
             {
                 TeaserId = GetTeaserIdFromPage();
                 Registry.hashTable["teaserId"] = TeaserId;
-
                 ClientId = Registry.hashTable["clientId"].ToString(); //берется для вывода в listBox и логи
                 PkId = Registry.hashTable["pkId"].ToString(); //берется для вывода в listBox и логи
 
@@ -156,7 +155,6 @@ namespace Task.Controller
 
         private string GetTeaserIdFromPage()
         {
-            //если нет ошибок - значит тизер успешно создался и мы перешли на страницу с инфо о созданном тизере
             List<IWebElement> list = _driver.FindElements(By.CssSelector("tbody td.info-column")).ToList(); //список ячеек 1го столбца таблицы
 
             _webElement = list[0]; //взяли только 0й - только что созданный

@@ -350,7 +350,7 @@ namespace Task.Model
                         IWebElement select = driver.FindElement(By.Id("curators-inviter"));
                         SelectElement selectAttractor = new SelectElement(select);
                         selectAttractor.SelectByIndex(SelectAttractorClient);
-                        chosenAttractorClient = selectAttractor.SelectedOption.GetAttribute("value");
+                        chosenAttractorClient = selectAttractor.SelectedOption.Text;
                     }
                 }
             #endregion
