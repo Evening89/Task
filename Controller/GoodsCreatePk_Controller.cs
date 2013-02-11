@@ -1443,34 +1443,34 @@ namespace Task.Controller
             string createPkUrl = _driver.Url; //запоминаем url страницы "Добавление РК"
             _pkModel.Submit(); //пытаемся сохранить форму
             LogTrace.WriteInLog("     Нажал кнопку Завершить");
-            string isCreatedPkUrl = _driver.Url; //запоминаем url страницы, открывшейся после нажатия "Завершить"
-            //если createPkUrl и isCreatedPkUrl совпали - мы никуда не перешли и значит есть ошибки заполнения полей
-            //если createPkUrl и isCreatedPkUrl не совпали - РК создалась и ошибки искать не надо
-            if (createPkUrl == isCreatedPkUrl)
-            {
-                Errors.Add(_pkModel.GetErrors().ToString()); //проверяем, появились ли на форме ошибки заполнения полей
-            }
-            else
-            {
-                //т.к. после успешного создания РК нас перебрасывает на страницу Клиента (а не РК)
-                //поэтому, чтобы получить ID РК, находим на странице название только что созданной РК
-                // и переходим по этому названию-ссылке на страницу РК
-                // открывается новое окно с РК - мы должны на него переключиться
-                // и там получаем ID РК из URL
-                if (_driver.PageSource.Contains(PkName))
-                {
-                    IWebElement webelement = _driver.FindElement(By.LinkText(PkName));
-                    string href = webelement.GetAttribute("href");
 
-                    char[] slash = new char[] { '/' };
-                    string[] url = href.Split(slash); //разбиваем URL по /
-                    PkId = url[url.Length - 1]; //берем последний элемент массива - это id новой РК
-                    ClientId = Registry.hashTable["clientId"].ToString(); //берется для вывода в listBox и логи
-                    LogTrace.WriteInLog("     " + _driver.Url);
-                }
-            }
+            if (_driver.Url == createPkUrl)
+                Errors.Add(_pkModel.GetErrors().ToString()); //проверяем, появились ли на форме ошибки заполнения полей
+            else
+                GetPkIdFromUrl();
+
             Registry.hashTable["pkId"] = PkId; //запомнили глобально ID созданной РК
             Registry.hashTable["driver"] = _driver;
+        }
+
+        private void GetPkIdFromUrl()
+        {
+            //т.к. после успешного создания РК нас перебрасывает на страницу Клиента (а не РК)
+            //поэтому, чтобы получить ID РК, находим на странице название только что созданной РК
+            // и переходим по этому названию-ссылке на страницу РК
+            // открывается новое окно с РК - мы должны на него переключиться
+            // и там получаем ID РК из URL
+            if (_driver.PageSource.Contains(PkName))
+            {
+                IWebElement webelement = _driver.FindElement(By.LinkText(PkName));
+                string href = webelement.GetAttribute("href");
+
+                char[] slash = new char[] { '/' };
+                string[] url = href.Split(slash); //разбиваем URL по /
+                PkId = url[url.Length - 1]; //берем последний элемент массива - это id новой РК
+                ClientId = Registry.hashTable["clientId"].ToString(); //берется для вывода в listBox и логи
+                LogTrace.WriteInLog("     " + _driver.Url);
+            }
         }
 
         private bool needSetCheckBox() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем

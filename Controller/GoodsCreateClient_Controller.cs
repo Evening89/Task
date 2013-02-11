@@ -171,7 +171,6 @@ namespace Task.Controller
             _clientModel.Submit(); //пытаемся сохранить форму
             LogTrace.WriteInLog("Нажал кнопку Сохранить");
 
-            //если текущий и createClientUrl совпали - мы никуда не перешли и значит есть ошибки заполнения полей
             //если текущий и createClientUrl не совпали - клиент создался и ошибки искать не надо
             if (_driver.Url == createClientUrl)
                 Errors.Add(_clientModel.GetErrors().ToString()); //проверяем, появились ли на форме ошибки заполнения полей

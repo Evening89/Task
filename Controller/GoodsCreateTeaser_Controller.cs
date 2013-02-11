@@ -136,16 +136,13 @@ namespace Task.Controller
             string createTeaserUrl = _driver.Url; //запоминаем url страницы "Добавление тизера"
             _teaserModel.Submit(); //пытаемся сохранить форму
             LogTrace.WriteInLog(Goods_View.tab1 + "Нажал кнопку Сохранить");
-            string isCreatedTeaserUrl = _driver.Url; //запоминаем url страницы, открывшейся после нажатия "Cохранить"
-            //если createSitetUrl и isCreatedSiteUrl совпали - мы никуда не перешли и значит есть ошибки заполнения полей
-            //если createSitetUrl и isCreatedSiteUrl не совпали - сайт создался и ошибки искать не надо
-            if (createTeaserUrl == isCreatedTeaserUrl)
-            {
-                Errors = _teaserModel.GetErrors(); //проверяем, появились ли на форме ошибки заполнения полей
-            }
+
+            if (_driver.Url == createTeaserUrl)
+                Errors.Add(_teaserModel.GetErrors().ToString()); //проверяем, появились ли на форме ошибки заполнения полей
+                //Errors = _teaserModel.GetErrors(); //проверяем, появились ли на форме ошибки заполнения полей
             else
             {
-                TeaserId = GetTeaserId();
+                TeaserId = GetTeaserIdFromPage();
                 Registry.hashTable["teaserId"] = TeaserId;
 
                 ClientId = Registry.hashTable["clientId"].ToString(); //берется для вывода в listBox и логи
@@ -157,7 +154,7 @@ namespace Task.Controller
             LogTrace.WriteInLog(Goods_View.tab1 + _driver.Url);
         }
 
-        private string GetTeaserId()
+        private string GetTeaserIdFromPage()
         {
             //если нет ошибок - значит тизер успешно создался и мы перешли на страницу с инфо о созданном тизере
             List<IWebElement> list = _driver.FindElements(By.CssSelector("tbody td.info-column")).ToList(); //список ячеек 1го столбца таблицы

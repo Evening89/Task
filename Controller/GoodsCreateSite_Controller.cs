@@ -91,23 +91,24 @@ namespace Task.Controller
             string createSitetUrl = _driver.Url; //запоминаем url страницы "Добавление сайта"
             _siteModel.Submit(); //пытаемся сохранить форму
             LogTrace.WriteInLog("     Нажал кнопку Сохранить");
-            string isCreatedSiteUrl = _driver.Url; //запоминаем url страницы, открывшейся после нажатия "Завершить"
-            //если createSitetUrl и isCreatedSiteUrl совпали - мы никуда не перешли и значит есть ошибки заполнения полей
-            //если createSitetUrl и isCreatedSiteUrl не совпали - сайт создался и ошибки искать не надо
-            if (createSitetUrl == isCreatedSiteUrl)
-            {
+
+            //если текущий и createSitetUrl не совпали - сайт создался и ошибки искать не надо
+            if (_driver.Url == createSitetUrl)
                 Errors.Add(_siteModel.GetErrors().ToString()); //проверяем, появились ли на форме ошибки заполнения полей
-            }
             else
-            {
-                char[] slash = new char[] { '/' };
-                string[] url = _driver.Url.Split(slash); //разбиваем URL по /
-                SiteId = url[url.Length - 1]; //берем последний элемент массива - это id нового клиента
-                ClientId = Registry.hashTable["clientId"].ToString(); //берется для вывода в listBox и логи
-                Registry.hashTable["siteId"] = SiteId;
-            }
+                GetSiteIdFromUrl();
+            
             Registry.hashTable["driver"] = _driver;
             LogTrace.WriteInLog("     " + _driver.Url);
+        }
+
+        private void GetSiteIdFromUrl()
+        {
+            char[] slash = new char[] { '/' };
+            string[] url = _driver.Url.Split(slash); //разбиваем URL по /
+            SiteId = url[url.Length - 1]; //берем последний элемент массива - это id нового клиента
+            ClientId = Registry.hashTable["clientId"].ToString(); //берется для вывода в listBox и логи
+            Registry.hashTable["siteId"] = SiteId;
         }
 
         private bool needSet() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем
