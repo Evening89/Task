@@ -748,5 +748,20 @@ namespace Task.View
             listBox1.Items.Clear();
             listBox1.ForeColor = Color.Black;
         }
+
+        private void claimForTeaserPic_Click_1(object sender, EventArgs e)
+        {
+            if (claimForTeaserPic.BackColor == SystemColors.Control)
+            {
+                claimForTeaserPic.BackColor = Color.Chartreuse;
+                claimForTeaserCheckBox.Checked = true;
+            }
+
+            else
+            {
+                claimForTeaserPic.BackColor = SystemColors.Control;
+                claimForTeaserCheckBox.Checked = false;
+            }
+        }
     }
 }

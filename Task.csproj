@@ -81,6 +81,7 @@
     <Compile Include="Model\GoodsEditPK_Model.cs" />
     <Compile Include="Model\GoodsEditSite_Model.cs" />
     <Compile Include="Model\GoodsEditTeaser_Model.cs" />
+    <Compile Include="Model\Pictograms\PicClaimForTeaser.cs" />
     <Compile Include="Utils\Credentials.cs" />
     <Compile Include="Utils\LogTrace.cs" />
     <Compile Include="Utils\FileData.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -123,6 +125,10 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\pics\claim_for_teaser.gif" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -11,7 +11,7 @@ namespace Task.Model
     {
         public IWebDriver driver;
 
-        #region Necessary fields
+        #region Required fields
             protected string FieldLogin;
             public string Login
             {
@@ -61,7 +61,7 @@ namespace Task.Model
             }
         #endregion
 
-        #region Unnecessary fields
+        #region Unrequired fields
             protected string FieldPhone;
             public string Phone
             {
