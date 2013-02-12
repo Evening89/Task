@@ -263,45 +263,45 @@ namespace Task.Controller
                 #region Контакты по направлению
                     LogTrace.WriteInLog("          ...Проверка: Контакты по направлению...");
 
-                    if (emailByDirection == clientEditModel.GetContactsByDirectionEmail) { LogTrace.WriteInLog("          Совпадают: содержимое поля E-Mail (" + clientEditModel.GetContactsByDirectionEmail + ") и введенное при редактировании (" + emailByDirection + ")"); }
+                    if (emailByDirection == clientEditModel.GetContactsByDirectionEmail) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля E-Mail ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionEmail, emailByDirection)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля E-Mail (" + clientEditModel.GetContactsByDirectionEmail + ") и введенное при редактировании (" + emailByDirection + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля E-Mail ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionEmail, emailByDirection));
                         wasMismatch = true;
                     }
 
-                    if (emailAdditionalByDirection == clientEditModel.GetContactsByDirectionEmailAdditional) { LogTrace.WriteInLog("          Совпадают: содержимое поля Дополнительный E-Mail (" + clientEditModel.GetContactsByDirectionEmailAdditional + ") и введенное при редактировании (" + emailAdditionalByDirection + ")"); }
+                    if (emailAdditionalByDirection == clientEditModel.GetContactsByDirectionEmailAdditional) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Дополнительный E-Mail ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionEmailAdditional, emailAdditionalByDirection)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Дополнительный E-Mail (" + clientEditModel.GetContactsByDirectionEmailAdditional + ") и введенное при редактировании (" + emailAdditionalByDirection + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Дополнительный E-Mail ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionEmailAdditional, emailAdditionalByDirection));
                         wasMismatch = true;
                     }
 
-                    if (phoneByDirection == clientEditModel.GetContactsByDirectionPhone) { LogTrace.WriteInLog("          Совпадают: содержимое поля Телефон (" + clientEditModel.GetContactsByDirectionPhone + ") и введенное при редактировании (" + phoneByDirection + ")"); }
+                    if (phoneByDirection == clientEditModel.GetContactsByDirectionPhone) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Телефон ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionPhone, phoneByDirection)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Телефон (" + clientEditModel.GetContactsByDirectionPhone + ") и введенное при редактировании (" + phoneByDirection + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Телефон ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionPhone, phoneByDirection));
                         wasMismatch = true;
                     }
 
-                    if (skypeByDirection == clientEditModel.GetContactsByDirectionSkype) { LogTrace.WriteInLog("          Совпадают: содержимое поля Skype (" + clientEditModel.GetContactsByDirectionSkype + ") и введенное при редактировании (" + skypeByDirection + ")"); }
+                    if (skypeByDirection == clientEditModel.GetContactsByDirectionSkype) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Skype ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionSkype, skypeByDirection)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Skype (" + clientEditModel.GetContactsByDirectionSkype + ") и введенное при редактировании (" + skypeByDirection + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Skype ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionSkype, skypeByDirection));
                         wasMismatch = true;
                     }
 
-                    if (icqByDirection == clientEditModel.GetContactsByDirectionIcq) { LogTrace.WriteInLog("          Совпадают: содержимое поля ICQ (" + clientEditModel.GetContactsByDirectionIcq + ") и введенное при редактировании (" + icqByDirection + ")"); }
+                    if (icqByDirection == clientEditModel.GetContactsByDirectionIcq) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля ICQ ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionIcq, icqByDirection)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля ICQ (" + clientEditModel.GetContactsByDirectionIcq + ") и введенное при редактировании (" + icqByDirection + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля ICQ ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionIcq, icqByDirection));
                         wasMismatch = true;
                     }
 
-                    if (nameByDirection == clientEditModel.GetContactsByDirectionName) { LogTrace.WriteInLog("          Совпадают: содержимое поля ФИО (" + clientEditModel.GetContactsByDirectionName + ") и введенное при редактировании (" + nameByDirection + ")"); }
+                    if (nameByDirection == clientEditModel.GetContactsByDirectionName) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля ФИО ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionName, nameByDirection)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля ФИО (" + clientEditModel.GetContactsByDirectionName + ") и введенное при редактировании (" + nameByDirection + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля ФИО ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsByDirectionName, nameByDirection));
                         wasMismatch = true;
                     }
                 #endregion
@@ -309,59 +309,59 @@ namespace Task.Controller
                 #region Основные контакты
                     LogTrace.WriteInLog("          ...Проверка: Основные контакты...");
 
-                    if (emailCommon == clientEditModel.GetContactsCommonEmail) { LogTrace.WriteInLog("          Совпадают: содержимое поля E-Mail (" + clientEditModel.GetContactsCommonEmail + ") и введенное при редактировании (" + emailCommon + ")"); }
+                    if (emailCommon == clientEditModel.GetContactsCommonEmail) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля E-Mail ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonEmail, emailCommon)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля E-Mail (" + clientEditModel.GetContactsCommonEmail + ") и введенное при редактировании (" + emailCommon + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля E-Mail ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonEmail, emailCommon));
                         wasMismatch = true;
                     }
 
                     if (emailAdditionalCommon == clientEditModel.GetContactsCommonEmailAdditional) { LogTrace.WriteInLog("          Совпадают: содержимое поля Дополнительный E-Mail (" + clientEditModel.GetContactsCommonEmailAdditional + ") и введенное при редактировании (" + emailAdditionalCommon + ")"); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Дополнительный E-Mail (" + clientEditModel.GetContactsCommonEmailAdditional + ") и введенное при редактировании (" + emailAdditionalCommon + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Дополнительный E-Mail ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonEmailAdditional, emailAdditionalCommon));
                         wasMismatch = true;
                     }
 
-                    if (phoneCommon == clientEditModel.GetContactsCommonPhone) { LogTrace.WriteInLog("          Совпадают: содержимое поля Телефон (" + clientEditModel.GetContactsCommonPhone + ") и введенное при редактировании (" + phoneCommon + ")"); }
+                    if (phoneCommon == clientEditModel.GetContactsCommonPhone) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Телефон ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonPhone, phoneCommon)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Телефон (" + clientEditModel.GetContactsCommonPhone + ") и введенное при редактировании (" + phoneCommon + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Телефон ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonPhone, phoneCommon));
                         wasMismatch = true;
                     }
 
-                    if (skypeCommon == clientEditModel.GetContactsCommonSkype) { LogTrace.WriteInLog("          Совпадают: содержимое поля Skype (" + clientEditModel.GetContactsCommonSkype + ") и введенное при редактировании (" + skypeCommon + ")"); }
+                    if (skypeCommon == clientEditModel.GetContactsCommonSkype) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Skype ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonSkype, skypeCommon)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Skype (" + clientEditModel.GetContactsCommonSkype + ") и введенное при редактировании (" + skypeCommon + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Skype ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonSkype, skypeCommon));
                         wasMismatch = true;
                     }
 
-                    if (icqCommon == clientEditModel.GetContactsCommonIcq) { LogTrace.WriteInLog("          Совпадают: содержимое поля ICQ (" + clientEditModel.GetContactsCommonIcq + ") и введенное при редактировании (" + icqCommon + ")"); }
+                    if (icqCommon == clientEditModel.GetContactsCommonIcq) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля ICQ ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonIcq, icqCommon)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля ICQ (" + clientEditModel.GetContactsCommonIcq + ") и введенное при редактировании (" + icqCommon + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля ICQ ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonIcq, icqCommon));
                         wasMismatch = true;
                     }
 
-                    if (nameCommon == clientEditModel.GetContactsCommonName) { LogTrace.WriteInLog("          Совпадают: содержимое поля ФИО (" + clientEditModel.GetContactsCommonName + ") и введенное при редактировании (" + nameCommon + ")"); }
+                    if (nameCommon == clientEditModel.GetContactsCommonName) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля ФИО ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonName, nameCommon)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля ФИО (" + clientEditModel.GetContactsCommonName + ") и введенное при редактировании (" + nameCommon + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля ФИО ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonName, nameCommon));
                         wasMismatch = true;
                     }
 
-                    if (aliasCommon == clientEditModel.GetContactsCommonAlias) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'Псевдоним для креатива' (" + clientEditModel.GetContactsCommonAlias + ") и введенное при редактировании (" + aliasCommon + ")"); }
+                    if (aliasCommon == clientEditModel.GetContactsCommonAlias) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля 'Псевдоним для креатива' ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonAlias, aliasCommon)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля 'Псевдоним для креатива' (" + clientEditModel.GetContactsCommonAlias + ") и введенное при редактировании (" + aliasCommon + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Псевдоним для креатива' ({0}) и введенное при редактировании ({1})", clientEditModel.GetContactsCommonAlias, aliasCommon));
                         wasMismatch = true;
                     }
 
-                    if (clientEditModel.chosenStartSectionProfile == clientEditModel.GetStartSectionProfile) { LogTrace.WriteInLog("          Совпадают: пункт списка 'Стартовый раздел кабинета' (" + clientEditModel.GetStartSectionProfile + ") и введенное при редактировании (" + clientEditModel.chosenStartSectionProfile + ")"); }
+                    if (clientEditModel.chosenStartSectionProfile == clientEditModel.GetStartSectionProfile) { LogTrace.WriteInLog(string.Format("          Совпадают: пункт списка 'Стартовый раздел кабинета' ({0}) и введенное при редактировании ({1})", clientEditModel.GetStartSectionProfile, clientEditModel.chosenStartSectionProfile)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: пункт списка 'Стартовый раздел кабинета' (" + clientEditModel.GetStartSectionProfile + ") и введенное при редактировании (" + clientEditModel.chosenStartSectionProfile + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: пункт списка 'Стартовый раздел кабинета' ({0}) и введенное при редактировании ({1})", clientEditModel.GetStartSectionProfile, clientEditModel.chosenStartSectionProfile));
                         wasMismatch = true;
                     }       
                 #endregion
@@ -370,10 +370,10 @@ namespace Task.Controller
                     LogTrace.WriteInLog("          ...Проверка: Платёжные реквизиты...");
 
                     string concatenated = clientEditModel.chosenKindOfPayment + " " + requisitesOfPayment;
-                    if (concatenated == clientEditModel.GetRequisites) { LogTrace.WriteInLog("          Совпадают: форма оплаты + реквизиты (" + clientEditModel.GetRequisites + ") и введенное при редактировании (" + concatenated + ")"); }
+                    if (concatenated == clientEditModel.GetRequisites) { LogTrace.WriteInLog(string.Format("          Совпадают: форма оплаты + реквизиты ({0}) и введенное при редактировании ({1})", clientEditModel.GetRequisites, concatenated)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: форма оплаты + реквизиты (" + clientEditModel.GetRequisites + ") и введенное при редактировании (" + concatenated + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: форма оплаты + реквизиты ({0}) и введенное при редактировании ({1})", clientEditModel.GetRequisites, concatenated));
                         wasMismatch = true;
                     }
                 #endregion
@@ -381,17 +381,17 @@ namespace Task.Controller
                 #region Взаимодействие
                     LogTrace.WriteInLog("          ...Проверка: Взаимодействие...");
 
-                    if (clientEditModel.GetCurrentCurator) { LogTrace.WriteInLog("          Совпадают: текущий куратор (" + clientEditModel.GetCurrentCurator + ") и введенное при редактировании (" + clientEditModel.chosenNewCuratorInternal + ")"); }
+                    if (clientEditModel.GetCurrentCurator) { LogTrace.WriteInLog(string.Format("          Совпадают: текущий куратор ({0}) и введенное при редактировании ({1})", clientEditModel.GetCurrentCurator, clientEditModel.chosenNewCuratorInternal)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: текущий куратор (" + clientEditModel.GetCurrentCurator + ") и введенное при редактировании (" + clientEditModel.chosenNewCuratorInternal + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: текущий куратор ({0}) и введенное при редактировании ({1})", clientEditModel.GetCurrentCurator, clientEditModel.chosenNewCuratorInternal));
                         wasMismatch = true;
                     }
 
-                    if (clientEditModel.chosenAttractorClient == clientEditModel.GetAttractorClient) { LogTrace.WriteInLog("          Совпадают: пункт списка 'Привлекатель клиента' (" + clientEditModel.GetAttractorClient + ") и введенное при редактировании (" + clientEditModel.chosenAttractorClient + ")"); }
+                    if (clientEditModel.chosenAttractorClient == clientEditModel.GetAttractorClient) { LogTrace.WriteInLog(string.Format("          Совпадают: пункт списка 'Привлекатель клиента' ({0}) и введенное при редактировании ({1})", clientEditModel.GetAttractorClient, clientEditModel.chosenAttractorClient)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: пункт списка 'Привлекатель клиента' (" + clientEditModel.GetAttractorClient + ") и введенное при редактировании (" + clientEditModel.chosenAttractorClient + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: пункт списка 'Привлекатель клиента' ({0}) и введенное при редактировании ({1})", clientEditModel.GetAttractorClient, clientEditModel.chosenAttractorClient));
                         wasMismatch = true;
                     }
                 #endregion
@@ -427,10 +427,10 @@ namespace Task.Controller
                         wasMismatch = true;
                     }
 
-                    if (limitPkQuantity == clientEditModel.GetLimitPkQuantity) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'Ограничение по количеству кампаний' (" + clientEditModel.GetLimitPkQuantity + ") и введенное при редактировании (" + limitPkQuantity + ")"); }
+                    if (limitPkQuantity == clientEditModel.GetLimitPkQuantity) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля 'Ограничение по количеству кампаний' ({0}) и введенное при редактировании ({1})", clientEditModel.GetLimitPkQuantity, limitPkQuantity)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля 'Ограничение по количеству кампаний' (" + clientEditModel.GetLimitPkQuantity + ") и введенное при редактировании (" + limitPkQuantity + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Ограничение по количеству кампаний' ({0}) и введенное при редактировании ({1})", clientEditModel.GetLimitPkQuantity, limitPkQuantity));
                         wasMismatch = true;
                     }
 
@@ -441,10 +441,10 @@ namespace Task.Controller
                         wasMismatch = true;
                     }
 
-                    if (limitTeasersQuantity == clientEditModel.GetLimitTeasersQuantityPerDay) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'Ограничение на кол-во создаваемых тизеров в сутки каждой РК' (" + clientEditModel.GetLimitTeasersQuantityPerDay + ") и введенное при редактировании (" + limitTeasersQuantity + ")"); }
+                    if (limitTeasersQuantity == clientEditModel.GetLimitTeasersQuantityPerDay) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля 'Ограничение на кол-во создаваемых тизеров в сутки каждой РК' ({0}) и введенное при редактировании ({1})", clientEditModel.GetLimitTeasersQuantityPerDay, limitTeasersQuantity)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля 'Ограничение на кол-во создаваемых тизеров в сутки каждой РК' (" + clientEditModel.GetLimitTeasersQuantityPerDay + ") и введенное при редактировании (" + limitTeasersQuantity + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Ограничение на кол-во создаваемых тизеров в сутки каждой РК' ({0}) и введенное при редактировании ({1})", clientEditModel.GetLimitTeasersQuantityPerDay, limitTeasersQuantity));
                         wasMismatch = true;
                     }
 
@@ -462,10 +462,10 @@ namespace Task.Controller
                         wasMismatch = true;
                     }
 
-                    if (comments == clientEditModel.GetComments) { LogTrace.WriteInLog("          Совпадают: содержимое поля Комментарий (" + clientEditModel.GetComments + ") и введенное при редактировании (" + comments + ")"); }
+                    if (comments == clientEditModel.GetComments) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Комментарий ({0}) и введенное при редактировании ({1})", clientEditModel.GetComments, comments)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Комментарий (" + clientEditModel.GetComments + ") и введенное при редактировании (" + comments + ")");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Комментарий ({0}) и введенное при редактировании ({1})", clientEditModel.GetComments, comments));
                         wasMismatch = true;
                     } 
                 #endregion

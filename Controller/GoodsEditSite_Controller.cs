@@ -83,16 +83,16 @@ namespace Task.Controller
             #region Проверка заполнения
                 LogTrace.WriteInLog("          ...Проверка: Название...");
 
-                if (siteName == siteEditModel.GetSiteName) { LogTrace.WriteInLog("          Совпадают: содержимое поля Название и введенное при редактировании"); }
+                if (siteName == siteEditModel.GetSiteName) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Название ({0}) и введенное при редактировании ({1})", siteEditModel.GetSiteName, siteName)); }
                 else
                 {
-                    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Название и введенное при редактировании");
+                    LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Название ({0}) и введенное при редактировании ({1})", siteEditModel.GetSiteName, siteName));
                     wasMismatch = true;
                 }
-                if (comments == siteEditModel.GetComments) { LogTrace.WriteInLog("          Совпадают: содержимое поля Комментарии и введенное при редактировании"); }
+                if (comments == siteEditModel.GetComments) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Комментарии ({0}) и введенное при редактировании ({1})", siteEditModel.GetComments, comments)); }
                 else
                 {
-                    LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Комментарии и введенное при редактировании");
+                    LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Комментарии ({0}) и введенное при редактировании ({1})", siteEditModel.GetComments, comments));
                     wasMismatch = true;
                 }
                 if (siteEditModel.GetAddTeasersToSubdomains) { LogTrace.WriteInLog("          Совпадают: состояние checkbox 'Добавлять тизеры на поддомены' и выбранное при редактировании"); }

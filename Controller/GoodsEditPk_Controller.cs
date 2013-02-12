@@ -1550,24 +1550,24 @@ namespace Task.Controller
                         wasMismatch = true;
                     }
 
-                    if (namePk == pkEditModel.GetName) { LogTrace.WriteInLog("          Совпадают: содержимое поля Название и введенное при редактировании"); }
+                    if (namePk == pkEditModel.GetName) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Название ({0}) и введенное при редактировании ({1})", pkEditModel.GetName, namePk)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Название и введенное при редактировании");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Название ({0}) и введенное при редактировании ({1})", pkEditModel.GetName, namePk));
                         wasMismatch = true;
                     }
 
-                    if (dateStartPk == pkEditModel.GetStartPkDate) { LogTrace.WriteInLog("          Совпадают: содержимое поля Дата старта РК и введенное при редактировании"); }
+                    if (dateStartPk == pkEditModel.GetStartPkDate) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Дата старта РК ({0}) и введенное при редактировании ({1})", pkEditModel.GetStartPkDate, dateStartPk)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Дата старта РК и введенное при редактировании");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Дата старта РК ({0}) и введенное при редактировании ({1})", pkEditModel.GetStartPkDate, dateStartPk));
                         wasMismatch = true;
                     }
 
-                    if (dateEndPk == pkEditModel.GetEndPkDate) { LogTrace.WriteInLog("          Совпадают: содержимое поля Дата окончания РК и введенное при редактировании"); }
+                    if (dateEndPk == pkEditModel.GetEndPkDate) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Дата окончания РК ({0}) и введенное при редактировании ({1})", pkEditModel.GetEndPkDate, dateEndPk)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: содержимое поля Дата окончания РК и введенное при редактировании");
+                        LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Дата окончания РК ({0}) и введенное при редактировании ({1})", pkEditModel.GetEndPkDate, dateEndPk));
                         wasMismatch = true;
                     }
 
@@ -1594,24 +1594,24 @@ namespace Task.Controller
                             if (dayLimitByBudget == pkEditModel.GetDayLimitByBudget)
                             {
                                 LogTrace.WriteInLog(
-                                    "          Совпадают: содержимое поля 'Суточный лимит РК' и введенное при редактировании");
+                                    string.Format("          Совпадают: содержимое поля 'Суточный лимит РК' ({0}) и введенное при редактировании ({1})", pkEditModel.GetDayLimitByBudget, dayLimitByBudget));
                             }
                             else
                             {
                                 LogTrace.WriteInLog(
-                                    "НЕ СОВПАДАЮТ: содержимое поля 'Суточный лимит РК' и введенное при редактировании");
+                                    string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Суточный лимит РК' ({0}) и введенное при редактировании ({1})", pkEditModel.GetDayLimitByBudget, dayLimitByBudget));
                                 wasMismatch = true;
                             }
 
                             if (generalLimitByBudget == pkEditModel.GetGeneralLimitByBudget)
                             {
                                 LogTrace.WriteInLog(
-                                    "          Совпадают: содержимое поля 'Общий лимит РК' и введенное при редактировании");
+                                    string.Format("          Совпадают: содержимое поля 'Общий лимит РК' ({0}) и введенное при редактировании ({1})", pkEditModel.GetGeneralLimitByBudget, generalLimitByBudget));
                             }
                             else
                             {
                                 LogTrace.WriteInLog(
-                                    "НЕ СОВПАДАЮТ: содержимое поля 'Общий лимит РК' и введенное при редактировании");
+                                    string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Общий лимит РК' ({0}) и введенное при редактировании ({1})", pkEditModel.GetGeneralLimitByBudget, generalLimitByBudget));
                                 wasMismatch = true;
                             }
                         }
@@ -1621,24 +1621,24 @@ namespace Task.Controller
                             if (dayLimitByClicks == pkEditModel.GetDayLimitByClicks)
                             {
                                 LogTrace.WriteInLog(
-                                    "          Совпадают: содержимое поля 'Суточный лимит кликов' и введенное при редактировании");
+                                    string.Format("          Совпадают: содержимое поля 'Суточный лимит кликов' ({0}) и введенное при редактировании ({1})", pkEditModel.GetDayLimitByClicks, dayLimitByClicks));
                             }
                             else
                             {
                                 LogTrace.WriteInLog(
-                                    "НЕ СОВПАДАЮТ: содержимое поля 'Суточный лимит кликов' и введенное при редактировании");
+                                    string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Суточный лимит кликов' ({0}) и введенное при редактировании ({1})", pkEditModel.GetDayLimitByClicks, dayLimitByClicks));
                                 wasMismatch = true;
                             }
 
                             if (generalLimitByClicks == pkEditModel.GetGeneralLimitByClicks)
                             {
                                 LogTrace.WriteInLog(
-                                    "          Совпадают: содержимое поля 'Лимит на кампанию' и введенное при редактировании");
+                                    string.Format("          Совпадают: содержимое поля 'Лимит на кампанию' ({0}) и введенное при редактировании ({1})", pkEditModel.GetGeneralLimitByClicks, generalLimitByClicks));
                             }
                             else
                             {
                                 LogTrace.WriteInLog(
-                                    "НЕ СОВПАДАЮТ: содержимое поля 'Лимит на кампанию' и введенное при редактировании");
+                                    string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Лимит на кампанию' ({0}) и введенное при редактировании ({1})", pkEditModel.GetGeneralLimitByClicks, generalLimitByClicks));
                                 wasMismatch = true;
                             }
                         }
@@ -1654,24 +1654,24 @@ namespace Task.Controller
                         wasMismatch = true;
                     }
 
-                    if (utmMedium == pkEditModel.GetUtmMedium) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'utm_medium (средство кампании)' и введенное при редактировании"); }
+                    if (utmMedium == pkEditModel.GetUtmMedium) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля 'utm_medium (средство кампании)' ({0}) и введенное при редактировании ({1})", pkEditModel.GetUtmMedium, utmMedium)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'utm_medium (средство кампании)' и введенное при редактировании");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'utm_medium (средство кампании)' ({0}) и введенное при редактировании ({1})", pkEditModel.GetUtmMedium, utmMedium));
                         wasMismatch = true;
                     }
 
-                    if (utmSource == pkEditModel.GetUtmSource) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'utm_source (источник кампании)' и введенное при редактировании"); }
+                    if (utmSource == pkEditModel.GetUtmSource) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля 'utm_source (источник кампании)' ({0}) и введенное при редактировании ({1})", pkEditModel.GetUtmSource, utmSource)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'utm_source (источник кампании)' и введенное при редактировании");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'utm_source (источник кампании)' ({0}) и введенное при редактировании ({1})", pkEditModel.GetUtmSource, utmSource));
                         wasMismatch = true;
                     }
 
-                    if (utmCampaign == pkEditModel.GetUtmCampaign) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'utm_campaign (название кампании)' и введенное при редактировании"); }
+                    if (utmCampaign == pkEditModel.GetUtmCampaign) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля 'utm_campaign (название кампании)' ({0}) и введенное при редактировании ({1})", pkEditModel.GetUtmCampaign, utmCampaign)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'utm_campaign (название кампании)' и введенное при редактировании");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'utm_campaign (название кампании)' ({0}) и введенное при редактировании ({1})", pkEditModel.GetUtmCampaign, utmCampaign));
                         wasMismatch = true;
                     }
                 #endregion
@@ -1684,10 +1684,10 @@ namespace Task.Controller
                         wasMismatch = true;
                     }
 
-                    if (utmUserStr == pkEditModel.GetUtmUserStr) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'UTM-разметка пользователя' и введенное при редактировании"); }
+                    if (utmUserStr == pkEditModel.GetUtmUserStr) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля 'UTM-разметка пользователя' ({0}) и введенное при редактировании ({1})", pkEditModel.GetUtmUserStr, utmUserStr)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'UTM-разметка пользователя' и введенное при редактировании");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'UTM-разметка пользователя' ({0}) и введенное при редактировании ({1})", pkEditModel.GetUtmUserStr, utmUserStr));
                         wasMismatch = true;
                     }
                 #endregion
@@ -1739,10 +1739,10 @@ namespace Task.Controller
                         wasMismatch = true;
                     }
 
-                    if (idOfPlatformInLink == pkEditModel.GetIdOfPlatformInLinkStr) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'Передавать id площадки в ссылке' и введенное при редактировании"); }
+                    if (idOfPlatformInLink == pkEditModel.GetIdOfPlatformInLinkStr) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля 'Передавать id площадки в ссылке' ({0}) и введенное при редактировании ({1})", pkEditModel.GetIdOfPlatformInLinkStr, idOfPlatformInLink)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'Передавать id площадки в ссылке' и введенное при редактировании");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'Передавать id площадки в ссылке' ({0}) и введенное при редактировании ({1})", pkEditModel.GetIdOfPlatformInLinkStr, idOfPlatformInLink));
                         wasMismatch = true;
                     }
                 #endregion
@@ -1757,10 +1757,10 @@ namespace Task.Controller
                 #endregion
 
                 #region Комментарий к кампании
-                    if (commentsForPk == pkEditModel.GetCommentsForPk) { LogTrace.WriteInLog("          Совпадают: содержимое поля 'Комментарий к кампании' и введенное при редактировании"); }
+                    if (commentsForPk == pkEditModel.GetCommentsForPk) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля 'Комментарий к кампании' ({0}) и введенное при редактировании ({1})", pkEditModel.GetCommentsForPk, commentsForPk)); }
                     else
                     {
-                        LogTrace.WriteInLog("НЕ СОВПАДАЮТ: Совпадают: содержимое поля 'Комментарий к кампании' и введенное при редактировании");
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Комментарий к кампании' ({0}) и введенное при редактировании ({1})", pkEditModel.GetCommentsForPk, commentsForPk));
                         wasMismatch = true;
                     }
                 #endregion
