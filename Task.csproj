@@ -72,6 +72,7 @@
     <Compile Include="Controller\GoodsEditPk_Controller.cs" />
     <Compile Include="Controller\GoodsEditSite_Controller.cs" />
     <Compile Include="Controller\GoodsEditTeaser_Controller.cs" />
+    <Compile Include="Controller\Pictograms\PicClaimForTeaser_Controller.cs" />
     <Compile Include="Model\Authorization.cs" />
     <Compile Include="Model\GoodsCreateClient_Model.cs" />
     <Compile Include="Model\GoodsCreatePK_Model.cs" />
@@ -81,7 +82,7 @@
     <Compile Include="Model\GoodsEditPK_Model.cs" />
     <Compile Include="Model\GoodsEditSite_Model.cs" />
     <Compile Include="Model\GoodsEditTeaser_Model.cs" />
-    <Compile Include="Model\Pictograms\PicClaimForTeaser.cs" />
+    <Compile Include="Model\Pictograms\PicClaimForTeaser_Model.cs" />
     <Compile Include="Utils\Credentials.cs" />
     <Compile Include="Utils\LogTrace.cs" />
     <Compile Include="Utils\FileData.cs" />

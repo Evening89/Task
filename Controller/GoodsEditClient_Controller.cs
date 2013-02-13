@@ -13,7 +13,7 @@ using Task.Utils;
 
 namespace Task.Controller
 {
-    public class GoodsEditClient_Controller
+    public class GoodsEditClientController
     {
         IWebDriver driver;
         public string baseUrl = "https://admin.dt00.net/cab/goodhits/clients-edit/id/" + Registry.hashTable["clientId"] + "/filters/%252Fclient_id%252F" + Registry.hashTable["clientId"] + "%252Fsubnet%252FFall";
@@ -40,9 +40,9 @@ namespace Task.Controller
 
         public int sendPassword;
 
-        public int newCuratorExternal;
-        public int newCuratorInternal;
-        public int attractorClient;
+        private int newCuratorExternal;
+        private int newCuratorInternal;
+        private int attractorClient;
 
         public string limitPkQuantity;
         public string limitTeasersQuantity;
@@ -122,7 +122,7 @@ namespace Task.Controller
                     clientEditModel.ContactsCommonAlias = aliasCommon;
                     LogTrace.WriteInLog("               Заполняю поле 'Псевдоним для креатива' по основным контактам. Было введено: " + clientEditModel.ContactsCommonAlias);
 
-                    int countElementsInList = clientEditModel.quantityItemsInList(clientEditModel.locatorStartSection);
+                    int countElementsInList = clientEditModel.QuantityItemsInList(clientEditModel.locatorStartSection);
                     Random rnd = new Random();
                     startSectionCommon = rnd.Next(0, countElementsInList);
                     clientEditModel.StartSectionProfile = startSectionCommon;
@@ -161,19 +161,19 @@ namespace Task.Controller
 
                     LogTrace.WriteInLog("          ...Взаимодействие...");
 
-                    countElementsInList = clientEditModel.quantityItemsInList(clientEditModel.locatorExtCurator);
+                    countElementsInList = clientEditModel.QuantityItemsInList(clientEditModel.locatorExtCurator);
                     rnd = new Random();
                     newCuratorExternal = rnd.Next(0, countElementsInList);
                     clientEditModel.NewCuratorExternal = newCuratorExternal;
                     LogTrace.WriteInLog("               Выбираю в выпадающем списке 'Выбрать нового куратора' (внешний): " + clientEditModel.chosenNewCuratorExternal);
 
-                    countElementsInList = clientEditModel.quantityItemsInList(clientEditModel.locatorIntCurator);
+                    countElementsInList = clientEditModel.QuantityItemsInList(clientEditModel.locatorIntCurator);
                     rnd = new Random();
                     newCuratorInternal = rnd.Next(0, countElementsInList);
                     clientEditModel.NewCuratorInternal = newCuratorInternal;
                     LogTrace.WriteInLog("               Выбираю в выпадающем списке 'Выбрать нового куратора' (внутренний): " + clientEditModel.chosenNewCuratorInternal);
 
-                    countElementsInList = clientEditModel.quantityItemsInList(clientEditModel.locatorAttractor);
+                    countElementsInList = clientEditModel.QuantityItemsInList(clientEditModel.locatorAttractor);
                     rnd = new Random();
                     attractorClient = rnd.Next(0, countElementsInList);
                     clientEditModel.AttractorClient = attractorClient;

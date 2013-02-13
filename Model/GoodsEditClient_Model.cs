@@ -899,7 +899,7 @@ namespace Task.Model
             {}
         }
 
-        public int quantityItemsInList(string findByCss)
+        public int QuantityItemsInList(string findByCss)
         {
             List<IWebElement> listOfTags = driver.FindElements(By.CssSelector(findByCss)).ToList();
             return listOfTags.Count;

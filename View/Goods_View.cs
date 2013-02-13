@@ -14,6 +14,7 @@ using OpenQA.Selenium.Firefox;
 using Task.Model;
 using Task.Controller;
 using Task.Utils;
+using Task.Controller.Pictograms;
 
 namespace Task.View
 {
@@ -287,7 +288,7 @@ namespace Task.View
             LogForClickers.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
             LogTrace.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
 
-            GoodsEditClient_Controller editClientController = new GoodsEditClient_Controller();
+            GoodsEditClientController editClientController = new GoodsEditClientController();
 
             editClientController.EditClient();
             
@@ -605,12 +606,51 @@ namespace Task.View
             LogTrace.WriteInLog("");
         }
 
+        public void PicClaimForTeaser()
+        {
+            listBox1.Items.Add("===============================Заявка на создание тизеров====================================");
+            LogForClickers.WriteInLog("===============================Заявка на создание тизеров====================================");
+            LogForClickers.WriteInLog(DateTime.Now.ToString());
+            LogTrace.WriteInLog("===============================Заявка на создание тизеров====================================");
+            LogTrace.WriteInLog(DateTime.Now.ToString());
+
+            PicClaimForTeaserController claimForTeaserController = new PicClaimForTeaserController();
+
+            claimForTeaserController.ApplyForTeaser();
+
+            List<string> errors = claimForTeaserController.Errors;
+
+            if (errors.Count != 0) //список непустой -- ошибки есть
+            {
+                listBox1.ForeColor = Color.Red;
+                listBox1.Items.Add("");
+                listBox1.Items.Add(tab2 + "!!! Ошибки !!!");
+
+                LogForClickers.WriteInLog("");
+                LogForClickers.WriteInLog(tab2 + "!!! Ошибки !!!");
+
+                LogTrace.WriteInLog("");
+                LogTrace.WriteInLog(tab2 + "!!! Ошибки !!!");
+
+                for (int i = 0; i < errors.Count; i++)
+                {
+                    listBox1.Items.Add(errors[i]);
+                    LogForClickers.WriteInLog(errors[i]);
+                    LogTrace.WriteInLog(errors[i]);
+                }
+            }
+            else
+            {
+                listBox1.Items.Add("Заявка на создание тизеров успешно отправлена");
+            }
+        }
+
         private void Button1Click(object sender, EventArgs e)
         {
             listBox1.ForeColor = Color.Black;
             int loopClient; //сколько создать клиентов
             int loopSite;//сколько создать сайтов
-            int loopPK;//сколько создать РК
+            int loopPk;//сколько создать РК
             int loopTeaser;//сколько создать тизеров
 
             switch (NewOrExist)
@@ -619,7 +659,7 @@ namespace Task.View
                 {
                     loopClient = int.Parse(newClientTextBox.Text); //сколько создать клиентов
                     loopSite = int.Parse(newSiteTextBox.Text);//сколько создать сайтов
-                    loopPK = int.Parse(newPKTextBox.Text);//сколько создать РК
+                    loopPk = int.Parse(newPKTextBox.Text);//сколько создать РК
                     loopTeaser = int.Parse(newTeaserTextBox.Text);//сколько создать тизеров
                     break;
                 }
@@ -627,7 +667,7 @@ namespace Task.View
                 {
                     loopClient = int.Parse(existClientTextBox.Text); //сколько создать клиентов
                     loopSite = int.Parse(existSiteTextBox.Text);//сколько создать сайтов
-                    loopPK = int.Parse(existPKTextBox.Text);//сколько создать РК
+                    loopPk = int.Parse(existPKTextBox.Text);//сколько создать РК
                     loopTeaser = int.Parse(existTeaserTextBox.Text);//сколько создать тизеров
                     break;
                 }
@@ -635,7 +675,7 @@ namespace Task.View
                 {
                     loopClient = 1; //сколько создать клиентов
                     loopSite = 1;//сколько создать сайтов
-                    loopPK = 1;//сколько создать РК
+                    loopPk = 1;//сколько создать РК
                     loopTeaser = 1;//сколько создать тизеров
                     break;
                 }
@@ -663,7 +703,7 @@ namespace Task.View
                         }
                         if (newPKCheckbox.Checked)
                         {
-                            for (int x = loopPK; x > 0; x--)
+                            for (int x = loopPk; x > 0; x--)
                             {
                                 CreateNewPk();
                                 if (editPkCheckBox.Checked)
@@ -678,6 +718,8 @@ namespace Task.View
                                     }
                                 }
                             }
+                            if(claimForTeaserCheckBox.Checked)
+                                PicClaimForTeaser();
                         }
                     }
                 }

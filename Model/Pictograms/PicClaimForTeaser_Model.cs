@@ -8,9 +8,11 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Task.Model.Pictograms
 {
-    public class PicClaimForTeaser
+    public class PicClaimForTeaserModel
     {
-        private IWebDriver driver;
+        public IWebDriver driver;
+        public string LocatorSites = "#sites > option";
+        public string LocatorPriority = "#priority > option";
 
         #region Required fields
             protected string FieldLoginManager;
@@ -180,6 +182,18 @@ namespace Task.Model.Pictograms
                 }
             }
 
+            protected string FieldPricePerClick;
+            public string PricePerClick
+            {
+                get { return FieldPricePerClick; }
+                set
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("all"));
+                    webelement.SendKeys(value);
+                    FieldPricePerClick = value;
+                }
+            }
+
             protected bool CheckboxOnlyForEditorsWagers;
             public bool OnlyForEditorsWagers
             {
@@ -202,6 +216,23 @@ namespace Task.Model.Pictograms
             }
             catch (Exception)
             { }
+        }
+
+        public int QuantityItemsInList(string findByCssSelector)
+        {
+            List<IWebElement> listOfTags = driver.FindElements(By.CssSelector(findByCssSelector)).ToList();
+            return listOfTags.Count;
+        }
+
+        public List<string> GetErrors()
+        {
+            List<IWebElement> list = driver.FindElements(By.CssSelector(".errors > li")).ToList();//проверка, есть ли на странице ошибки заполнения полей
+            List<string> result = new List<string>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                result.Add(list[i].Text);
+            }
+            return result;
         }
     }
 }
