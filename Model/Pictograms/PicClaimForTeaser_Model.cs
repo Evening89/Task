@@ -13,6 +13,8 @@ namespace Task.Model.Pictograms
         public IWebDriver driver;
         public string LocatorSites = "#sites > option";
         public string LocatorPriority = "#priority > option";
+        public string LocatorGeoTargeting = ".geo-container input";
+        //fieldset#fieldset-countries
 
         #region Required fields
             protected string FieldLoginManager;
@@ -194,6 +196,18 @@ namespace Task.Model.Pictograms
                 }
             }
 
+            protected bool ClickPricePerClick;
+            public bool PricePerClickExpand
+            {
+                get { return ClickPricePerClick; }
+                set
+                {
+                    IWebElement webelement = driver.FindElement(By.CssSelector("p.description"));
+                    webelement.Click();
+                    ClickPricePerClick = value;
+                }
+            }
+
             protected bool CheckboxOnlyForEditorsWagers;
             public bool OnlyForEditorsWagers
             {
@@ -222,6 +236,17 @@ namespace Task.Model.Pictograms
         {
             List<IWebElement> listOfTags = driver.FindElements(By.CssSelector(findByCssSelector)).ToList();
             return listOfTags.Count;
+        }
+
+        public List<string> GetAllGeoTargetingInputs(string findByCssSelector)
+        {
+            List<IWebElement> listOfInputs = driver.FindElements(By.CssSelector(findByCssSelector)).ToList();
+            List<string> result = new List<string>();
+            for (int i = 0; i < listOfInputs.Count; i++)
+            {
+                result[i] = listOfInputs[i].GetAttribute("id");
+            }
+            return result;
         }
 
         public List<string> GetErrors()

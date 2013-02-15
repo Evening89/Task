@@ -583,7 +583,6 @@ namespace Task.View
                 LogForClickers.WriteInLog(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
                 LogTrace.WriteInLog(tab2 + "ID РК: " + Registry.hashTable["pkId"]);
                 
-
                 editTeaserController.CheckEditingTeaser();
 
                 if (editTeaserController.wasMismatch)
@@ -641,8 +640,20 @@ namespace Task.View
             }
             else
             {
-                listBox1.Items.Add("Заявка на создание тизеров успешно отправлена");
+                listBox1.Items.Add(string.Format("\nID заявки: {0}", claimForTeaserController.ClaimId));
+                LogForClickers.WriteInLog(string.Format("ID заявки: {0}", claimForTeaserController.ClaimId));
+                LogTrace.WriteInLog(string.Format("\nID заявки: {0}", claimForTeaserController.ClaimId));
+
+                listBox1.Items.Add("ID клиента: " + Registry.hashTable["clientId"]);
+                LogForClickers.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
+                LogTrace.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
+
+                listBox1.Items.Add("ID РК: " + Registry.hashTable["pkId"]);
+                LogForClickers.WriteInLog("ID РК: " + Registry.hashTable["pkId"]);
+                LogTrace.WriteInLog("ID РК: " + Registry.hashTable["pkId"]);
             }
+            LogForClickers.WriteInLog("");
+            LogTrace.WriteInLog("");
         }
 
         private void Button1Click(object sender, EventArgs e)
@@ -717,9 +728,9 @@ namespace Task.View
                                             EditAndCheckTeaser();
                                     }
                                 }
+                                if (claimForTeaserCheckBox.Checked)
+                                    PicClaimForTeaser();
                             }
-                            if(claimForTeaserCheckBox.Checked)
-                                PicClaimForTeaser();
                         }
                     }
                 }
@@ -735,6 +746,8 @@ namespace Task.View
                 LogForClickers.CloseLogFile();
                 LogTrace.CloseLogFile();
             }
+            LogForClickers.WriteInLog("");
+            LogTrace.WriteInLog("");
         }
 
         private void Button2Click(object sender, EventArgs e)
@@ -795,7 +808,7 @@ namespace Task.View
         {
             if (claimForTeaserPic.BackColor == SystemColors.Control)
             {
-                claimForTeaserPic.BackColor = Color.Chartreuse;
+                claimForTeaserPic.BackColor = Color.OrangeRed;
                 claimForTeaserCheckBox.Checked = true;
             }
 

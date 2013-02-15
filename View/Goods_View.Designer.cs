@@ -61,14 +61,14 @@
             this.editTeaserCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.claimForTeaserPic = new System.Windows.Forms.PictureBox();
+            this.claimForTeaserCheckBox = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.claimForTeaserCheckBox = new System.Windows.Forms.CheckBox();
-            this.claimForTeaserPic = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.claimForTeaserPic)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -430,6 +430,33 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             // 
+            // claimForTeaserPic
+            // 
+            this.claimForTeaserPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.claimForTeaserPic.BackColor = System.Drawing.SystemColors.Control;
+            this.claimForTeaserPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.claimForTeaserPic.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.claimForTeaserPic.Image = global::Task.Properties.Resources.claim_for_teaser;
+            this.claimForTeaserPic.Location = new System.Drawing.Point(233, 128);
+            this.claimForTeaserPic.Name = "claimForTeaserPic";
+            this.claimForTeaserPic.Size = new System.Drawing.Size(20, 20);
+            this.claimForTeaserPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.claimForTeaserPic.TabIndex = 35;
+            this.claimForTeaserPic.TabStop = false;
+            this.toolTip1.SetToolTip(this.claimForTeaserPic, "Подать заявку на создание тизеров");
+            this.claimForTeaserPic.Click += new System.EventHandler(this.claimForTeaserPic_Click_1);
+            // 
+            // claimForTeaserCheckBox
+            // 
+            this.claimForTeaserCheckBox.AutoSize = true;
+            this.claimForTeaserCheckBox.Location = new System.Drawing.Point(216, 132);
+            this.claimForTeaserCheckBox.Name = "claimForTeaserCheckBox";
+            this.claimForTeaserCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.claimForTeaserCheckBox.TabIndex = 34;
+            this.claimForTeaserCheckBox.UseVisualStyleBackColor = true;
+            // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
@@ -449,33 +476,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             // 
-            // claimForTeaserCheckBox
-            // 
-            this.claimForTeaserCheckBox.AutoSize = true;
-            this.claimForTeaserCheckBox.Location = new System.Drawing.Point(216, 132);
-            this.claimForTeaserCheckBox.Name = "claimForTeaserCheckBox";
-            this.claimForTeaserCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.claimForTeaserCheckBox.TabIndex = 34;
-            this.claimForTeaserCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // claimForTeaserPic
-            // 
-            this.claimForTeaserPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.claimForTeaserPic.BackColor = System.Drawing.SystemColors.Control;
-            this.claimForTeaserPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.claimForTeaserPic.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.claimForTeaserPic.Image = global::Task.Properties.Resources.claim_for_teaser;
-            this.claimForTeaserPic.Location = new System.Drawing.Point(233, 128);
-            this.claimForTeaserPic.Name = "claimForTeaserPic";
-            this.claimForTeaserPic.Size = new System.Drawing.Size(19, 19);
-            this.claimForTeaserPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.claimForTeaserPic.TabIndex = 35;
-            this.claimForTeaserPic.TabStop = false;
-            this.toolTip1.SetToolTip(this.claimForTeaserPic, "Подать заявку на создание тизеров");
-            this.claimForTeaserPic.Click += new System.EventHandler(this.claimForTeaserPic_Click_1);
-            // 
             // Goods_View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -488,9 +488,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.claimForTeaserPic)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.claimForTeaserPic)).EndInit();
             this.ResumeLayout(false);
 
         }

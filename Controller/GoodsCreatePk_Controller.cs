@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenQA.Selenium.Support.UI;
 using Task.Model;
 using Task.Utils;
 using OpenQA.Selenium;
@@ -1447,13 +1448,13 @@ namespace Task.Controller
             if (_driver.Url == createPkUrl)
                 Errors.Add(_pkModel.GetErrors().ToString()); //проверяем, появились ли на форме ошибки заполнения полей
             else
-                GetPkIdFromUrl();
+                GetPkIdFromLink();
 
             Registry.hashTable["pkId"] = PkId; //запомнили глобально ID созданной РК
             Registry.hashTable["driver"] = _driver;
         }
 
-        private void GetPkIdFromUrl()
+        private void GetPkIdFromLink()
         {
             //т.к. после успешного создания РК нас перебрасывает на страницу Клиента (а не РК)
             //поэтому, чтобы получить ID РК, находим на странице название только что созданной РК
@@ -1462,9 +1463,10 @@ namespace Task.Controller
             // и там получаем ID РК из URL
             if (_driver.PageSource.Contains(PkName))
             {
-                IWebElement webelement = _driver.FindElement(By.LinkText(PkName));
+                WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+                IWebElement webelement = wait.Until(ExpectedConditions.ElementExists(By.LinkText(PkName)));//_driver.FindElement(By.LinkText(PkName));
                 string href = webelement.GetAttribute("href");
-
+                
                 char[] slash = new char[] { '/' };
                 string[] url = href.Split(slash); //разбиваем URL по /
                 PkId = url[url.Length - 1]; //берем последний элемент массива - это id новой РК

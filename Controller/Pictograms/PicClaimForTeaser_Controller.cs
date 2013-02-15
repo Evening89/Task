@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using Task.Model.Pictograms;
 using Task.Utils;
+using Task.View;
 
 namespace Task.Controller.Pictograms
 {
@@ -17,13 +19,9 @@ namespace Task.Controller.Pictograms
         private readonly Randoms _randoms = new Randoms();//класс генерации случайных строк
 
         public List<string> Errors = new List<string>(); //список ошибок
-        private int _siteInDropDownList;
-        private int _priorityInDropDownList;
-        private string _terms;
-        private string _numberOfTeasers;
-        private string _pricePerClick;
-        private int _actionWhenSaveClaim;
-        private string _numberOfTeasersPopUpWindow;
+        public string ClaimId;
+        public string ClientId;
+        public string PkId;
 
         public void ApplyForTeaser()
         {
@@ -34,57 +32,91 @@ namespace Task.Controller.Pictograms
             _claimForTeaserModel = new PicClaimForTeaserModel();
             _claimForTeaserModel.driver = _driver;
 
-            LogTrace.WriteInLog("          " + _driver.Url);
+            LogTrace.WriteInLog(_driver.Url);
 
             #region Заполнение полей
+                LogTrace.WriteInLog("...Заполняю обязательные поля...");
+
                 int countElementsInList = _claimForTeaserModel.QuantityItemsInList(_claimForTeaserModel.LocatorSites);
                 Random rnd = new Random();
-                _siteInDropDownList = rnd.Next(0, countElementsInList);
-                _claimForTeaserModel.Site = _siteInDropDownList;
+                _claimForTeaserModel.Site = rnd.Next(0, countElementsInList);
                 LogTrace.WriteInLog("Выбираю в выпадающем списке Сайт. Выбрано: " + _claimForTeaserModel.ChosenSite);
 
-                _terms = "тест. не креативить"; //_randoms.RandomString(20);
-                _claimForTeaserModel.Terms = _terms;
+                _claimForTeaserModel.Terms = "тест. не креативить";
+                LogTrace.WriteInLog("Заполняю поле Условия. Было введено: " + _claimForTeaserModel.Terms);
 
-                _numberOfTeasers = rnd.Next(1, 11).ToString();
-                _claimForTeaserModel.NumberOfTeasers = _numberOfTeasers;
+                _claimForTeaserModel.NumberOfTeasers = rnd.Next(1, 11).ToString();
+                LogTrace.WriteInLog("Заполняю поле 'Кол-во тизеров'. Было введено: " + _claimForTeaserModel.NumberOfTeasers);
 
                 //countElementsInList = _claimForTeaserModel.QuantityItemsInList(_claimForTeaserModel.LocatorPriority);
-                //rnd = new Random();
-                _priorityInDropDownList = 0; // rnd.Next(0, countElementsInList);
-                _claimForTeaserModel.Priority = _priorityInDropDownList;
+                // rnd.Next(0, countElementsInList);
+                _claimForTeaserModel.Priority = 0;
+                LogTrace.WriteInLog("Выбираю в выпадающем списке Приоритет. Выбрано: " + _claimForTeaserModel.ChosenPriority);
+            
+                List<IWebElement> inputsPricesPerClick = _driver.FindElements(By.CssSelector("fieldset#fieldset-countries input")).ToList();
+                List<IWebElement> inputsLabelsPricesPerClick = _driver.FindElements(By.CssSelector("fieldset#fieldset-countries p.hint")).ToList();
+                string str;
+                if (inputsPricesPerClick.Count != 0)
+                {
+                    _claimForTeaserModel.PricePerClickExpand = true;
+                    for (int i = 0; i < inputsPricesPerClick.Count; i++ )
+                    {
+                        IWebElement webElement = _driver.FindElement(By.Id(inputsPricesPerClick[i].GetAttribute("id")));
+                        str = rnd.Next(1, 11).ToString();
+                        webElement.SendKeys(str);
+                        LogTrace.WriteInLog(string.Format("Заполняю поле '{0}'. Было введено: {1}", inputsLabelsPricesPerClick[i].Text, str));
+                    }
+                }
+                
+                _claimForTeaserModel.PricePerClick = rnd.Next(1, 11).ToString();
+                LogTrace.WriteInLog("Заполняю поле 'Цена за клик на все регионы'. Было введено: " + _claimForTeaserModel.PricePerClick);
 
-                _pricePerClick = rnd.Next(1, 11).ToString();
-                _claimForTeaserModel.PricePerClick = _pricePerClick;
-
-                //rnd = new Random();
-                _actionWhenSaveClaim = rnd.Next(0, 3);
-                _claimForTeaserModel.ActionWhenSaveClaim = _actionWhenSaveClaim;
+                _claimForTeaserModel.ActionWhenSaveClaim = rnd.Next(0, 3);
                 LogTrace.WriteInLog("Выбираю radiobutton 'Какое действие выполнить при сохранении заявки?'. Выбрано: " + _claimForTeaserModel.chosenActionWhenSaveClaim);
-
-                if (_actionWhenSaveClaim == 1)
+            
+                if (_claimForTeaserModel.ActionWhenSaveClaim == 1)
                 {
                     _claimForTeaserModel.TestCreativist = true;
-                    _numberOfTeasersPopUpWindow = rnd.Next(1, 11).ToString();
-                    _claimForTeaserModel.NumberOfTeasersPopUpWindow = _numberOfTeasersPopUpWindow;
+                    LogTrace.WriteInLog("Выбираю Тестового креативиста");
+                    _claimForTeaserModel.NumberOfTeasersPopUpWindow = _claimForTeaserModel.NumberOfTeasers;//rnd.Next(1, 11).ToString();
+                    LogTrace.WriteInLog("Заполняю поле 'К-во тизеров'. Было введено: " + _claimForTeaserModel.NumberOfTeasersPopUpWindow);
                     _claimForTeaserModel.ButtonApply = true;
+                    LogTrace.WriteInLog("Нажал кнопку Применить");
                 }
 
                 _claimForTeaserModel.OnlyForEditorsWagers = true;
+                LogTrace.WriteInLog("Выбран checkbox 'Только для редакторов-ставочников'");
             #endregion
 
             string claimedForTeaserUrl = _driver.Url; 
             _claimForTeaserModel.Submit();
+
             if (_driver.Url == claimedForTeaserUrl)
-            {
                 Errors = _claimForTeaserModel.GetErrors(); //проверяем, появились ли на форме ошибки заполнения полей
-            }
             else
             {
-                LogTrace.WriteInLog("Заявка на создание тизеров успешно отправлена");
-                LogForClickers.WriteInLog("Заявка на создание тизеров успешно отправлена");
+                GetClaimIdFromUrl();
+                IWebElement webElement =
+                    _driver.FindElement(By.CssSelector("img[id ^= 'stopimg'][title = 'Закрыть заявку']"));
+                webElement.Click();
+                webElement = _driver.FindElement(By.CssSelector("input[id ^= 'campaign-block-reason']"));
+                webElement.SendKeys("патамушто апельсин");
+                webElement = _driver.FindElement(By.Id("dijit_form_Button_0"));
+                webElement.Click();
             }
+            
             Registry.hashTable["driver"] = _driver;
+        }
+
+        private void GetClaimIdFromUrl()
+        {
+            string url = _driver.Url;
+            char[] slash = new char[] { '/' };
+            string[] mas = url.Split(slash); //разбиваем URL по /
+            ClaimId = mas[mas.Length - 1]; //берем последний элемент массива - это id новой РК
+            ClientId = Registry.hashTable["clientId"].ToString(); //берется для вывода в listBox и логи
+            PkId = Registry.hashTable["pkId"].ToString(); //берется для вывода в listBox и логи
+            LogTrace.WriteInLog(_driver.Url);
         }
     }
 }
