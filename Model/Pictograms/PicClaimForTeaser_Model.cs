@@ -221,6 +221,44 @@ namespace Task.Model.Pictograms
             }
         #endregion
 
+        #region Закрыть заявку на тизер
+            protected bool ClickRefuseClaimPic;
+            public bool RefuseClaimPic
+            {
+                get { return ClickRefuseClaimPic; }
+                set
+                {
+                    IWebElement webelement = driver.FindElement(By.CssSelector("img[id ^= 'stopimg'][title = 'Закрыть заявку']"));
+                    webelement.Click();
+                    ClickRefuseClaimPic = value;
+                }
+            }
+
+            protected string FieldCauseOfRefusal;
+            public string CauseOfRefusal
+            {
+                get { return FieldCauseOfRefusal; }
+                set
+                {
+                    IWebElement webelement = driver.FindElement(By.CssSelector("input[id ^= 'campaign-block-reason']"));
+                    webelement.SendKeys(value);
+                    FieldCauseOfRefusal = value;
+                }
+            }
+
+            protected bool ClickRefuseButton;
+            public bool RefuseButton
+            {
+                get { return ClickRefuseButton; }
+                set
+                {
+                    IWebElement webelement = driver.FindElement(By.Id("dijit_form_Button_0"));
+                    webelement.Click();
+                    ClickRefuseButton = value;
+                }
+            }
+        #endregion
+
         public void Submit()
         {
             try
