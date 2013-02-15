@@ -373,7 +373,7 @@ namespace Task.View
 
             editSiteController.EditSite();
 
-            List<string> errors = editSiteController.errors;
+            List<string> errors = editSiteController.Errors;
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
@@ -414,7 +414,7 @@ namespace Task.View
                 
                 editSiteController.CheckEditingSite();
 
-                if (editSiteController.wasMismatch)
+                if (editSiteController.WasMismatch)
                 {
                     listBox1.ForeColor = Color.Red;
                     listBox1.Items.Add("");
