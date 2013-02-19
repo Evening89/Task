@@ -137,6 +137,8 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.checkBox1.Location = new System.Drawing.Point(6, 248);
             this.checkBox1.Name = "checkBox1";
@@ -159,6 +161,8 @@
             // newClientCheckbox
             // 
             this.newClientCheckbox.AutoSize = true;
+            this.newClientCheckbox.Checked = true;
+            this.newClientCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.newClientCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.newClientCheckbox.Location = new System.Drawing.Point(9, 25);
             this.newClientCheckbox.Name = "newClientCheckbox";
@@ -171,6 +175,8 @@
             // newSiteCheckbox
             // 
             this.newSiteCheckbox.AutoSize = true;
+            this.newSiteCheckbox.Checked = true;
+            this.newSiteCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.newSiteCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.newSiteCheckbox.Location = new System.Drawing.Point(31, 77);
             this.newSiteCheckbox.Name = "newSiteCheckbox";
@@ -191,6 +197,8 @@
             // newPKCheckbox
             // 
             this.newPKCheckbox.AutoSize = true;
+            this.newPKCheckbox.Checked = true;
+            this.newPKCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.newPKCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.newPKCheckbox.Location = new System.Drawing.Point(31, 129);
             this.newPKCheckbox.Name = "newPKCheckbox";
@@ -211,6 +219,8 @@
             // newTeaserCheckbox
             // 
             this.newTeaserCheckbox.AutoSize = true;
+            this.newTeaserCheckbox.Checked = true;
+            this.newTeaserCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.newTeaserCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.newTeaserCheckbox.Location = new System.Drawing.Point(31, 182);
             this.newTeaserCheckbox.Name = "newTeaserCheckbox";
@@ -218,7 +228,7 @@
             this.newTeaserCheckbox.TabIndex = 18;
             this.newTeaserCheckbox.Text = "Тизер";
             this.newTeaserCheckbox.UseVisualStyleBackColor = true;
-            this.newTeaserCheckbox.Click += new System.EventHandler(this.checkBox6_Click);
+            this.newTeaserCheckbox.Click += new System.EventHandler(this.newTeaserCheckbox_Click);
             // 
             // newTeaserTextBox
             // 
@@ -456,6 +466,7 @@
             this.claimForTeaserCheckBox.Size = new System.Drawing.Size(15, 14);
             this.claimForTeaserCheckBox.TabIndex = 34;
             this.claimForTeaserCheckBox.UseVisualStyleBackColor = true;
+            this.claimForTeaserCheckBox.Visible = false;
             // 
             // tabPage2
             // 

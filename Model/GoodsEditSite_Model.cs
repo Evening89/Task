@@ -7,7 +7,7 @@ using OpenQA.Selenium;
 
 namespace Task.Model
 {
-    public class GoodsEditSite_Model
+    public class GoodsEditSiteModel
     {
         public IWebDriver driver;
 

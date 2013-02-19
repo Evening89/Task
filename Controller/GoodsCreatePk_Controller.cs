@@ -13,16 +13,16 @@ namespace Task.Controller
     public class GoodsCreatePkController
     {
         private IWebDriver _driver;
-        private GoodsCreatePK_Model _pkModel;//берем сохраненный ранее 
+        private GoodsCreatePkModel _pkModel;//берем сохраненный ранее 
                                             //(при создании клиента Task.Controller.GoodsCreateClient_Controller) ID клиента
                                             //и дописываем в URL
         private readonly string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/clients-new-campaign/client_id/" + Registry.hashTable["clientId"];
+        private readonly Randoms _randoms = new Randoms(); //класс генерации случайных строк
 
         public List<string> Errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
         public string PkId; //переменная для хранения ID только что созданной РК
         public string ClientId;
         public string PkName; //переменная для хранения названия только что созданной РК
-        readonly Randoms _randoms = new Randoms(); //класс генерации случайных строк
 
         public void CreatePk(bool setNecessaryFields, bool setUnnecessaryFields)
         {
@@ -41,7 +41,7 @@ namespace Task.Controller
 
         private void SetUpFields(bool setNecessaryFields, bool setUnnecessaryFields)
         {
-            _pkModel = new GoodsCreatePK_Model();
+            _pkModel = new GoodsCreatePkModel();
             _pkModel.driver = _driver;
 
             LogTrace.WriteInLog("     " + _driver.Url);

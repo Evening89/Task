@@ -8,7 +8,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Task.Model
 {
-    public class GoodsCreatePK_Model
+    public class GoodsCreatePkModel
     {
         public IWebDriver driver;
 

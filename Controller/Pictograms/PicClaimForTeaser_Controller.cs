@@ -68,7 +68,16 @@ namespace Task.Controller.Pictograms
                 string str;
                 if (inputsPricesPerClick.Count != 0)
                 {
-                    _claimForTeaserModel.PricePerClickExpand = true;
+                    if (_driver.PageSource.Contains("Россия") || _driver.PageSource.Contains("Украина"))
+                    {
+                        List<IWebElement> list = _driver.FindElements(By.CssSelector("div.geo-country-collapsed")).ToList();//список того, на что надо кликнуть чтоб развернуть
+                        foreach (var x in list)
+                        {
+                            x.Click();
+                        }
+                    }
+                    else _claimForTeaserModel.PricePerClickExpand = true;
+
                     for (int i = 0; i < inputsPricesPerClick.Count; i++)
                     {
                         IWebElement webElement = _driver.FindElement(By.Id(inputsPricesPerClick[i].GetAttribute("id")));

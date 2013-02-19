@@ -9,10 +9,10 @@ using Task.Utils;
 
 namespace Task.Controller
 {
-    public class GoodsEditSite_Controller
+    public class GoodsEditSiteController
     {
         private IWebDriver _driver;
-        private GoodsEditSite_Model _siteEditModel;
+        private GoodsEditSiteModel _siteEditModel;
         private readonly string _baseUrl = "https://admin.dt00.net/cab/goodhits/sites-edit/id/" + Registry.hashTable["siteId"] + "/filters/%252Fid%252F" + Registry.hashTable["siteId"];
         readonly Randoms _randoms = new Randoms();//класс генерации случайных строк
         private string _siteName;
@@ -25,7 +25,7 @@ namespace Task.Controller
         {
             GetDriver();
             SetUpFields();
-            CreationIsSuccessful();
+            EditingIsSuccessful();
         }
 
         private void GetDriver()
@@ -37,11 +37,11 @@ namespace Task.Controller
 
         private void SetUpFields()
         {
-            _siteEditModel = new GoodsEditSite_Model();
+            _siteEditModel = new GoodsEditSiteModel();
             _siteEditModel.driver = _driver;
             LogTrace.WriteInLog("          " + _driver.Url);
 
-            #region Заполнение
+            #region Редактирование полей
                 _siteName = _randoms.RandomString(8) + ".ru";
                 _siteEditModel.SiteName = _siteName;
                 LogTrace.WriteInLog("          Заполняю поле Название. Было введено: " + _siteEditModel.SiteName);
@@ -57,7 +57,7 @@ namespace Task.Controller
             #endregion
         }
 
-        private void CreationIsSuccessful()
+        private void EditingIsSuccessful()
         {
             string editSiteUrl = _driver.Url; //запоминаем url страницы
 
@@ -95,7 +95,7 @@ namespace Task.Controller
         {
             LogTrace.WriteInLog("          " + _driver.Url);
 
-            #region Проверка заполнения
+            #region Проверка редактирования
                 if (_siteName == _siteEditModel.GetSiteName) { LogTrace.WriteInLog(string.Format("          Совпадают: содержимое поля Название ({0}) и введенное при редактировании ({1})", _siteEditModel.GetSiteName, _siteName)); }
                 else
                 {

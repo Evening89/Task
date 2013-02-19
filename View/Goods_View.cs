@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
@@ -292,7 +293,7 @@ namespace Task.View
 
             editClientController.EditClient();
             
-            List<string> errors = editClientController.errors; //парсим со страницы список ошибок
+            List<string> errors = editClientController.Errors; //парсим со страницы список ошибок
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
@@ -329,7 +330,7 @@ namespace Task.View
 
                 editClientController.CheckEditingClient();
 
-                if (editClientController.wasMismatch)
+                if (editClientController.WasMismatch)
                 {
                     listBox1.ForeColor = Color.Red;
                     listBox1.Items.Add("");
@@ -369,7 +370,7 @@ namespace Task.View
             LogForClickers.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
             LogTrace.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
 
-            GoodsEditSite_Controller editSiteController = new GoodsEditSite_Controller();
+            GoodsEditSiteController editSiteController = new GoodsEditSiteController();
 
             editSiteController.EditSite();
 
@@ -451,11 +452,11 @@ namespace Task.View
             LogForClickers.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
             LogTrace.WriteInLog(tab2 + "ID клиента: " + Registry.hashTable["clientId"]);
 
-            GoodsEditPk_Controller editPkController = new GoodsEditPk_Controller();
+            GoodsEditPkController editPkController = new GoodsEditPkController();
 
             editPkController.EditPk();
 
-            List<string> errors = editPkController.errors;
+            List<string> errors = editPkController.Errors;
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
@@ -496,7 +497,7 @@ namespace Task.View
                 
                 editPkController.CheckEditingPk();
 
-                if (editPkController.wasMismatch)
+                if (editPkController.WasMismatch)
                 {
                     listBox1.ForeColor = Color.Red;
                     listBox1.Items.Add("");
@@ -656,30 +657,109 @@ namespace Task.View
             LogTrace.WriteInLog("");
         }
 
+        public string NewOrExist;
+
         private void Button1Click(object sender, EventArgs e)
         {
+            if(!newClientCheckbox.Checked)
+            {
+                newClientCheckbox.Checked = true;
+                MessageBox.Show("Не был выбран клиент. Теперь он выбран");
+                return;
+            }
+
+            if(newTeaserCheckbox.Checked & (!newPKCheckbox.Checked || !newSiteCheckbox.Checked))
+            {
+                newPKCheckbox.Checked = true;
+                newSiteCheckbox.Checked = true;
+                MessageBox.Show("Невозможно создать тизер, не создав РК и сайт для него. Теперь РК и сайт выбраны");
+                return;
+            }
+
             listBox1.ForeColor = Color.Black;
             int loopClient; //сколько создать клиентов
             int loopSite;//сколько создать сайтов
             int loopPk;//сколько создать РК
             int loopTeaser;//сколько создать тизеров
 
+            if (newClientCheckbox.Checked) NewOrExist = "new";
+            else if (existClientCheckbox.Checked) NewOrExist = "exist";
+
+            int result;
+            bool isSuccessConversion;
             switch (NewOrExist)
             {
                 case "new":
                 {
-                    loopClient = int.Parse(newClientTextBox.Text); //сколько создать клиентов
-                    loopSite = int.Parse(newSiteTextBox.Text);//сколько создать сайтов
-                    loopPk = int.Parse(newPKTextBox.Text);//сколько создать РК
-                    loopTeaser = int.Parse(newTeaserTextBox.Text);//сколько создать тизеров
+                    isSuccessConversion = int.TryParse(newClientTextBox.Text, out result); //сколько создать клиентов
+                    if (!isSuccessConversion)
+                    {
+                        MessageBox.Show("Поле ввода имеет некорректное значение");
+                        return;
+                    }
+                    loopClient = result;
+
+
+                    isSuccessConversion = int.TryParse(newSiteTextBox.Text, out result);//сколько создать сайтов
+                    if (!isSuccessConversion)
+                    {
+                        MessageBox.Show("Поле ввода имеет некорректное значение");
+                        return;
+                    }
+                    loopSite = result;
+
+                    isSuccessConversion = int.TryParse(newPKTextBox.Text, out result);//сколько создать РК
+                    if (!isSuccessConversion)
+                    {
+                        MessageBox.Show("Поле ввода имеет некорректное значение");
+                        return;
+                    }
+                    loopPk = result;
+
+                    isSuccessConversion = int.TryParse(newTeaserTextBox.Text, out result);//сколько создать тизеров
+                    if (!isSuccessConversion)
+                    {
+                        MessageBox.Show("Поле ввода имеет некорректное значение");
+                        return;
+                    }
+                    loopTeaser = result;
+
                     break;
                 }
                 case "exist":
                 {
-                    loopClient = int.Parse(existClientTextBox.Text); //сколько создать клиентов
-                    loopSite = int.Parse(existSiteTextBox.Text);//сколько создать сайтов
-                    loopPk = int.Parse(existPKTextBox.Text);//сколько создать РК
-                    loopTeaser = int.Parse(existTeaserTextBox.Text);//сколько создать тизеров
+                    isSuccessConversion = int.TryParse(existClientTextBox.Text, out result); //сколько создать клиентов
+                    if (!isSuccessConversion)
+                    {
+                        MessageBox.Show("Поле ввода имеет некорректное значение");
+                        return;
+                    }
+                    loopClient = result;
+
+
+                    isSuccessConversion = int.TryParse(existSiteTextBox.Text, out result);//сколько создать сайтов
+                    if (!isSuccessConversion)
+                    {
+                        MessageBox.Show("Поле ввода имеет некорректное значение");
+                        return;
+                    }
+                    loopSite = result;
+
+                    isSuccessConversion = int.TryParse(existPKTextBox.Text, out result);//сколько создать РК
+                    if (!isSuccessConversion)
+                    {
+                        MessageBox.Show("Поле ввода имеет некорректное значение");
+                        return;
+                    }
+                    loopPk = result;
+
+                    isSuccessConversion = int.TryParse(existTeaserTextBox.Text, out result);//сколько создать тизеров
+                    if (!isSuccessConversion)
+                    {
+                        MessageBox.Show("Поле ввода имеет некорректное значение");
+                        return;
+                    }
+                    loopTeaser = result;
                     break;
                 }
                 default:
@@ -756,11 +836,9 @@ namespace Task.View
             //textBox1.Text = openFileDialog1.FileName;
         }
 
-        public string NewOrExist;
-
         private void checkBox3_Click(object sender, EventArgs e) //выбран Новый клиент
         {
-            NewOrExist = "new"; //когда выбран Новый клиент - стягиваем кол-во из левых инпутов
+            //NewOrExist = "new"; //когда выбран Новый клиент - стягиваем кол-во из левых инпутов
 
             existClientCheckbox.Checked = false; //снимаем выбор с Существующего клиента
 
@@ -775,7 +853,7 @@ namespace Task.View
 
         private void checkBox10_Click(object sender, EventArgs e) //выбран Существующий клиент
         {
-            NewOrExist = "exist"; //когда выбран Существующий клиент - стягиваем кол-во из правых инпутов
+            //NewOrExist = "exist"; //когда выбран Существующий клиент - стягиваем кол-во из правых инпутов
 
             newClientCheckbox.Checked = false; //снимаем выбор с Нового клиента
 
@@ -798,7 +876,7 @@ namespace Task.View
             //existPKCheckbox.Checked = true; //выбираем также РК
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e) //очистить listbox
         {
             listBox1.Items.Clear();
             listBox1.ForeColor = Color.Black;
@@ -816,6 +894,15 @@ namespace Task.View
             {
                 claimForTeaserPic.BackColor = SystemColors.Control;
                 claimForTeaserCheckBox.Checked = false;
+            }
+        }
+
+       private void newTeaserCheckbox_Click(object sender, EventArgs e)
+        {
+            if(newTeaserCheckbox.Checked & (!newSiteCheckbox.Checked || !newPKCheckbox.Checked))
+            {
+                newSiteCheckbox.Checked = true;
+                newPKCheckbox.Checked = true;
             }
         }
     }
