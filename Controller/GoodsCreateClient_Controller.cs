@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.IE;
 using Task.Model;
 using Task.Utils;
 
@@ -28,11 +29,11 @@ namespace Task.Controller
         {
             //FirefoxBinary FireBin = new FirefoxBinary("C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
             //FireBin.TimeoutInMilliseconds = 130000;
-            //FirefoxProfile FireProfile = new FirefoxProfile(@"C:\Users\User\AppData\Roaming\Mozilla\Firefox\Profiles\d1j6msfx.FF");
-            //FireProfile.Port = 9966;
-            //driver = new FirefoxDriver(FireBin, FireProfile);
-
-            _driver = new FirefoxDriver(); 
+            //FirefoxProfile fireProfile = new FirefoxProfile(@"C:\Users\User\AppData\Roaming\Mozilla\Firefox\Profiles\d1j6msfx.FF");
+            //fireProfile.Port = 9966;
+            //fireProfile.SetPreference("network.automatic-ntlm-auth.trusted-uris", ".dt00.net");
+            //_driver = new FirefoxDriver(FireBin, fireProfile);
+            _driver = new FirefoxDriver();
             _driver.Navigate().GoToUrl(BaseUrl); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));//ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
         }

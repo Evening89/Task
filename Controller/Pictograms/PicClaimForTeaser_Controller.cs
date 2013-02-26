@@ -103,8 +103,11 @@ namespace Task.Controller.Pictograms
                     LogTrace.WriteInLog("Нажал кнопку Применить");
                 }
 
-                _claimForTeaserModel.OnlyForEditorsWagers = true;
-                LogTrace.WriteInLog("Выбран checkbox 'Только для редакторов-ставочников'");
+                if(needSetCheckBox())
+                {
+                    _claimForTeaserModel.OnlyForEditorsWagers = true;
+                    LogTrace.WriteInLog("Выбран checkbox 'Только для редакторов-ставочников'");
+                }
             #endregion
         }
 
@@ -144,6 +147,12 @@ namespace Task.Controller.Pictograms
 
             _claimForTeaserModel.RefuseButton = true;
             LogTrace.WriteInLog("Нажал кнопку 'Отклонить заявку'");
+        }
+
+        private bool needSetCheckBox() //генерируем 0 или 1.  1 - заполняем необязательное поле, 0 - не заполняем
+        {
+            Random rnd = new Random();
+            return rnd.Next(0, 2) == 1 ? true : false;
         }
     }
 }

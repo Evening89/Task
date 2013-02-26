@@ -657,6 +657,21 @@ namespace Task.View
             LogTrace.WriteInLog("");
         }
 
+        public void PicStatistics()
+        {
+            listBox1.Items.Add("===============================Заявка на создание тизеров====================================");
+            LogForClickers.WriteInLog("===============================Заявка на создание тизеров====================================");
+            LogForClickers.WriteInLog(DateTime.Now.ToString());
+            LogTrace.WriteInLog("===============================Заявка на создание тизеров====================================");
+            LogTrace.WriteInLog(DateTime.Now.ToString());
+
+            PicStatisticsController statisticsController = new PicStatisticsController();
+
+            if(statisticsController.ViewStatistics())
+                listBox1.ForeColor = Color.Red;
+            
+        }
+
         public string NewOrExist;
 
         private void Button1Click(object sender, EventArgs e)
@@ -810,6 +825,9 @@ namespace Task.View
                                 }
                                 if (claimForTeaserCheckBox.Checked)
                                     PicClaimForTeaser();
+
+                                if (statisticsCheckBox.Checked)
+                                    PicStatistics();
                             }
                         }
                     }
@@ -905,5 +923,20 @@ namespace Task.View
                 newPKCheckbox.Checked = true;
             }
         }
+
+       private void statisticsPic_Click(object sender, EventArgs e)
+       {
+           if (statisticsPic.BackColor == SystemColors.Control)
+           {
+               statisticsPic.BackColor = Color.OrangeRed;
+               statisticsCheckBox.Checked = true;
+           }
+
+           else
+           {
+               statisticsPic.BackColor = SystemColors.Control;
+               statisticsCheckBox.Checked = false;
+           }
+       }
     }
 }
