@@ -61,17 +61,17 @@
             this.editTeaserCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.statisticsPic = new System.Windows.Forms.PictureBox();
+            this.statisticsCheckBox = new System.Windows.Forms.CheckBox();
+            this.claimForTeaserPic = new System.Windows.Forms.PictureBox();
             this.claimForTeaserCheckBox = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.statisticsCheckBox = new System.Windows.Forms.CheckBox();
-            this.statisticsPic = new System.Windows.Forms.PictureBox();
-            this.claimForTeaserPic = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.statisticsPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.claimForTeaserPic)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -445,6 +445,52 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             // 
+            // statisticsPic
+            // 
+            this.statisticsPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.statisticsPic.BackColor = System.Drawing.SystemColors.Control;
+            this.statisticsPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.statisticsPic.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.statisticsPic.Image = global::Task.Properties.Resources.stat;
+            this.statisticsPic.Location = new System.Drawing.Point(273, 127);
+            this.statisticsPic.Name = "statisticsPic";
+            this.statisticsPic.Size = new System.Drawing.Size(20, 20);
+            this.statisticsPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.statisticsPic.TabIndex = 37;
+            this.statisticsPic.TabStop = false;
+            this.toolTip1.SetToolTip(this.statisticsPic, "Статистика");
+            this.statisticsPic.Click += new System.EventHandler(this.statisticsPic_Click);
+            // 
+            // statisticsCheckBox
+            // 
+            this.statisticsCheckBox.AutoSize = true;
+            this.statisticsCheckBox.Location = new System.Drawing.Point(256, 131);
+            this.statisticsCheckBox.Name = "statisticsCheckBox";
+            this.statisticsCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.statisticsCheckBox.TabIndex = 36;
+            this.statisticsCheckBox.UseVisualStyleBackColor = true;
+            this.statisticsCheckBox.Visible = false;
+            // 
+            // claimForTeaserPic
+            // 
+            this.claimForTeaserPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.claimForTeaserPic.BackColor = System.Drawing.SystemColors.Control;
+            this.claimForTeaserPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.claimForTeaserPic.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.claimForTeaserPic.Image = global::Task.Properties.Resources.claim_for_teaser;
+            this.claimForTeaserPic.Location = new System.Drawing.Point(233, 128);
+            this.claimForTeaserPic.Name = "claimForTeaserPic";
+            this.claimForTeaserPic.Size = new System.Drawing.Size(20, 20);
+            this.claimForTeaserPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.claimForTeaserPic.TabIndex = 35;
+            this.claimForTeaserPic.TabStop = false;
+            this.toolTip1.SetToolTip(this.claimForTeaserPic, "Подать заявку на создание тизеров");
+            this.claimForTeaserPic.Click += new System.EventHandler(this.claimForTeaserPic_Click_1);
+            // 
             // claimForTeaserCheckBox
             // 
             this.claimForTeaserCheckBox.AutoSize = true;
@@ -474,52 +520,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             // 
-            // statisticsCheckBox
-            // 
-            this.statisticsCheckBox.AutoSize = true;
-            this.statisticsCheckBox.Location = new System.Drawing.Point(256, 131);
-            this.statisticsCheckBox.Name = "statisticsCheckBox";
-            this.statisticsCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.statisticsCheckBox.TabIndex = 36;
-            this.statisticsCheckBox.UseVisualStyleBackColor = true;
-            this.statisticsCheckBox.Visible = false;
-            // 
-            // statisticsPic
-            // 
-            this.statisticsPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.statisticsPic.BackColor = System.Drawing.SystemColors.Control;
-            this.statisticsPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.statisticsPic.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.statisticsPic.Image = global::Task.Properties.Resources.stat;
-            this.statisticsPic.Location = new System.Drawing.Point(273, 127);
-            this.statisticsPic.Name = "statisticsPic";
-            this.statisticsPic.Size = new System.Drawing.Size(20, 20);
-            this.statisticsPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.statisticsPic.TabIndex = 37;
-            this.statisticsPic.TabStop = false;
-            this.toolTip1.SetToolTip(this.statisticsPic, "Подать заявку на создание тизеров");
-            this.statisticsPic.Click += new System.EventHandler(this.statisticsPic_Click);
-            // 
-            // claimForTeaserPic
-            // 
-            this.claimForTeaserPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.claimForTeaserPic.BackColor = System.Drawing.SystemColors.Control;
-            this.claimForTeaserPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.claimForTeaserPic.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.claimForTeaserPic.Image = global::Task.Properties.Resources.claim_for_teaser;
-            this.claimForTeaserPic.Location = new System.Drawing.Point(233, 128);
-            this.claimForTeaserPic.Name = "claimForTeaserPic";
-            this.claimForTeaserPic.Size = new System.Drawing.Size(20, 20);
-            this.claimForTeaserPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.claimForTeaserPic.TabIndex = 35;
-            this.claimForTeaserPic.TabStop = false;
-            this.toolTip1.SetToolTip(this.claimForTeaserPic, "Подать заявку на создание тизеров");
-            this.claimForTeaserPic.Click += new System.EventHandler(this.claimForTeaserPic_Click_1);
-            // 
             // Goods_View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -532,10 +532,10 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.statisticsPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.claimForTeaserPic)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }

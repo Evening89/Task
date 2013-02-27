@@ -202,7 +202,7 @@ namespace Task.Model.Pictograms
                 get { return ClickPricePerClick; }
                 set
                 {
-                    IWebElement webelement = driver.FindElement(By.CssSelector("p.description"));
+                    IWebElement webelement = driver.FindElement(By.CssSelector("div[class *= 'geo-all-add-form'] p.description"));
                     webelement.Click();
                     ClickPricePerClick = value;
                 }

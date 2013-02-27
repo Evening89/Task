@@ -81,13 +81,13 @@ namespace Task.Controller.Pictograms
                     for (int i = 0; i < inputsPricesPerClick.Count; i++)
                     {
                         IWebElement webElement = _driver.FindElement(By.Id(inputsPricesPerClick[i].GetAttribute("id")));
-                        str = rnd.Next(1, 11).ToString();
+                        str = rnd.Next(5, 11).ToString();
                         webElement.SendKeys(str);
                         LogTrace.WriteInLog(string.Format("Заполняю поле '{0}'. Было введено: {1}", inputsLabelsPricesPerClick[i].Text, str));
                     }
                 }
 
-                _claimForTeaserModel.PricePerClick = rnd.Next(1, 11).ToString();
+                _claimForTeaserModel.PricePerClick = rnd.Next(5, 11).ToString();
                 LogTrace.WriteInLog("Заполняю поле 'Цена за клик на все регионы'. Было введено: " + _claimForTeaserModel.PricePerClick);
 
                 _claimForTeaserModel.ActionWhenSaveClaim = rnd.Next(0, 3);
