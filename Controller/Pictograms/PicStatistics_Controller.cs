@@ -12,7 +12,6 @@ using OpenQA.Selenium;
 using Task.Model;
 using Task.Model.Pictograms;
 using Task.Utils;
-using Cookie = OpenQA.Selenium.Cookie;
 
 namespace Task.Controller.Pictograms
 {
@@ -21,12 +20,12 @@ namespace Task.Controller.Pictograms
         private IWebDriver _driver;
         private PicStatisticsModel _statisticsModel;
         private readonly string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/campaigns-stat/campaign_id/" + Registry.hashTable["pkId"];
-        private readonly string _pkUrl = "https://admin.dt00.net/cab/goodhits/campaigns/client_id/" + Registry.hashTable["clientId"];
+        public List<string> Errors = new List<string>();
 
-        public bool ViewStatistics()
+        public void ViewStatistics()
         {
             GetDriver();
-            return SetUpFields();
+            DoExport();
         }
 
         private void GetDriver()
@@ -36,7 +35,7 @@ namespace Task.Controller.Pictograms
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
         }
 
-        private bool SetUpFields()
+        private void DoExport()
         {
             _statisticsModel = new PicStatisticsModel();
             _statisticsModel.driver = _driver;
@@ -44,32 +43,19 @@ namespace Task.Controller.Pictograms
             LogTrace.WriteInLog(_driver.Url);
 
             #region Заполнение полей
-            //string parentWindow = _driver.CurrentWindowHandle;
-
-            //string css = "a[href *= '/cab/goodhits/campaigns-stat/id/" + Registry.hashTable["pkId"] + "'] > img[src *= '/cab/public/images/stat.png']";
-            //_driver.FindElement(By.CssSelector(css)).Click();
-
-            //IReadOnlyCollection<string> windows = _driver.WindowHandles;
-            //foreach (var window in windows)
-            //{
-            //    _driver.SwitchTo().Window(window);
-            //    if (_driver.Title.Contains("Товары > Кампании > Статистика")) break;
-            //}
-            
-            //_statisticsModel.ButtonExportData = true;
-            bool result = false;
-            if (_driver.PageSource.Contains("403 | Forbidden | Exception"))
-                return result = true;
-
-            string filepath = string.Concat(Directory.GetCurrentDirectory(), "\\Экспорт_Статистики_" + DateTime.Now.Day + ".xls");
-            DownloadFile("https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/campaigns-stat-export/campaign_id/" + Registry.hashTable["pkId"], filepath);
-            
-            return result;
-
+                try
+                {
+                    string filepath = string.Concat(Directory.GetCurrentDirectory(), "\\Экспорт_Статистики_" + DateTime.Now.Day + ".xls");
+                    DownloadFile("https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/campaigns-stat-export/campaign_id/" + Registry.hashTable["pkId"], filepath);
+                }
+                catch (Exception)
+                {
+                   Errors.Add("Не удалось загрузить файл экспорта");
+                }
             #endregion
         }
 
-        public int DownloadFile(String remoteFilename, String localFilename)
+        private int DownloadFile(String remoteFilename, String localFilename)
         {
             // Function will return the number of bytes processed
             // to the caller. Initialize to 0 here.

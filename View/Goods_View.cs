@@ -659,17 +659,52 @@ namespace Task.View
 
         public void PicStatistics()
         {
-            listBox1.Items.Add("===============================Заявка на создание тизеров====================================");
-            LogForClickers.WriteInLog("===============================Заявка на создание тизеров====================================");
+            listBox1.Items.Add("===============================Статистика====================================");
+            LogForClickers.WriteInLog("===============================Статистика====================================");
             LogForClickers.WriteInLog(DateTime.Now.ToString());
-            LogTrace.WriteInLog("===============================Заявка на создание тизеров====================================");
+            LogTrace.WriteInLog("===============================Статистика====================================");
             LogTrace.WriteInLog(DateTime.Now.ToString());
 
             PicStatisticsController statisticsController = new PicStatisticsController();
 
-            if(statisticsController.ViewStatistics())
+            statisticsController.ViewStatistics();
+
+            if(statisticsController.Errors.Count != 0)
+            {
                 listBox1.ForeColor = Color.Red;
-            
+
+                listBox1.Items.Add("");
+                listBox1.Items.Add(tab2 + "!!! Ошибки !!!");
+
+                LogForClickers.WriteInLog("");
+                LogForClickers.WriteInLog(tab2 + "!!! Ошибки !!!");
+
+                LogTrace.WriteInLog("");
+                LogTrace.WriteInLog(tab2 + "!!! Ошибки !!!");
+
+                foreach (var item in statisticsController.Errors)
+                {
+                    listBox1.Items.Add(item);
+                    LogForClickers.WriteInLog(item);
+                    LogTrace.WriteInLog(item);
+                }
+            }
+            else
+            {
+                listBox1.Items.Add("ID РК: " + Registry.hashTable["pkId"]);
+                LogForClickers.WriteInLog("ID РК: " + Registry.hashTable["pkId"]);
+                LogTrace.WriteInLog("ID РК: " + Registry.hashTable["pkId"]);
+
+                listBox1.Items.Add("ID клиента: " + Registry.hashTable["clientId"]);
+                LogForClickers.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
+                LogTrace.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
+
+                listBox1.Items.Add("Файл экспорта загружен в " + Directory.GetCurrentDirectory());
+                LogForClickers.WriteInLog("Файл экспорта загружен в " + Directory.GetCurrentDirectory());
+                LogTrace.WriteInLog("Файл экспорта загружен в " + Directory.GetCurrentDirectory());
+            }
+            LogForClickers.WriteInLog("");
+            LogTrace.WriteInLog("");
         }
 
         public string NewOrExist;
@@ -936,6 +971,21 @@ namespace Task.View
            {
                statisticsPic.BackColor = SystemColors.Control;
                statisticsCheckBox.Checked = false;
+           }
+       }
+
+       private void historyPic_Click(object sender, EventArgs e)
+       {
+           if (historyPic.BackColor == SystemColors.Control)
+           {
+               historyPic.BackColor = Color.OrangeRed;
+               historyCheckBox.Checked = true;
+           }
+
+           else
+           {
+               historyPic.BackColor = SystemColors.Control;
+               historyCheckBox.Checked = false;
            }
        }
     }

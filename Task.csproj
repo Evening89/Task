@@ -75,6 +75,7 @@
     <Compile Include="Controller\GoodsEditSite_Controller.cs" />
     <Compile Include="Controller\GoodsEditTeaser_Controller.cs" />
     <Compile Include="Controller\Pictograms\PicClaimForTeaser_Controller.cs" />
+    <Compile Include="Controller\Pictograms\PicHistory_Controller.cs" />
     <Compile Include="Controller\Pictograms\PicStatistics_Controller.cs" />
     <Compile Include="Model\Authorization.cs" />
     <Compile Include="Model\GoodsCreateClient_Model.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Model\GoodsEditSite_Model.cs" />
     <Compile Include="Model\GoodsEditTeaser_Model.cs" />
     <Compile Include="Model\Pictograms\PicClaimForTeaser_Model.cs" />
+    <Compile Include="Model\Pictograms\PicHistory_Model.cs" />
     <Compile Include="Model\Pictograms\PicStatistics_Model.cs" />
     <Compile Include="Utils\Credentials.cs" />
     <Compile Include="Utils\LogTrace.cs" />
@@ -135,6 +137,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\pics\stat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\pics\history.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
