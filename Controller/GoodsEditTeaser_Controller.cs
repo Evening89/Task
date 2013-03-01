@@ -17,7 +17,8 @@ namespace Task.Controller
     {
         IWebDriver driver;
         
-        public string baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
+        //private string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
+        private string _baseUrl = "https://admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
 
         public List<string> errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
         Randoms randoms = new Randoms();//класс генерации случайных строк
@@ -36,7 +37,7 @@ namespace Task.Controller
         {
             driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
             allowedDomain = GetAnyAllowedDomain();//сначала выбираем 1 из разрешенных доменов
-            driver.Navigate().GoToUrl(baseUrl); //заходим по ссылке
+            driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
             driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
 
             teaserEditModel.driver = driver;
@@ -63,11 +64,11 @@ namespace Task.Controller
                     advertText = teaserEditModel.AdvertText = randoms.RandomString(20);
                     LogTrace.WriteInLog(Goods_View.tab3 + "Заполняю поле Рекламный текст. Было введено: " + teaserEditModel.AdvertText);
 
-                    string dir = Directory.GetCurrentDirectory();
-                    teaserEditModel.AttachFile = dir + @"\zaj.jpg";
-                    Thread.Sleep(5000);
-                    LogTrace.WriteInLog(Goods_View.tab3 + "Работаю с полем загрузки Фото. Было загружено: " + teaserEditModel.AttachFile);
-                    attachFile = driver.FindElement(By.Id("imageLink")).GetAttribute("value");
+                    //string dir = Directory.GetCurrentDirectory();
+                    //teaserEditModel.AttachFile = dir + @"\zaj.jpg";
+                    //Thread.Sleep(5000);
+                    //LogTrace.WriteInLog(Goods_View.tab3 + "Работаю с полем загрузки Фото. Было загружено: " + teaserEditModel.AttachFile);
+                    //attachFile = driver.FindElement(By.Id("imageLink")).GetAttribute("value");
                 #endregion
 
                 #region Unrequired fields
@@ -121,7 +122,7 @@ namespace Task.Controller
         {
             driver = (IWebDriver) Registry.hashTable["driver"];
                 //забираем из хештаблицы сохраненный при создании клиента драйвер
-            driver.Navigate().GoToUrl(baseUrl); //заходим по ссылке
+            driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
             driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             LogTrace.WriteInLog(Goods_View.tab3 + driver.Url);
 
@@ -158,12 +159,12 @@ namespace Task.Controller
                         wasMismatch = true;
                     }
 
-                    if (attachFile == teaserEditModel.GetAttachFile) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Фото ({1}) и введенное при редактировании ({2})", Goods_View.tab3, teaserEditModel.GetAttachFile, attachFile)); }
-                    else
-                    {
-                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Фото ({0}) и введенное при редактировании ({1})", teaserEditModel.GetAttachFile, advertText));
-                        wasMismatch = true;
-                    }
+                    //if (attachFile == teaserEditModel.GetAttachFile) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Фото ({1}) и введенное при редактировании ({2})", Goods_View.tab3, teaserEditModel.GetAttachFile, attachFile)); }
+                    //else
+                    //{
+                    //    LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Фото ({0}) и введенное при редактировании ({1})", teaserEditModel.GetAttachFile, advertText));
+                    //    wasMismatch = true;
+                    //}
                 #endregion
 
                 #region Проверить необязательные поля

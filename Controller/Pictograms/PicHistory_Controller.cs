@@ -14,6 +14,7 @@ namespace Task.Controller.Pictograms
         private IWebDriver _driver;
         private PicHistoryModel _historyModel;
         private readonly string _baseUrl = "https://admin.dt00.net/cab/overall-log/show-log/table_id/" + Registry.hashTable["pkId"] + "/table/g_partners_1";
+        public List<string> Errors = new List<string>();
 
         public void ViewHistory()
         {
@@ -28,10 +29,24 @@ namespace Task.Controller.Pictograms
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
         }
 
-        private bool CheckUrlOnIdPkPresence()
+        private void CheckUrlOnIdPkPresence()
         {
-            if (_driver.Url.Contains(Registry.hashTable["pkId"].ToString())) return true;
-            return false;
+            _historyModel = new PicHistoryModel();
+            _historyModel.driver = _driver;
+
+            LogTrace.WriteInLog(_driver.Url);
+
+            string pkIdCurrent = Registry.hashTable["pkId"].ToString();
+            if (_driver.Url.Contains(pkIdCurrent))
+            {
+                if(_historyModel.GetIdPkInTable == pkIdCurrent)
+                    return;
+                Errors.Add("В поле ввода фильтрации содержится неверный id РК");
+            }
+            else
+            {
+                Errors.Add("В URL страницы содержится неверный id РК");
+            }
         }
     }
 }

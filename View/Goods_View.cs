@@ -707,6 +707,56 @@ namespace Task.View
             LogTrace.WriteInLog("");
         }
 
+        public void PicHistory()
+        {
+            listBox1.Items.Add("===============================История====================================");
+            LogForClickers.WriteInLog("===============================История====================================");
+            LogForClickers.WriteInLog(DateTime.Now.ToString());
+            LogTrace.WriteInLog("===============================История====================================");
+            LogTrace.WriteInLog(DateTime.Now.ToString());
+
+            PicHistoryController historyController = new PicHistoryController();
+
+            historyController.ViewHistory();
+
+            if (historyController.Errors.Count != 0)
+            {
+                listBox1.ForeColor = Color.Red;
+
+                listBox1.Items.Add("");
+                listBox1.Items.Add(tab2 + "!!! Ошибки !!!");
+
+                LogForClickers.WriteInLog("");
+                LogForClickers.WriteInLog(tab2 + "!!! Ошибки !!!");
+
+                LogTrace.WriteInLog("");
+                LogTrace.WriteInLog(tab2 + "!!! Ошибки !!!");
+
+                foreach (var item in historyController.Errors)
+                {
+                    listBox1.Items.Add(item);
+                    LogForClickers.WriteInLog(item);
+                    LogTrace.WriteInLog(item);
+                }
+            }
+            else
+            {
+                listBox1.Items.Add("ID РК: " + Registry.hashTable["pkId"]);
+                LogForClickers.WriteInLog("ID РК: " + Registry.hashTable["pkId"]);
+                LogTrace.WriteInLog("ID РК: " + Registry.hashTable["pkId"]);
+
+                listBox1.Items.Add("ID клиента: " + Registry.hashTable["clientId"]);
+                LogForClickers.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
+                LogTrace.WriteInLog("ID клиента: " + Registry.hashTable["clientId"]);
+
+                listBox1.Items.Add("id PK в URL и в фильтрации совпадает с действительным id PK");
+                LogForClickers.WriteInLog("id PK в URL и в фильтрации совпадает с действительным id PK");
+                LogTrace.WriteInLog("id PK в URL и в фильтрации совпадает с действительным id PK");
+            }
+            LogForClickers.WriteInLog("");
+            LogTrace.WriteInLog("");
+        }
+
         public string NewOrExist;
 
         private void Button1Click(object sender, EventArgs e)
@@ -863,6 +913,9 @@ namespace Task.View
 
                                 if (statisticsCheckBox.Checked)
                                     PicStatistics();
+
+                                if (historyCheckBox.Checked)
+                                    PicHistory();
                             }
                         }
                     }
