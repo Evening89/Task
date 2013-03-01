@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using Task.Utils;
@@ -121,33 +122,34 @@ namespace Task.Controller
                             }
                         case 1:
                             {
-                                int num2;
-                                do
-                                {
-                                    num2 = int.Parse(_randoms.RandomNumber(2));
-                                } while (num2 < 5); //суточный лимит должен быть не менее 5
-                                LogTrace.WriteInLog("          Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по бюджету");
+                                Random rndd = new Random();
+                                _dayLimitByBudget = rndd.Next(5, 20).ToString();
+                                _generalLimitByBudget = rndd.Next(20, 50).ToString();
+                                
+                                LogTrace.WriteInLog("     Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по бюджету");
+                                _pkEditModel.DayLimitByBudget = _dayLimitByBudget.ToString();//суточный лимит должен быть не менее 5
+                                LogTrace.WriteInLog("        Заполняю поле Суточный лимит РК. Было введено: " + _pkEditModel.DayLimitByBudget);
+                                //_dayLimitByBudget = _dayLimitByBudget + ".00";
 
-                                _dayLimitByBudget = num2.ToString() + ".00";//суточный лимит должен быть не менее 5
-                                _pkEditModel.DayLimitByBudget = _dayLimitByBudget;
-                                LogTrace.WriteInLog("             Заполняю поле Суточный лимит РК. Было введено: " + _pkEditModel.DayLimitByBudget);
-
-                                _generalLimitByBudget = _randoms.RandomNumber(3) + ".00";
-                                _pkEditModel.GeneralLimitByBudget = _generalLimitByBudget;
-                                LogTrace.WriteInLog("             Заполняю поле Общий лимит РК. Было введено: " + _pkEditModel.GeneralLimitByBudget);
+                                _pkEditModel.GeneralLimitByBudget = _generalLimitByBudget.ToString();
+                                LogTrace.WriteInLog("        Заполняю поле Общий лимит РК. Было введено: " + _pkEditModel.GeneralLimitByBudget);
+                                //_generalLimitByBudget = _generalLimitByBudget + ".00";
                                 break;
                             }
                         case 2:
                             {
-                                LogTrace.WriteInLog("          Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по количеству кликов");
-
-                                _dayLimitByClicks = _randoms.RandomNumber(3);
-                                _pkEditModel.DayLimitByClicks = _dayLimitByClicks;
-                                LogTrace.WriteInLog("             Заполняю поле Суточный лимит кликов РК. Было введено: " + _pkEditModel.DayLimitByClicks);
-
-                                _generalLimitByClicks = _randoms.RandomNumber(3);
-                                _pkEditModel.GeneralLimitByClicks = _generalLimitByClicks;
-                                LogTrace.WriteInLog("             Заполняю поле Общий лимит кликов РК. Было введено: " + _pkEditModel.GeneralLimitByClicks);
+                                Random rnd = new Random();
+                                _dayLimitByClicks = rnd.Next(50, 70).ToString();
+                                _generalLimitByClicks = rnd.Next(70, 100).ToString();
+                                
+                                LogTrace.WriteInLog("     Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по количеству кликов");
+                                _pkEditModel.DayLimitByClicks = _dayLimitByClicks.ToString();
+                                LogTrace.WriteInLog("        Заполняю поле Суточный лимит кликов РК. Было введено: " + _pkEditModel.DayLimitByClicks);
+                                //_dayLimitByClicks = _dayLimitByClicks + ".00";
+                                
+                                _pkEditModel.GeneralLimitByClicks = _generalLimitByClicks.ToString();
+                                LogTrace.WriteInLog("        Заполняю поле Общий лимит кликов РК. Было введено: " + _pkEditModel.GeneralLimitByClicks);
+                                //_generalLimitByClicks = _generalLimitByClicks + ".00";
                                 break;
                             }
                     }
@@ -1598,54 +1600,74 @@ namespace Task.Controller
             {
                 if (_chosenVariantLimitsPk == 1)
                 {
-                    if (_dayLimitByBudget == _pkEditModel.GetDayLimitByBudget)
+                    string _pkEditModelGetDayLimitByBudget = _pkEditModel.GetDayLimitByBudget;
+                    Regex regex = new Regex(@"\.00");
+                    Match match = regex.Match(_pkEditModelGetDayLimitByBudget);
+                    if (match.Success) _pkEditModelGetDayLimitByBudget = regex.Replace(_pkEditModelGetDayLimitByBudget, "");
+
+                    if (_dayLimitByBudget == _pkEditModelGetDayLimitByBudget)
                     {
                         LogTrace.WriteInLog(
-                            string.Format("          Совпадают: содержимое поля 'Суточный лимит РК' ({0}) и введенное при редактировании ({1})", _pkEditModel.GetDayLimitByBudget, _dayLimitByBudget));
+                            string.Format("          Совпадают: содержимое поля 'Суточный лимит РК' ({0}) и введенное при редактировании ({1})", _pkEditModelGetDayLimitByBudget, _dayLimitByBudget));
                     }
                     else
                     {
                         LogTrace.WriteInLog(
-                            string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Суточный лимит РК' ({0}) и введенное при редактировании ({1})", _pkEditModel.GetDayLimitByBudget, _dayLimitByBudget));
+                            string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Суточный лимит РК' ({0}) и введенное при редактировании ({1})", _pkEditModelGetDayLimitByBudget, _dayLimitByBudget));
                         WasMismatch = true;
                     }
 
-                    if (_generalLimitByBudget == _pkEditModel.GetGeneralLimitByBudget)
+                    string _pkEditModelGetGeneralLimitByBudget = _pkEditModel.GetGeneralLimitByBudget;
+                    regex = new Regex(@"\.00");
+                    match = regex.Match(_pkEditModelGetGeneralLimitByBudget);
+                    if (match.Success) _pkEditModelGetGeneralLimitByBudget = regex.Replace(_pkEditModelGetGeneralLimitByBudget, "");
+
+                    if (_generalLimitByBudget == _pkEditModelGetGeneralLimitByBudget)
                     {
                         LogTrace.WriteInLog(
-                            string.Format("          Совпадают: содержимое поля 'Общий лимит РК' ({0}) и введенное при редактировании ({1})", _pkEditModel.GetGeneralLimitByBudget, _generalLimitByBudget));
+                            string.Format("          Совпадают: содержимое поля 'Общий лимит РК' ({0}) и введенное при редактировании ({1})", _pkEditModelGetGeneralLimitByBudget, _generalLimitByBudget));
                     }
                     else
                     {
                         LogTrace.WriteInLog(
-                            string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Общий лимит РК' ({0}) и введенное при редактировании ({1})", _pkEditModel.GetGeneralLimitByBudget, _generalLimitByBudget));
+                            string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Общий лимит РК' ({0}) и введенное при редактировании ({1})", _pkEditModelGetGeneralLimitByBudget, _generalLimitByBudget));
                         WasMismatch = true;
                     }
                 }
 
                 if (_chosenVariantLimitsPk == 2)
                 {
-                    if (_dayLimitByClicks == _pkEditModel.GetDayLimitByClicks)
+                    string _pkEditModelGetDayLimitByClicks = _pkEditModel.GetDayLimitByClicks;
+                    Regex regex = new Regex(@"\.00");
+                    Match match = regex.Match(_pkEditModelGetDayLimitByClicks);
+                    if (match.Success) _pkEditModelGetDayLimitByClicks = regex.Replace(_pkEditModelGetDayLimitByClicks, "");
+
+                    if (_dayLimitByClicks == _pkEditModelGetDayLimitByClicks)
                     {
                         LogTrace.WriteInLog(
-                            string.Format("          Совпадают: содержимое поля 'Суточный лимит кликов' ({0}) и введенное при редактировании ({1})", _pkEditModel.GetDayLimitByClicks, _dayLimitByClicks));
+                            string.Format("          Совпадают: содержимое поля 'Суточный лимит кликов' ({0}) и введенное при редактировании ({1})", _pkEditModelGetDayLimitByClicks, _dayLimitByClicks));
                     }
                     else
                     {
                         LogTrace.WriteInLog(
-                            string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Суточный лимит кликов' ({0}) и введенное при редактировании ({1})", _pkEditModel.GetDayLimitByClicks, _dayLimitByClicks));
+                            string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Суточный лимит кликов' ({0}) и введенное при редактировании ({1})", _pkEditModelGetDayLimitByClicks, _dayLimitByClicks));
                         WasMismatch = true;
                     }
 
-                    if (_generalLimitByClicks == _pkEditModel.GetGeneralLimitByClicks)
+                    string _pkEditModelGetGeneralLimitByClicks = _pkEditModel.GetGeneralLimitByClicks;
+                    regex = new Regex(@"\.00");
+                    match = regex.Match(_pkEditModelGetGeneralLimitByClicks);
+                    if (match.Success) _pkEditModelGetGeneralLimitByClicks = regex.Replace(_pkEditModelGetGeneralLimitByClicks, "");
+
+                    if (_generalLimitByClicks == _pkEditModelGetGeneralLimitByClicks)
                     {
                         LogTrace.WriteInLog(
-                            string.Format("          Совпадают: содержимое поля 'Лимит на кампанию' ({0}) и введенное при редактировании ({1})", _pkEditModel.GetGeneralLimitByClicks, _generalLimitByClicks));
+                            string.Format("          Совпадают: содержимое поля 'Лимит на кампанию' ({0}) и введенное при редактировании ({1})", _pkEditModelGetGeneralLimitByClicks, _generalLimitByClicks));
                     }
                     else
                     {
                         LogTrace.WriteInLog(
-                            string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Лимит на кампанию' ({0}) и введенное при редактировании ({1})", _pkEditModel.GetGeneralLimitByClicks, _generalLimitByClicks));
+                            string.Format("НЕ СОВПАДАЮТ: содержимое поля 'Лимит на кампанию' ({0}) и введенное при редактировании ({1})", _pkEditModelGetGeneralLimitByClicks, _generalLimitByClicks));
                         WasMismatch = true;
                     }
                 }
@@ -2268,7 +2290,7 @@ namespace Task.Controller
             #region OC таргетинг
             if (_chosenVariantOsTargeting != 0)
             {
-                if (_pkEditModel.OsTargetingOther)
+                if (_pkEditModel.GetOsTargetingOther)
                 {
                     LogTrace.WriteInLog(
                         "          Совпадают: состояние checkbox 'Другие' и выбранное при редактировании");

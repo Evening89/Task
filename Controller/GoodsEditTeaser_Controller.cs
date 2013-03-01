@@ -19,6 +19,9 @@ namespace Task.Controller
         
         //private string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
         private string _baseUrl = "https://admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
+        private int _countElementsInList;
+        private int _newCategory;
+        private int _newCurrency;
 
         public List<string> errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
         Randoms randoms = new Randoms();//класс генерации случайных строк
@@ -56,9 +59,10 @@ namespace Task.Controller
                     title = teaserEditModel.Title = randoms.RandomString(10);
                     LogTrace.WriteInLog(Goods_View.tab3 + "Заполняю поле Заголовок. Было введено: " + teaserEditModel.Title);
 
-                    Random rnd = new Random();
-                    int category = rnd.Next(1, 31);
-                    teaserEditModel.Category = category;
+                    _countElementsInList = teaserEditModel.QuantityItemsInList(teaserEditModel.locatorCategory);
+                    Random rand = new Random();
+                    _newCategory = rand.Next(1, _countElementsInList);
+                    teaserEditModel.Category = _newCategory;
                     LogTrace.WriteInLog(Goods_View.tab3 + "Работаю с выпадающим списком Категория. Было выбрано: " + teaserEditModel.chosenCategory);
 
                     advertText = teaserEditModel.AdvertText = randoms.RandomString(20);
@@ -76,10 +80,11 @@ namespace Task.Controller
 
                     //teaserEditModel.TeaserWomen = true;
                     //LogTrace.WriteInLog(Goods_View.tab2 + "Выбран checkbox Тизер женской тематики (если таковая есть для выбранной Категории)");
-                   
-                    rnd = new Random();
-                    int currency = rnd.Next(0, 6);
-                    teaserEditModel.Currency = currency;
+
+                    _countElementsInList = teaserEditModel.QuantityItemsInList(teaserEditModel.locatorCurrency);
+                    Random rnd = new Random();
+                    _newCurrency = rand.Next(0, _countElementsInList);
+                    teaserEditModel.Currency = _newCurrency;
                     LogTrace.WriteInLog(Goods_View.tab3 + "Работаю с выпадающим списком Валюта. Было выбрано: " + teaserEditModel.chosenCurrency);
                     
                     rnd = new Random();
@@ -207,5 +212,7 @@ namespace Task.Controller
             domain = listDomains[randomIndex].GetAttribute("href"); //извлекаем ссылку
             return domain;
         }
+
+        
     }
 }

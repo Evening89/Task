@@ -21,6 +21,9 @@ namespace Task.Controller
         private readonly string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/ghits-add/campaign_id/" + Registry.hashTable["pkId"] + "/filters/client_id/" + Registry.hashTable["clientId"];
         private GoodsCreateTeaser_Model _teaserModel;
         private IWebElement _webElement;
+        private int _countElementsInList;
+        private int _newCategory;
+        private int _newCurrency;
 
         public List<string> Errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
         readonly Randoms _randoms = new Randoms();//класс генерации случайных строк
@@ -65,16 +68,17 @@ namespace Task.Controller
                     _teaserModel.Title = _randoms.RandomString(10);
                     LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю поле Заголовок. Было введено: " + _teaserModel.Title);
 
-                    Random rnd = new Random();
-                    int category = rnd.Next(1, 31);
-                    _teaserModel.Category = category;
+
+                    _countElementsInList = _teaserModel.QuantityItemsInList(_teaserModel.locatorCategory);
+                    Random rand = new Random();
+                    _newCategory = rand.Next(1, _countElementsInList);
+                    _teaserModel.Category = _newCategory;
                     LogTrace.WriteInLog(Goods_View.tab1 + "Работаю с выпадающим списком Категория. Было выбрано: " + _teaserModel.chosenCategory);
 
                     _teaserModel.AdvertText = _randoms.RandomString(20);
                     LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю поле Рекламный текст. Было введено: " + _teaserModel.AdvertText);
 
-                    rnd = new Random();
-                    int price = rnd.Next(5, 11);
+                    int price = rand.Next(5, 11);
                     _teaserModel.PriceForClick = price.ToString();
                     LogTrace.WriteInLog(Goods_View.tab1 + "Заполняю поле Цена за клик, центы. Было введено: " + _teaserModel.PriceForClick);
 
@@ -114,9 +118,10 @@ namespace Task.Controller
 
                     if (needSet())
                     {
+                        _countElementsInList = _teaserModel.QuantityItemsInList(_teaserModel.locatorCurrency);
                         Random rnd = new Random();
-                        int currency = rnd.Next(0, 6);
-                        _teaserModel.Currency = currency;
+                        _newCurrency = rnd.Next(0, _countElementsInList);
+                        _teaserModel.Currency = _newCurrency;
                         LogTrace.WriteInLog(Goods_View.tab1 + "Работаю с выпадающим списком Валюта. Было выбрано: " + _teaserModel.chosenCurrency);
                     }
 

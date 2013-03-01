@@ -13,6 +13,8 @@ namespace Task.Model
     public class GoodsCreateTeaser_Model
     {
         public IWebDriver driver;
+        public string locatorCategory = "#sunriseField_id_category > option";
+        public string locatorCurrency = "#sunriseField_currencyid > option";
 
         #region Required fields
             protected string FieldLink;
@@ -47,191 +49,10 @@ namespace Task.Model
                 set
                 {
                     SelectCategory = value;
-                    IWebElement webelement = driver.FindElement(By.Id("sunriseField_id_category"));
-                    SelectElement listCategory = new SelectElement(webelement);
-                    switch (value)
-                    {
-                        case 1:
-                            {
-                                listCategory.SelectByIndex(1);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 2:
-                            {
-                                listCategory.SelectByIndex(2);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 3:
-                            {
-                                listCategory.SelectByIndex(3);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 4:
-                            {
-                                listCategory.SelectByIndex(4);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 5:
-                            {
-                                listCategory.SelectByIndex(5);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 6:
-                            {
-                                listCategory.SelectByIndex(6);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 7:
-                            {
-                                listCategory.SelectByIndex(7);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 8:
-                            {
-                                listCategory.SelectByIndex(8);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 9:
-                            {
-                                listCategory.SelectByIndex(9);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 10:
-                            {
-                                listCategory.SelectByIndex(10);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 11:
-                            {
-                                listCategory.SelectByIndex(11);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 12:
-                            {
-                                listCategory.SelectByIndex(12);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 13:
-                            {
-                                listCategory.SelectByIndex(13);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 14:
-                            {
-                                listCategory.SelectByIndex(14);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 15:
-                            {
-                                listCategory.SelectByIndex(15);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 16:
-                            {
-                                listCategory.SelectByIndex(16);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 17:
-                            {
-                                listCategory.SelectByIndex(17);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 18:
-                            {
-                                listCategory.SelectByIndex(18);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 19:
-                            {
-                                listCategory.SelectByIndex(19);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 20:
-                            {
-                                listCategory.SelectByIndex(20);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 21:
-                            {
-                                listCategory.SelectByIndex(21);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 22:
-                            {
-                                listCategory.SelectByIndex(22);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 23:
-                            {
-                                listCategory.SelectByIndex(23);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 24:
-                            {
-                                listCategory.SelectByIndex(24);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 25:
-                            {
-                                listCategory.SelectByIndex(25);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 26:
-                            {
-                                listCategory.SelectByIndex(26);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 27:
-                            {
-                                listCategory.SelectByIndex(27);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 28:
-                            {
-                                listCategory.SelectByIndex(28);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 29:
-                            {
-                                listCategory.SelectByIndex(29);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                        case 30:
-                            {
-                                listCategory.SelectByIndex(30);
-                                chosenCategory = listCategory.SelectedOption.Text;
-                                break;
-                            }
-                    }
+                    IWebElement select = driver.FindElement(By.Id("sunriseField_id_category"));
+                    SelectElement selectCategory = new SelectElement(select);
+                    selectCategory.SelectByIndex(SelectCategory);
+                    chosenCategory = selectCategory.SelectedOption.Text;
                 }
             }
 
@@ -345,7 +166,7 @@ namespace Task.Model
                 }
             }
 
-        public string chosenCurrency = null;
+            public string chosenCurrency = null;
             protected int SelectCurrency;
             public int Currency
             {
@@ -353,47 +174,10 @@ namespace Task.Model
                 set
                 {
                     SelectCurrency = value;
-                    IWebElement webelement = driver.FindElement(By.Id("sunriseField_currencyid"));
-                    SelectElement listCurrency = new SelectElement(webelement);
-                    switch (value)
-                    {
-                        case 0:
-                            {
-                                listCurrency.SelectByIndex(0);
-                                chosenCurrency = listCurrency.SelectedOption.Text;
-                                break;
-                            }
-                        case 1:
-                            {
-                                listCurrency.SelectByIndex(1);
-                                chosenCurrency = listCurrency.SelectedOption.Text;
-                                break;
-                            }
-                        case 2:
-                            {
-                                listCurrency.SelectByIndex(2);
-                                chosenCurrency = listCurrency.SelectedOption.Text;
-                                break;
-                            }
-                        case 3:
-                            {
-                                listCurrency.SelectByIndex(3);
-                                chosenCurrency = listCurrency.SelectedOption.Text;
-                                break;
-                            }
-                        case 4:
-                            {
-                                listCurrency.SelectByIndex(4);
-                                chosenCurrency = listCurrency.SelectedOption.Text;
-                                break;
-                            }
-                        case 5:
-                            {
-                                listCurrency.SelectByIndex(5);
-                                chosenCurrency = listCurrency.SelectedOption.Text;
-                                break;
-                            }
-                    }
+                    IWebElement select = driver.FindElement(By.Id("sunriseField_currencyid"));
+                    SelectElement selectCurrency = new SelectElement(select);
+                    selectCurrency.SelectByIndex(SelectCurrency);
+                    chosenCurrency = selectCurrency.SelectedOption.Text;
                 }
             }
 
@@ -431,6 +215,12 @@ namespace Task.Model
             save = driver.FindElement(By.Id("save")); //клик по "Сохранить"
             //Thread.Sleep(5000);
             save.Click();
+        }
+
+        public int QuantityItemsInList(string findByCss)
+        {
+            List<IWebElement> listOfTags = driver.FindElements(By.CssSelector(findByCss)).ToList();
+            return listOfTags.Count;
         }
     }
 }

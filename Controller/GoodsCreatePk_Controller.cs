@@ -102,11 +102,6 @@ namespace Task.Controller
                                 }
                             case "1":
                                 {
-                                    //int num2;
-                                    //do
-                                    //{
-                                    //    num2 = int.Parse(_randoms.RandomNumber(2));
-                                    //} while (num2 < 5); //суточный лимит должен быть не менее 5
                                     Random rndd = new Random();
                                     int dayLimitByBudget = rndd.Next(5, 20);
                                     int generalLimitByBudget = rndd.Next(20, 50);
@@ -123,9 +118,9 @@ namespace Task.Controller
                                     int dayLimitByClicks = rnd.Next(50, 70);
                                     int generalLimitByClicks = rnd.Next(70, 100);
                                     LogTrace.WriteInLog("     Выбираю radiobutton Ограничения рекламной кампании. Выбрано: по количеству кликов");
-                                    _pkModel.DayLimitByClicks = _randoms.RandomNumber(3);
+                                    _pkModel.DayLimitByClicks = dayLimitByClicks.ToString();
                                     LogTrace.WriteInLog("        Заполняю поле Суточный лимит кликов РК. Было введено: " + _pkModel.DayLimitByClicks);
-                                    _pkModel.GeneralLimitByClicks = _randoms.RandomNumber(3);
+                                    _pkModel.GeneralLimitByClicks = generalLimitByClicks.ToString();
                                     LogTrace.WriteInLog("        Заполняю поле Общий лимит кликов РК. Было введено: " + _pkModel.GeneralLimitByClicks);
                                     break;
                                 }
