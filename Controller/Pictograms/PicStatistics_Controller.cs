@@ -19,7 +19,7 @@ namespace Task.Controller.Pictograms
     {
         private IWebDriver _driver;
         private PicStatisticsModel _statisticsModel;
-        private readonly string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/campaigns-stat/campaign_id/" + Registry.hashTable["pkId"];
+        //private readonly string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/campaigns-stat/campaign_id/" + Registry.hashTable["pkId"];
         public List<string> Errors = new List<string>();
 
         public void ViewStatistics()
@@ -31,7 +31,7 @@ namespace Task.Controller.Pictograms
         private void GetDriver()
         {
             _driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
-            _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
+            _driver.Navigate().GoToUrl(Paths.UrlPicStatistics); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
         }
 

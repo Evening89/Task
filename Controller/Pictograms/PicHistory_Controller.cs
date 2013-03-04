@@ -13,7 +13,7 @@ namespace Task.Controller.Pictograms
     {
         private IWebDriver _driver;
         private PicHistoryModel _historyModel;
-        private readonly string _baseUrl = "https://admin.dt00.net/cab/overall-log/show-log/table_id/" + Registry.hashTable["pkId"] + "/table/g_partners_1";
+        //private readonly string _baseUrl = "https://admin.dt00.net/cab/overall-log/show-log/table_id/" + Registry.hashTable["pkId"] + "/table/g_partners_1";
         public List<string> Errors = new List<string>();
 
         public void ViewHistory()
@@ -25,7 +25,7 @@ namespace Task.Controller.Pictograms
         private void GetDriver()
         {
             _driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
-            _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
+            _driver.Navigate().GoToUrl(Paths.UrlPicHistory); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
         }
 

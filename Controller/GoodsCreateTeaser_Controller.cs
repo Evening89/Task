@@ -18,7 +18,7 @@ namespace Task.Controller
     public class GoodsCreateTeaserController
     {
         private IWebDriver _driver;
-        private readonly string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/ghits-add/campaign_id/" + Registry.hashTable["pkId"] + "/filters/client_id/" + Registry.hashTable["clientId"];
+        //private readonly string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/ghits-add/campaign_id/" + Registry.hashTable["pkId"] + "/filters/client_id/" + Registry.hashTable["clientId"];
         private GoodsCreateTeaser_Model _teaserModel;
         private IWebElement _webElement;
         private int _countElementsInList;
@@ -43,7 +43,7 @@ namespace Task.Controller
         {
             _driver = (IWebDriver)Registry.hashTable["driver"];//забираем из хештаблицы сохраненный при создании РК драйвер
             AllowedDomain = GetAnyAllowedDomain();//сначала выбираем 1 из разрешенных доменов
-            _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
+            _driver.Navigate().GoToUrl(Paths.UrlCreateTeaser); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             //ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
         }

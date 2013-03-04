@@ -18,7 +18,7 @@ namespace Task.Controller
         IWebDriver driver;
         
         //private string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
-        private string _baseUrl = "https://admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
+        //private string _baseUrl = "https://admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
         private int _countElementsInList;
         private int _newCategory;
         private int _newCurrency;
@@ -40,7 +40,7 @@ namespace Task.Controller
         {
             driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
             allowedDomain = GetAnyAllowedDomain();//сначала выбираем 1 из разрешенных доменов
-            driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
+            driver.Navigate().GoToUrl(Paths.UrlEditTeaser); //заходим по ссылке
             driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
 
             teaserEditModel.driver = driver;
@@ -127,7 +127,7 @@ namespace Task.Controller
         {
             driver = (IWebDriver) Registry.hashTable["driver"];
                 //забираем из хештаблицы сохраненный при создании клиента драйвер
-            driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
+            driver.Navigate().GoToUrl(Paths.UrlEditTeaser); //заходим по ссылке
             driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             LogTrace.WriteInLog(Goods_View.tab3 + driver.Url);
 

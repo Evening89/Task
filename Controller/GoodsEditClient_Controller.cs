@@ -17,7 +17,7 @@ namespace Task.Controller
     {
         private IWebDriver _driver;
         private GoodsEditClient_Model _clientEditModel;
-        private readonly string _baseUrl = "https://admin.dt00.net/cab/goodhits/clients-edit/id/" + Registry.hashTable["clientId"] + "/filters/%252Fclient_id%252F" + Registry.hashTable["clientId"] + "%252Fsubnet%252FFall";
+        //private readonly string _baseUrl = "https://admin.dt00.net/cab/goodhits/clients-edit/id/" + Registry.hashTable["clientId"] + "/filters/%252Fclient_id%252F" + Registry.hashTable["clientId"] + "%252Fsubnet%252FFall";
         readonly Randoms _randoms = new Randoms();//класс генерации случайных строк
         private string _emailByDirection;
         private string _emailAdditionalByDirection;
@@ -55,7 +55,7 @@ namespace Task.Controller
         private void GetDriver()
         {
             _driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
-            _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
+            _driver.Navigate().GoToUrl(Paths.UrlEditClient); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
         }
 

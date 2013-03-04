@@ -15,7 +15,7 @@ namespace Task.Controller
     {
         private IWebDriver _driver;
         private GoodsEditPkModel _pkEditModel;
-        private readonly string _baseUrl = "https://admin.dt00.net/cab/goodhits/campaigns-edit/id/" + Registry.hashTable["pkId"] + "/filters/%252Fclient_id%252F" + Registry.hashTable["clientId"];
+        //private readonly string _baseUrl = "https://admin.dt00.net/cab/goodhits/campaigns-edit/id/" + Registry.hashTable["pkId"] + "/filters/%252Fclient_id%252F" + Registry.hashTable["clientId"];
         readonly Randoms _randoms = new Randoms(); //класс генерации случайных строк
         private string _namePk;
         private string _dateStartPk;
@@ -52,7 +52,7 @@ namespace Task.Controller
         private void GetDriver()
         {
             _driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
-            _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
+            _driver.Navigate().GoToUrl(Paths.UrlEditPk); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
         }
 

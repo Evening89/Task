@@ -15,7 +15,7 @@ namespace Task.Controller
     {
         private IWebDriver _driver;
         private GoodsCreateSite_Model _siteModel;
-        private readonly string _baseUrl = "https://admin.dt00.net/cab/goodhits/clients-new-site/client_id/" + Registry.hashTable["clientId"]; //берем сохраненный ранее 
+        //private readonly string _baseUrl = "https://admin.dt00.net/cab/goodhits/clients-new-site/client_id/" + Registry.hashTable["clientId"]; //берем сохраненный ранее 
                                                                                                                                     //(при создании клиента Task.Controller.GoodsCreateClient_Controller) ID клиента
                                                                                                                                     //и дописываем в URL
         public List<string> Errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
@@ -35,7 +35,7 @@ namespace Task.Controller
         private void GetDriver()
         {
             _driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный при создании клиента драйвер
-            _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
+            _driver.Navigate().GoToUrl(Paths.UrlCreateSite); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             //ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
         }

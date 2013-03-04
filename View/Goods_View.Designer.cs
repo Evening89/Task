@@ -62,26 +62,27 @@
             this.editTeaserCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.SubdomainComboBox = new System.Windows.Forms.ComboBox();
+            this.historyPic = new System.Windows.Forms.PictureBox();
+            this.historyCheckBox = new System.Windows.Forms.CheckBox();
+            this.statisticsPic = new System.Windows.Forms.PictureBox();
             this.statisticsCheckBox = new System.Windows.Forms.CheckBox();
+            this.claimForTeaserPic = new System.Windows.Forms.PictureBox();
             this.claimForTeaserCheckBox = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.historyCheckBox = new System.Windows.Forms.CheckBox();
-            this.historyPic = new System.Windows.Forms.PictureBox();
-            this.statisticsPic = new System.Windows.Forms.PictureBox();
-            this.claimForTeaserPic = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.historyPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statisticsPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.claimForTeaserPic)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(6, 328);
+            this.button1.Location = new System.Drawing.Point(6, 362);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(145, 34);
             this.button1.TabIndex = 0;
@@ -97,7 +98,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(6, 308);
+            this.label2.Location = new System.Drawing.Point(6, 342);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(90, 17);
             this.label2.TabIndex = 4;
@@ -106,16 +107,16 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(3, 397);
+            this.listBox1.Location = new System.Drawing.Point(3, 436);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(682, 264);
+            this.listBox1.Size = new System.Drawing.Size(682, 225);
             this.listBox1.TabIndex = 5;
             // 
             // newClientTextBox
             // 
             this.newClientTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newClientTextBox.Location = new System.Drawing.Point(145, 23);
+            this.newClientTextBox.Location = new System.Drawing.Point(145, 57);
             this.newClientTextBox.Name = "newClientTextBox";
             this.newClientTextBox.Size = new System.Drawing.Size(53, 23);
             this.newClientTextBox.TabIndex = 7;
@@ -125,7 +126,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(6, 3);
+            this.label4.Location = new System.Drawing.Point(6, 37);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(225, 17);
             this.label4.TabIndex = 8;
@@ -135,7 +136,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(6, 228);
+            this.label5.Location = new System.Drawing.Point(6, 262);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(143, 17);
             this.label5.TabIndex = 9;
@@ -147,7 +148,7 @@
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox1.Location = new System.Drawing.Point(6, 248);
+            this.checkBox1.Location = new System.Drawing.Point(6, 282);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(161, 21);
             this.checkBox1.TabIndex = 10;
@@ -158,7 +159,7 @@
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox2.Location = new System.Drawing.Point(6, 275);
+            this.checkBox2.Location = new System.Drawing.Point(6, 309);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(176, 21);
             this.checkBox2.TabIndex = 11;
@@ -171,7 +172,7 @@
             this.newClientCheckbox.Checked = true;
             this.newClientCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.newClientCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newClientCheckbox.Location = new System.Drawing.Point(9, 25);
+            this.newClientCheckbox.Location = new System.Drawing.Point(9, 59);
             this.newClientCheckbox.Name = "newClientCheckbox";
             this.newClientCheckbox.Size = new System.Drawing.Size(120, 21);
             this.newClientCheckbox.TabIndex = 12;
@@ -185,7 +186,7 @@
             this.newSiteCheckbox.Checked = true;
             this.newSiteCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.newSiteCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newSiteCheckbox.Location = new System.Drawing.Point(31, 77);
+            this.newSiteCheckbox.Location = new System.Drawing.Point(31, 111);
             this.newSiteCheckbox.Name = "newSiteCheckbox";
             this.newSiteCheckbox.Size = new System.Drawing.Size(59, 21);
             this.newSiteCheckbox.TabIndex = 14;
@@ -195,7 +196,7 @@
             // newSiteTextBox
             // 
             this.newSiteTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newSiteTextBox.Location = new System.Drawing.Point(96, 75);
+            this.newSiteTextBox.Location = new System.Drawing.Point(96, 109);
             this.newSiteTextBox.Name = "newSiteTextBox";
             this.newSiteTextBox.Size = new System.Drawing.Size(53, 23);
             this.newSiteTextBox.TabIndex = 13;
@@ -207,7 +208,7 @@
             this.newPKCheckbox.Checked = true;
             this.newPKCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.newPKCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newPKCheckbox.Location = new System.Drawing.Point(31, 129);
+            this.newPKCheckbox.Location = new System.Drawing.Point(31, 163);
             this.newPKCheckbox.Name = "newPKCheckbox";
             this.newPKCheckbox.Size = new System.Drawing.Size(45, 21);
             this.newPKCheckbox.TabIndex = 16;
@@ -217,7 +218,7 @@
             // newPKTextBox
             // 
             this.newPKTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newPKTextBox.Location = new System.Drawing.Point(96, 127);
+            this.newPKTextBox.Location = new System.Drawing.Point(96, 161);
             this.newPKTextBox.Name = "newPKTextBox";
             this.newPKTextBox.Size = new System.Drawing.Size(53, 23);
             this.newPKTextBox.TabIndex = 15;
@@ -229,7 +230,7 @@
             this.newTeaserCheckbox.Checked = true;
             this.newTeaserCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.newTeaserCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newTeaserCheckbox.Location = new System.Drawing.Point(31, 182);
+            this.newTeaserCheckbox.Location = new System.Drawing.Point(31, 216);
             this.newTeaserCheckbox.Name = "newTeaserCheckbox";
             this.newTeaserCheckbox.Size = new System.Drawing.Size(67, 21);
             this.newTeaserCheckbox.TabIndex = 18;
@@ -240,7 +241,7 @@
             // newTeaserTextBox
             // 
             this.newTeaserTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.newTeaserTextBox.Location = new System.Drawing.Point(96, 180);
+            this.newTeaserTextBox.Location = new System.Drawing.Point(96, 214);
             this.newTeaserTextBox.Name = "newTeaserTextBox";
             this.newTeaserTextBox.Size = new System.Drawing.Size(53, 23);
             this.newTeaserTextBox.TabIndex = 17;
@@ -350,7 +351,7 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(567, 344);
+            this.button3.Location = new System.Drawing.Point(567, 378);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(107, 22);
             this.button3.TabIndex = 28;
@@ -363,7 +364,7 @@
             this.editClientCheckBox.AutoSize = true;
             this.editClientCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.editClientCheckBox.ForeColor = System.Drawing.Color.ForestGreen;
-            this.editClientCheckBox.Location = new System.Drawing.Point(57, 52);
+            this.editClientCheckBox.Location = new System.Drawing.Point(57, 86);
             this.editClientCheckBox.Name = "editClientCheckBox";
             this.editClientCheckBox.Size = new System.Drawing.Size(154, 17);
             this.editClientCheckBox.TabIndex = 29;
@@ -375,7 +376,7 @@
             this.editSiteCheckBox.AutoSize = true;
             this.editSiteCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.editSiteCheckBox.ForeColor = System.Drawing.Color.ForestGreen;
-            this.editSiteCheckBox.Location = new System.Drawing.Point(57, 104);
+            this.editSiteCheckBox.Location = new System.Drawing.Point(57, 138);
             this.editSiteCheckBox.Name = "editSiteCheckBox";
             this.editSiteCheckBox.Size = new System.Drawing.Size(142, 17);
             this.editSiteCheckBox.TabIndex = 30;
@@ -387,7 +388,7 @@
             this.editPkCheckBox.AutoSize = true;
             this.editPkCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.editPkCheckBox.ForeColor = System.Drawing.Color.ForestGreen;
-            this.editPkCheckBox.Location = new System.Drawing.Point(56, 156);
+            this.editPkCheckBox.Location = new System.Drawing.Point(56, 190);
             this.editPkCheckBox.Name = "editPkCheckBox";
             this.editPkCheckBox.Size = new System.Drawing.Size(127, 17);
             this.editPkCheckBox.TabIndex = 31;
@@ -399,7 +400,7 @@
             this.editTeaserCheckBox.AutoSize = true;
             this.editTeaserCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.editTeaserCheckBox.ForeColor = System.Drawing.Color.ForestGreen;
-            this.editTeaserCheckBox.Location = new System.Drawing.Point(57, 208);
+            this.editTeaserCheckBox.Location = new System.Drawing.Point(57, 242);
             this.editTeaserCheckBox.Name = "editTeaserCheckBox";
             this.editTeaserCheckBox.Size = new System.Drawing.Size(148, 17);
             this.editTeaserCheckBox.TabIndex = 32;
@@ -410,15 +411,16 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(3, 3);
+            this.tabControl1.Location = new System.Drawing.Point(2, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(682, 392);
+            this.tabControl1.Size = new System.Drawing.Size(682, 429);
             this.tabControl1.TabIndex = 33;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.SubdomainComboBox);
             this.tabPage1.Controls.Add(this.historyPic);
             this.tabPage1.Controls.Add(this.historyCheckBox);
             this.tabPage1.Controls.Add(this.statisticsPic);
@@ -447,24 +449,103 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(674, 366);
+            this.tabPage1.Size = new System.Drawing.Size(674, 403);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
+            // 
+            // SubdomainComboBox
+            // 
+            this.SubdomainComboBox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.SubdomainComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.SubdomainComboBox.FormattingEnabled = true;
+            this.SubdomainComboBox.Items.AddRange(new object[] {
+            "prod",
+            "beta"});
+            this.SubdomainComboBox.Location = new System.Drawing.Point(9, 6);
+            this.SubdomainComboBox.Name = "SubdomainComboBox";
+            this.SubdomainComboBox.Size = new System.Drawing.Size(121, 24);
+            this.SubdomainComboBox.TabIndex = 40;
+            //this.SubdomainComboBox.SelectedIndexChanged += new System.EventHandler(this.SubdomainComboBox_SelectedIndexChanged);
+            this.SubdomainComboBox.SelectedValueChanged += new System.EventHandler(this.SubdomainComboBox_SelectedValueChanged);
+            // 
+            // historyPic
+            // 
+            this.historyPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.historyPic.BackColor = System.Drawing.SystemColors.Control;
+            this.historyPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.historyPic.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.historyPic.Image = global::Task.Properties.Resources.history;
+            this.historyPic.Location = new System.Drawing.Point(312, 160);
+            this.historyPic.Name = "historyPic";
+            this.historyPic.Size = new System.Drawing.Size(20, 24);
+            this.historyPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.historyPic.TabIndex = 39;
+            this.historyPic.TabStop = false;
+            this.toolTip1.SetToolTip(this.historyPic, "История");
+            this.historyPic.Click += new System.EventHandler(this.historyPic_Click);
+            // 
+            // historyCheckBox
+            // 
+            this.historyCheckBox.AutoSize = true;
+            this.historyCheckBox.Location = new System.Drawing.Point(295, 164);
+            this.historyCheckBox.Name = "historyCheckBox";
+            this.historyCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.historyCheckBox.TabIndex = 38;
+            this.historyCheckBox.UseVisualStyleBackColor = true;
+            this.historyCheckBox.Visible = false;
+            // 
+            // statisticsPic
+            // 
+            this.statisticsPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.statisticsPic.BackColor = System.Drawing.SystemColors.Control;
+            this.statisticsPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.statisticsPic.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.statisticsPic.Image = global::Task.Properties.Resources.stat;
+            this.statisticsPic.Location = new System.Drawing.Point(273, 161);
+            this.statisticsPic.Name = "statisticsPic";
+            this.statisticsPic.Size = new System.Drawing.Size(20, 23);
+            this.statisticsPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.statisticsPic.TabIndex = 37;
+            this.statisticsPic.TabStop = false;
+            this.toolTip1.SetToolTip(this.statisticsPic, "Статистика");
+            this.statisticsPic.Click += new System.EventHandler(this.statisticsPic_Click);
             // 
             // statisticsCheckBox
             // 
             this.statisticsCheckBox.AutoSize = true;
-            this.statisticsCheckBox.Location = new System.Drawing.Point(256, 131);
+            this.statisticsCheckBox.Location = new System.Drawing.Point(256, 165);
             this.statisticsCheckBox.Name = "statisticsCheckBox";
             this.statisticsCheckBox.Size = new System.Drawing.Size(15, 14);
             this.statisticsCheckBox.TabIndex = 36;
             this.statisticsCheckBox.UseVisualStyleBackColor = true;
             this.statisticsCheckBox.Visible = false;
             // 
+            // claimForTeaserPic
+            // 
+            this.claimForTeaserPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.claimForTeaserPic.BackColor = System.Drawing.SystemColors.Control;
+            this.claimForTeaserPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.claimForTeaserPic.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.claimForTeaserPic.Image = global::Task.Properties.Resources.claim_for_teaser;
+            this.claimForTeaserPic.Location = new System.Drawing.Point(233, 162);
+            this.claimForTeaserPic.Name = "claimForTeaserPic";
+            this.claimForTeaserPic.Size = new System.Drawing.Size(20, 22);
+            this.claimForTeaserPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.claimForTeaserPic.TabIndex = 35;
+            this.claimForTeaserPic.TabStop = false;
+            this.toolTip1.SetToolTip(this.claimForTeaserPic, "Подать заявку на создание тизеров");
+            this.claimForTeaserPic.Click += new System.EventHandler(this.claimForTeaserPic_Click_1);
+            // 
             // claimForTeaserCheckBox
             // 
             this.claimForTeaserCheckBox.AutoSize = true;
-            this.claimForTeaserCheckBox.Location = new System.Drawing.Point(216, 132);
+            this.claimForTeaserCheckBox.Location = new System.Drawing.Point(216, 166);
             this.claimForTeaserCheckBox.Name = "claimForTeaserCheckBox";
             this.claimForTeaserCheckBox.Size = new System.Drawing.Size(15, 14);
             this.claimForTeaserCheckBox.TabIndex = 34;
@@ -486,73 +567,9 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(674, 366);
+            this.tabPage2.Size = new System.Drawing.Size(674, 403);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
-            // 
-            // historyCheckBox
-            // 
-            this.historyCheckBox.AutoSize = true;
-            this.historyCheckBox.Location = new System.Drawing.Point(295, 130);
-            this.historyCheckBox.Name = "historyCheckBox";
-            this.historyCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.historyCheckBox.TabIndex = 38;
-            this.historyCheckBox.UseVisualStyleBackColor = true;
-            this.historyCheckBox.Visible = false;
-            // 
-            // historyPic
-            // 
-            this.historyPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.historyPic.BackColor = System.Drawing.SystemColors.Control;
-            this.historyPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.historyPic.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.historyPic.Image = global::Task.Properties.Resources.history;
-            this.historyPic.Location = new System.Drawing.Point(312, 126);
-            this.historyPic.Name = "historyPic";
-            this.historyPic.Size = new System.Drawing.Size(20, 20);
-            this.historyPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.historyPic.TabIndex = 39;
-            this.historyPic.TabStop = false;
-            this.toolTip1.SetToolTip(this.historyPic, "История");
-            this.historyPic.Click += new System.EventHandler(this.historyPic_Click);
-            // 
-            // statisticsPic
-            // 
-            this.statisticsPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.statisticsPic.BackColor = System.Drawing.SystemColors.Control;
-            this.statisticsPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.statisticsPic.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.statisticsPic.Image = global::Task.Properties.Resources.stat;
-            this.statisticsPic.Location = new System.Drawing.Point(273, 127);
-            this.statisticsPic.Name = "statisticsPic";
-            this.statisticsPic.Size = new System.Drawing.Size(20, 20);
-            this.statisticsPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.statisticsPic.TabIndex = 37;
-            this.statisticsPic.TabStop = false;
-            this.toolTip1.SetToolTip(this.statisticsPic, "Статистика");
-            this.statisticsPic.Click += new System.EventHandler(this.statisticsPic_Click);
-            // 
-            // claimForTeaserPic
-            // 
-            this.claimForTeaserPic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.claimForTeaserPic.BackColor = System.Drawing.SystemColors.Control;
-            this.claimForTeaserPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.claimForTeaserPic.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.claimForTeaserPic.Image = global::Task.Properties.Resources.claim_for_teaser;
-            this.claimForTeaserPic.Location = new System.Drawing.Point(233, 128);
-            this.claimForTeaserPic.Name = "claimForTeaserPic";
-            this.claimForTeaserPic.Size = new System.Drawing.Size(20, 20);
-            this.claimForTeaserPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.claimForTeaserPic.TabIndex = 35;
-            this.claimForTeaserPic.TabStop = false;
-            this.toolTip1.SetToolTip(this.claimForTeaserPic, "Подать заявку на создание тизеров");
-            this.claimForTeaserPic.Click += new System.EventHandler(this.claimForTeaserPic_Click_1);
             // 
             // Goods_View
             // 
@@ -567,11 +584,11 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.historyPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.statisticsPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.claimForTeaserPic)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -618,6 +635,7 @@
         private System.Windows.Forms.CheckBox statisticsCheckBox;
         private System.Windows.Forms.PictureBox historyPic;
         private System.Windows.Forms.CheckBox historyCheckBox;
+        private System.Windows.Forms.ComboBox SubdomainComboBox;
     }
 }
 

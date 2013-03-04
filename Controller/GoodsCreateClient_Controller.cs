@@ -17,7 +17,7 @@ namespace Task.Controller
     {
         private IWebDriver _driver;
         private GoodsCreateClient_Model _clientModel;
-        private const string BaseUrl = "https://admin.dt00.net/cab/goodhits/clients-new";
+        //private const string BaseUrl = "https://admin.dt00.net/cab/goodhits/clients-new";
 
         public List<string> Errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
         public string ClientId; //переменная для хранения ID только что созданного клиента
@@ -34,7 +34,7 @@ namespace Task.Controller
             //fireProfile.SetPreference("network.automatic-ntlm-auth.trusted-uris", ".dt00.net");
             //_driver = new FirefoxDriver(FireBin, fireProfile);
             _driver = new FirefoxDriver();
-            _driver.Navigate().GoToUrl(BaseUrl); //заходим по ссылке
+            _driver.Navigate().GoToUrl(Paths.UrlCreateClient); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));//ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
         }
 

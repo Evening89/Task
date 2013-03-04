@@ -13,7 +13,7 @@ namespace Task.Controller
     {
         private IWebDriver _driver;
         private GoodsEditSiteModel _siteEditModel;
-        private readonly string _baseUrl = "https://admin.dt00.net/cab/goodhits/sites-edit/id/" + Registry.hashTable["siteId"] + "/filters/%252Fid%252F" + Registry.hashTable["siteId"];
+        //private readonly string _baseUrl = "https://admin.dt00.net/cab/goodhits/sites-edit/id/" + Registry.hashTable["siteId"] + "/filters/%252Fid%252F" + Registry.hashTable["siteId"];
         readonly Randoms _randoms = new Randoms();//класс генерации случайных строк
         private string _siteName;
         private string _comments;
@@ -31,7 +31,7 @@ namespace Task.Controller
         private void GetDriver()
         {
             _driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
-            _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
+            _driver.Navigate().GoToUrl(Paths.UrlEditSite); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
         }
 

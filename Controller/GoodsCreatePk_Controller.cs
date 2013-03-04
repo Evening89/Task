@@ -16,7 +16,7 @@ namespace Task.Controller
         private GoodsCreatePkModel _pkModel;//берем сохраненный ранее 
                                             //(при создании клиента Task.Controller.GoodsCreateClient_Controller) ID клиента
                                             //и дописываем в URL
-        private readonly string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/clients-new-campaign/client_id/" + Registry.hashTable["clientId"];
+        //private readonly string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/clients-new-campaign/client_id/" + Registry.hashTable["clientId"];
         private readonly Randoms _randoms = new Randoms(); //класс генерации случайных строк
 
         public List<string> Errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
@@ -34,7 +34,7 @@ namespace Task.Controller
         private void GetDriver()
         {
             _driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
-            _driver.Navigate().GoToUrl(_baseUrl); //заходим по ссылке
+            _driver.Navigate().GoToUrl(Paths.UrlCreatePk); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             //ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
         }

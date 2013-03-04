@@ -21,10 +21,12 @@ namespace Task.View
 {
     public partial class Goods_View : Form
     {
+        private const string _defaultDomain = "prod";
         public Goods_View()
         {
             InitializeComponent();
-            //textBox1.Text = "Auth.csv";
+            SubdomainComboBox.SelectedItem = _defaultDomain;
+            Paths.SwitchPaths(_defaultDomain);
         }
 
         //public StreamWriter sw; //запись в файл
@@ -1040,6 +1042,12 @@ namespace Task.View
                historyPic.BackColor = SystemColors.Control;
                historyCheckBox.Checked = false;
            }
+       }
+
+       private void SubdomainComboBox_SelectedValueChanged(object sender, EventArgs e)
+       {
+            string _domain = SubdomainComboBox.SelectedItem.ToString();
+            Paths.SwitchPaths(_domain);
        }
     }
 }

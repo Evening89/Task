@@ -93,6 +93,7 @@
     <Compile Include="Utils\LogTrace.cs" />
     <Compile Include="Utils\FileData.cs" />
     <Compile Include="Utils\LogForClickers.cs" />
+    <Compile Include="Utils\Paths.cs" />
     <Compile Include="Utils\Randoms.cs" />
     <Compile Include="Utils\Registry.cs" />
     <Compile Include="View\Goods_View.cs">
