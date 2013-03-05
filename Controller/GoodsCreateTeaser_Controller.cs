@@ -217,7 +217,7 @@ namespace Task.Controller
         private string GetAnyAllowedDomain() //функция, возвращающая 1 из разрешенных доменов для данного клиента
         {
             string domain;
-            _driver.Navigate().GoToUrl("https://admin.dt00.net/cab/goodhits/sites/client_id/" + Registry.hashTable["clientId"]); //идем на страницу с сайтами для данного клиента
+            _driver.Navigate().GoToUrl(Paths.GetAnyAllowedDomain); //идем на страницу с сайтами для данного клиента
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
             List<IWebElement> listDomains = _driver.FindElements(By.CssSelector("td[nowrap='nowrap']>a")).ToList(); //получаем список элементов-доменов, из которых нужно извлечь ссылку
 

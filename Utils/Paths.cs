@@ -126,6 +126,12 @@ namespace Task.Utils
             set { }
         }
 
+        public static string GetAnyAllowedDomain
+        {
+            get { return "https://" + _domain + "goodhits/sites/client_id/" + Registry.hashTable["clientId"]; }
+            set { }
+        }
+
         public static void SwitchPaths(string _place)
         {
             if (_place == "prod") _domain = "admin.dt00.net/cab/";
