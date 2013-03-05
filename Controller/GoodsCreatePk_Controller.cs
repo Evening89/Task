@@ -1309,11 +1309,13 @@ namespace Task.Controller
                                     }
 
                                     #region Россия
-                                        if (needSetCheckBox())
-                                        {
-                                            _pkModel.GeoTargetingRussiaChoseAll = true;
-                                            LogTrace.WriteInLog("        Россия. Выбран checkbox Все");
-                                        }
+                                    if (needSetCheckBox())
+                                    {
+                                        _pkModel.GeoTargetingRussiaChoseAll = true;
+                                        LogTrace.WriteInLog("        Россия. Выбран checkbox Все");
+                                    }
+                                    else
+                                    {
                                         if (needSetCheckBox())
                                         {
                                             _pkModel.GeoTargetingRussiaEburg = true;
@@ -1344,6 +1346,8 @@ namespace Task.Controller
                                             _pkModel.GeoTargetingRussiaHabarovsk = true;
                                             LogTrace.WriteInLog("        Россия. Выбран checkbox Хабаровск");
                                         }
+                                    }
+
                                     #endregion
 
                                     if (needSetCheckBox())
@@ -1353,11 +1357,13 @@ namespace Task.Controller
                                     }
 
                                     #region Украина
-                                        if (needSetCheckBox())
-                                        {
-                                            _pkModel.GeoTargetingUkraineChoseAll = true;
-                                            LogTrace.WriteInLog("        Украина. Выбран checkbox Все");
-                                        }
+                                    if (needSetCheckBox())
+                                    {
+                                        _pkModel.GeoTargetingUkraineChoseAll = true;
+                                        LogTrace.WriteInLog("        Украина. Выбран checkbox Все");
+                                    }
+                                    else
+                                    {
                                         if (needSetCheckBox())
                                         {
                                             _pkModel.GeoTargetingUkraineDnepr = true;
@@ -1423,6 +1429,8 @@ namespace Task.Controller
                                             _pkModel.GeoTargetingUkraineChernovzi = true;
                                             LogTrace.WriteInLog("        Украина. Выбран checkbox Черновцы");
                                         }
+                                    }
+
                                     #endregion
 
                                     if (needSetCheckBox())
