@@ -27,10 +27,15 @@ namespace Task.Model
                 get { return FieldName; }
                 set
                 {
-                    FieldName = value;
-                    IWebElement webelement = driver.FindElement(By.Id("name"));
-                    webelement.Clear();
-                    webelement.SendKeys(value);
+                    try
+                    {
+                        FieldName = value;
+                        IWebElement webelement = driver.FindElement(By.Id("name"));
+                        webelement.Clear();
+                        webelement.SendKeys(value);
+                    }
+                    catch (Exception)
+                    {}
                 }
             }
         #endregion
@@ -43,9 +48,14 @@ namespace Task.Model
                     get { return CheckboxViewSensors; }
                     set
                     {
-                        IWebElement webelement = driver.FindElement(By.Id("display_goods_buying"));
-                        webelement.Click();
-                        CheckboxViewSensors = value;
+                        try
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("display_goods_buying"));
+                            webelement.Click();
+                            CheckboxViewSensors = value;
+                        }
+                        catch (Exception)
+                        {}
                     }
                 }
 
@@ -55,23 +65,37 @@ namespace Task.Model
                     get { return CheckboxViewConversion; }
                     set
                     {
-                        IWebElement webelement = driver.FindElement(By.Id("display_goods_conversion"));
-                        webelement.Click();
-                        CheckboxViewConversion = value;
+                        try
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("display_goods_conversion"));
+                            webelement.Click();
+                            CheckboxViewConversion = value;
+                        }
+                        catch (Exception)
+                        {}
                     }
                 }
 
                 protected string FieldStartPkDate;
                 public string StartPkDate
                 {
-                    get { return FieldStartPkDate; }
+                    get
+                    {
+                        return FieldStartPkDate;
+                    }
                     set
                     {
-                        IWebElement webelement = driver.FindElement(By.Id("when_autostart"));
-                        webelement.Clear();
-                        webelement.SendKeys(value);
-                        FieldStartPkDate = value;
+                        try
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("when_autostart"));
+                            webelement.Clear();
+                            webelement.SendKeys(value);
+                            FieldStartPkDate = value;
+                        }
+                        catch(Exception)
+                        {}
                     }
+                    
                 }
 
                 protected string FieldEndPkDate;
@@ -80,10 +104,15 @@ namespace Task.Model
                     get { return FieldEndPkDate; }
                     set
                     {
-                        IWebElement webelement = driver.FindElement(By.Id("limit_date"));
-                        webelement.Clear();
-                        webelement.SendKeys(value);
-                        FieldEndPkDate = value;
+                        try
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("limit_date"));
+                            webelement.Clear();
+                            webelement.SendKeys(value);
+                            FieldEndPkDate = value;
+                        }
+                        catch (Exception)
+                        {}
                     }
                 }
 
@@ -93,9 +122,14 @@ namespace Task.Model
                     get { return CheckboxBlockTeasersAfterCreation; }
                     set
                     {
-                        IWebElement webelement = driver.FindElement(By.Id("block_before_show"));
-                        webelement.Click();
-                        CheckboxBlockTeasersAfterCreation = value;
+                        try
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("block_before_show"));
+                            webelement.Click();
+                            CheckboxBlockTeasersAfterCreation = value;
+                        }
+                        catch (Exception)
+                        {}
                     }
                 }
 
@@ -105,9 +139,14 @@ namespace Task.Model
                     get { return CheckboxStoppedByManager; }
                     set
                     {
-                        IWebElement webelement = driver.FindElement(By.Id("manager_delete"));
-                        webelement.Click();
-                        CheckboxStoppedByManager = value;
+                        try
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("manager_delete"));
+                            webelement.Click();
+                            CheckboxStoppedByManager = value;
+                        }
+                        catch (Exception)
+                        {}
                     }
                 }
         #endregion
@@ -120,28 +159,33 @@ namespace Task.Model
                     get { return RadioLimitsOfPk; }
                     set
                     {
-                        RadioLimitsOfPk = value;
-                        switch (value)
+                        try
                         {
-                            case 0:
-                                {
-                                    IWebElement unlimited = driver.FindElement(By.Id("limit_type-unlimited"));
-                                    unlimited.Click();
-                                    break;
-                                }
-                            case 1:
-                                {
-                                    IWebElement byBudget = driver.FindElement(By.Id("limit_type-budgetlimits"));
-                                    byBudget.Click();
-                                    break;
-                                }
-                            case 2:
-                                {
-                                    IWebElement byClickNum = driver.FindElement(By.Id("limit_type-clickslimits"));
-                                    byClickNum.Click();
-                                    break;
-                                }
+                            RadioLimitsOfPk = value;
+                            switch (value)
+                            {
+                                case 0:
+                                    {
+                                        IWebElement unlimited = driver.FindElement(By.Id("limit_type-unlimited"));
+                                        unlimited.Click();
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        IWebElement byBudget = driver.FindElement(By.Id("limit_type-budgetlimits"));
+                                        byBudget.Click();
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        IWebElement byClickNum = driver.FindElement(By.Id("limit_type-clickslimits"));
+                                        byClickNum.Click();
+                                        break;
+                                    }
+                            }
                         }
+                        catch (Exception)
+                        {}
                     }
                 }
                 protected string FieldDayLimitByBudget;
@@ -150,10 +194,15 @@ namespace Task.Model
                     get { return FieldDayLimitByBudget; }
                     set
                     {
-                        IWebElement webelement = driver.FindElement(By.Id("limit_per_day"));
-                        webelement.Clear();
-                        webelement.SendKeys(value);
-                        FieldDayLimitByBudget = value;
+                        try
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("limit_per_day"));
+                            webelement.Clear();
+                            webelement.SendKeys(value);
+                            FieldDayLimitByBudget = value;
+                        }
+                        catch (Exception)
+                        {}
                     }
                 }
                 protected string FieldGeneralLimitByBudget;
@@ -162,10 +211,15 @@ namespace Task.Model
                     get { return FieldGeneralLimitByBudget; }
                     set
                     {
-                        IWebElement webelement = driver.FindElement(By.Id("limit_per_campaign"));
-                        webelement.Clear();
-                        webelement.SendKeys(value);
-                        FieldGeneralLimitByBudget = value;
+                        try
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("limit_per_campaign"));
+                            webelement.Clear();
+                            webelement.SendKeys(value);
+                            FieldGeneralLimitByBudget = value;
+                        }
+                        catch (Exception)
+                        {}
                     }
                 }
                 protected string FieldDayLimitByClicks;
@@ -174,10 +228,15 @@ namespace Task.Model
                     get { return FieldDayLimitByClicks; }
                     set
                     {
-                        IWebElement webelement = driver.FindElement(By.Id("limit_clicks_per_day"));
-                        webelement.Clear();
-                        webelement.SendKeys(value);
-                        FieldDayLimitByClicks = value;
+                        try
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("limit_clicks_per_day"));
+                            webelement.Clear();
+                            webelement.SendKeys(value);
+                            FieldDayLimitByClicks = value;
+                        }
+                        catch (Exception)
+                        {}
                     }
                 }
                 protected string FieldGeneralLimitByClicks;
@@ -186,10 +245,15 @@ namespace Task.Model
                     get { return FieldGeneralLimitByClicks; }
                     set
                     {
-                        IWebElement webelement = driver.FindElement(By.Id("limit_clicks"));
-                        webelement.Clear();
-                        webelement.SendKeys(value);
-                        FieldGeneralLimitByClicks = value;
+                        try
+                        {
+                            IWebElement webelement = driver.FindElement(By.Id("limit_clicks"));
+                            webelement.Clear();
+                            webelement.SendKeys(value);
+                            FieldGeneralLimitByClicks = value;
+                        }
+                        catch (Exception)
+                        {}
                     }
                 }
                 //Конец Блока радиобаттонов "ограничения рекламной кампании"

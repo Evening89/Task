@@ -82,15 +82,15 @@ namespace Task.Controller
 
                     //dateStartPk = pkEditModel.GenerateDate();
                     _pkEditModel.StartPkDate = _pkEditModel.GenerateDate();
-                    _driver.FindElement(By.Id("when_autostart")).Click();//чтобы обновилось содержимое полей и к месяцам и дням < 10 добавились 0
-                    _driver.FindElement(By.Id("editsite")).Click();
+                    _driver.FindElement(By.CssSelector("label[for='name']")).Click();//чтобы обновилось содержимое полей и к месяцам и дням < 10 добавились 0
+                    //_driver.FindElement(By.Id("editsite")).Click();
                     _dateStartPk = _pkEditModel.GetStartPkDate;
                     LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Дата старта РК. Было введено: " + _pkEditModel.StartPkDate);
 
                     //dateEndPk = pkEditModel.GenerateDate();
                     _pkEditModel.EndPkDate = _pkEditModel.GenerateDate();
-                    _driver.FindElement(By.Id("limit_date")).Click();//чтобы обновилось содержимое полей и к месяцам и дням < 10 добавились 0
-                    _driver.FindElement(By.Id("editsite")).Click();
+                    _driver.FindElement(By.CssSelector("label[for='name']")).Click();//чтобы обновилось содержимое полей и к месяцам и дням < 10 добавились 0
+                    //_driver.FindElement(By.Id("editsite")).Click();
                     _dateEndPk = _pkEditModel.GetEndPkDate;
                     LogTrace.WriteInLog(Goods_View.tab2 + "Заполняю поле Дата окончания РК. Было введено: " + _pkEditModel.EndPkDate);
                     List<string> instantErrorsDate = _pkEditModel.ErrorsInFillFields();
