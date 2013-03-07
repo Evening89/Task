@@ -27,13 +27,13 @@ namespace Task.Controller
         
         private void InitDriver()
         {
-            //FirefoxBinary FireBin = new FirefoxBinary("C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
-            //FireBin.TimeoutInMilliseconds = 130000;
-            //FirefoxProfile fireProfile = new FirefoxProfile(@"C:\Users\User\AppData\Roaming\Mozilla\Firefox\Profiles\d1j6msfx.FF");
-            //fireProfile.Port = 9966;
-            //fireProfile.SetPreference("network.automatic-ntlm-auth.trusted-uris", ".dt00.net");
-            //_driver = new FirefoxDriver(FireBin, fireProfile);
-            _driver = new FirefoxDriver();
+            FirefoxBinary FireBin = new FirefoxBinary("C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
+            FireBin.TimeoutInMilliseconds = 130000;
+            FirefoxProfile fireProfile = new FirefoxProfile(@"C:\Users\User\AppData\Roaming\Mozilla\Firefox\Profiles\d1j6msfx.FF");
+            fireProfile.Port = 9966;
+            fireProfile.SetPreference("network.automatic-ntlm-auth.trusted-uris", ".dt00.net");
+            _driver = new FirefoxDriver(FireBin, fireProfile);
+            //_driver = new FirefoxDriver();
             _driver.Navigate().GoToUrl(Paths.UrlCreateClient); //заходим по ссылке
             _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));//ставим ожидание в 10 сек на случай, если страница медленно грузится и нужные эл-ты появятся не сразу
         }
