@@ -15,37 +15,43 @@ namespace Task.Controller
 {
     public class GoodsEditTeaser_Controller
     {
-        IWebDriver driver;
-        
-        //private string _baseUrl = "https://" + Registry.hashTable["Login"] + ":" + Registry.hashTable["Password"] + "@" + "admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
-        //private string _baseUrl = "https://admin.dt00.net/cab/goodhits/ghits-edit/id/" + Registry.hashTable["teaserId"] + "/filters/%252Fcampaign_id%252F" + Registry.hashTable["pkId"];
+        private IWebDriver _driver;
         private int _countElementsInList;
         private int _newCategory;
         private int _newCurrency;
+        private string _allowedDomain;
+        private GoodsEditTeaser_Model _teaserEditModel = new GoodsEditTeaser_Model();
 
-        public List<string> errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
-        Randoms randoms = new Randoms();//класс генерации случайных строк
+        public List<string> Errors = new List<string>(); //список ошибок (в каждой строке - спарсенное со страницы описание ошибки)
+        readonly Randoms _randoms = new Randoms();//класс генерации случайных строк
 
-        public string link;
-        public string title;
-        public string advertText;
-        public string attachFile;
-        public string priceForGoodsService;
-        
-        public string allowedDomain;
-
-        GoodsEditTeaser_Model teaserEditModel = new GoodsEditTeaser_Model();
+        public string Link;
+        public string Title;
+        public string AdvertText;
+        public string AttachFile;
+        public string PriceForGoodsService;
+        public bool WasMismatch = false;
 
         public void EditTeaser()
         {
-            driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
-            allowedDomain = GetAnyAllowedDomain();//сначала выбираем 1 из разрешенных доменов
-            driver.Navigate().GoToUrl(Paths.UrlEditTeaser); //заходим по ссылке
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+            GetDriver();
+            SetUpFields();
+            EditingIsSuccessful();
+        }
 
-            teaserEditModel.driver = driver;
+        private void GetDriver()
+        {
+            _driver = (IWebDriver)Registry.hashTable["driver"]; //забираем из хештаблицы сохраненный ранее драйвер
+            _allowedDomain = GetAnyAllowedDomain();//сначала выбираем 1 из разрешенных доменов
+            _driver.Navigate().GoToUrl(Paths.UrlEditTeaser); //заходим по ссылке
+            _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+        }
 
-            LogTrace.WriteInLog(Goods_View.tab3 + driver.Url);
+        private void SetUpFields()
+        {
+            _teaserEditModel.driver = _driver;
+
+            LogTrace.WriteInLog(Goods_View.tab3 + _driver.Url);
 
             #region Редактирование полей
                 #region Required fields
@@ -53,20 +59,20 @@ namespace Task.Controller
 
                     LogTrace.WriteInLog(Goods_View.tab3 + "...Заполняю обязательные поля...");
 
-                    link = teaserEditModel.Link = allowedDomain;
-                    LogTrace.WriteInLog(Goods_View.tab3 + "Заполняю поле Ссылка. Было введено: " + teaserEditModel.Link);
+                    Link = _teaserEditModel.Link = _allowedDomain;
+                    LogTrace.WriteInLog(Goods_View.tab3 + "Заполняю поле Ссылка. Было введено: " + _teaserEditModel.Link);
 
-                    title = teaserEditModel.Title = randoms.RandomString(10);
-                    LogTrace.WriteInLog(Goods_View.tab3 + "Заполняю поле Заголовок. Было введено: " + teaserEditModel.Title);
+                    Title = _teaserEditModel.Title = _randoms.RandomString(10);
+                    LogTrace.WriteInLog(Goods_View.tab3 + "Заполняю поле Заголовок. Было введено: " + _teaserEditModel.Title);
 
-                    _countElementsInList = teaserEditModel.QuantityItemsInList(teaserEditModel.locatorCategory);
+                    _countElementsInList = _teaserEditModel.QuantityItemsInList(_teaserEditModel.locatorCategory);
                     Random rand = new Random();
                     _newCategory = rand.Next(1, _countElementsInList);
-                    teaserEditModel.Category = _newCategory;
-                    LogTrace.WriteInLog(Goods_View.tab3 + "Работаю с выпадающим списком Категория. Было выбрано: " + teaserEditModel.chosenCategory);
+                    _teaserEditModel.Category = _newCategory;
+                    LogTrace.WriteInLog(Goods_View.tab3 + "Работаю с выпадающим списком Категория. Было выбрано: " + _teaserEditModel.chosenCategory);
 
-                    advertText = teaserEditModel.AdvertText = randoms.RandomString(20);
-                    LogTrace.WriteInLog(Goods_View.tab3 + "Заполняю поле Рекламный текст. Было введено: " + teaserEditModel.AdvertText);
+                    AdvertText = _teaserEditModel.AdvertText = _randoms.RandomString(20);
+                    LogTrace.WriteInLog(Goods_View.tab3 + "Заполняю поле Рекламный текст. Было введено: " + _teaserEditModel.AdvertText);
 
                     //string dir = Directory.GetCurrentDirectory();
                     //teaserEditModel.AttachFile = dir + @"\zaj.jpg";
@@ -81,87 +87,92 @@ namespace Task.Controller
                     //teaserEditModel.TeaserWomen = true;
                     //LogTrace.WriteInLog(Goods_View.tab2 + "Выбран checkbox Тизер женской тематики (если таковая есть для выбранной Категории)");
 
-                    _countElementsInList = teaserEditModel.QuantityItemsInList(teaserEditModel.locatorCurrency);
+                    _countElementsInList = _teaserEditModel.QuantityItemsInList(_teaserEditModel.locatorCurrency);
                     Random rnd = new Random();
                     _newCurrency = rand.Next(0, _countElementsInList);
-                    teaserEditModel.Currency = _newCurrency;
-                    LogTrace.WriteInLog(Goods_View.tab3 + "Работаю с выпадающим списком Валюта. Было выбрано: " + teaserEditModel.chosenCurrency);
-                    
+                    _teaserEditModel.Currency = _newCurrency;
+                    LogTrace.WriteInLog(Goods_View.tab3 + "Работаю с выпадающим списком Валюта. Было выбрано: " + _teaserEditModel.chosenCurrency);
+
                     rnd = new Random();
                     int price = rnd.Next(1, 11);
-                    priceForGoodsService = price.ToString();
-                    if (priceForGoodsService.StartsWith("0"))
+                    PriceForGoodsService = price.ToString();
+                    if (PriceForGoodsService.StartsWith("0"))
                     {
                         Regex regex = new Regex(@"^[0]*");
-                        Match match = regex.Match(priceForGoodsService);
-                        if (match.Success) priceForGoodsService = regex.Replace(priceForGoodsService, "");
+                        Match match = regex.Match(PriceForGoodsService);
+                        if (match.Success) PriceForGoodsService = regex.Replace(PriceForGoodsService, "");
                     }
-                    teaserEditModel.PriceForGoodsService = priceForGoodsService;
-                    LogTrace.WriteInLog(Goods_View.tab3 + "Заполняю поле Цена товара/услуги. Было введено: " + teaserEditModel.PriceForGoodsService);
+                    _teaserEditModel.PriceForGoodsService = PriceForGoodsService;
+                    LogTrace.WriteInLog(Goods_View.tab3 + "Заполняю поле Цена товара/услуги. Было введено: " + _teaserEditModel.PriceForGoodsService);
                 #endregion
             #endregion
+        }
 
-            string createTeaserUrl = driver.Url; //запоминаем url страницы "Добавление тизера"
-            //Thread.Sleep(5000);
-            teaserEditModel.Submit(); //пытаемся сохранить форму
-            //Thread.Sleep(5000);
+        private void EditingIsSuccessful()
+        {
+            string editTeaserUrl = _driver.Url; //запоминаем url страницы "Добавление тизера"
+            _teaserEditModel.Submit(); //пытаемся сохранить форму
             LogTrace.WriteInLog(Goods_View.tab3 + "Нажал кнопку Сохранить");
-            string isCreatedTeaserUrl = driver.Url; //запоминаем url страницы, открывшейся после нажатия "Cохранить"
-            //если createSitetUrl и isCreatedSiteUrl совпали - мы никуда не перешли и значит есть ошибки заполнения полей
-            //если createSitetUrl и isCreatedSiteUrl не совпали - сайт создался и ошибки искать не надо
-            if (createTeaserUrl == isCreatedTeaserUrl)
+
+            //если editTeaserUrl и текущий url совпали - мы никуда не перешли и значит есть ошибки заполнения полей
+            if (_driver.Url == editTeaserUrl)
             {
-                errors = teaserEditModel.GetErrors(); //проверяем, появились ли на форме ошибки заполнения полей
+                Errors = _teaserEditModel.GetErrors(); //проверяем, появились ли на форме ошибки заполнения полей
             }
             else
             {
                 LogTrace.WriteInLog(Goods_View.tab3 + "Тизер успешно отредактирован");
                 LogForClickers.WriteInLog(Goods_View.tab3 + "Тизер успешно отредактирован");
             }
-            Registry.hashTable["driver"] = driver;
+            Registry.hashTable["driver"] = _driver;
         }
-
-        public bool wasMismatch = false;
 
         public void CheckEditingTeaser()
         {
-            driver = (IWebDriver) Registry.hashTable["driver"];
-                //забираем из хештаблицы сохраненный при создании клиента драйвер
-            driver.Navigate().GoToUrl(Paths.UrlEditTeaser); //заходим по ссылке
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
-            LogTrace.WriteInLog(Goods_View.tab3 + driver.Url);
+            GetDriver();
 
-            #region Проверка заполнения
+            if (!CheckFields())
+            {
+                LogTrace.WriteInLog("          ОК, всё ранее введенное совпадает с текущими значениями");
+                LogForClickers.WriteInLog("          ОК, всё ранее введенное совпадает с текущими значениями");
+            }
+        }
+
+        private bool CheckFields()
+        {
+            LogTrace.WriteInLog(Goods_View.tab3 + _driver.Url);
+
+            #region Проверка редактирования
 
                 #region Проверить обязательные поля
                     LogTrace.WriteInLog(Goods_View.tab3 + "...Проверка: Обязательные поля...");
 
-                    if (link == teaserEditModel.GetLink) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Ссылка ({1}) и введенное при редактировании ({2})", Goods_View.tab3, teaserEditModel.GetLink, link) ); }
+                    if (Link == _teaserEditModel.GetLink) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Ссылка ({1}) и введенное при редактировании ({2})", Goods_View.tab3, _teaserEditModel.GetLink, Link)); }
                     else
                     {
-                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Ссылка ({0}) и введенное при редактировании ({1})", teaserEditModel.GetLink, link));
-                        wasMismatch = true;
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Ссылка ({0}) и введенное при редактировании ({1})", _teaserEditModel.GetLink, Link));
+                        WasMismatch = true;
                     }
 
-                    if (title == teaserEditModel.GetTitle) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Заголовок ({1}) и введенное при редактировании ({2})", Goods_View.tab3, teaserEditModel.GetTitle, title)); }
+                    if (Title == _teaserEditModel.GetTitle) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Заголовок ({1}) и введенное при редактировании ({2})", Goods_View.tab3, _teaserEditModel.GetTitle, Title)); }
                     else
                     {
-                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Заголовок ({0}) и введенное при редактировании ({1})", teaserEditModel.GetTitle, title));
-                        wasMismatch = true;
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Заголовок ({0}) и введенное при редактировании ({1})", _teaserEditModel.GetTitle, Title));
+                        WasMismatch = true;
                     }
 
-                    if (teaserEditModel.chosenCategory == teaserEditModel.GetCategory) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Категория ({1}) и введенное при редактировании ({2})", Goods_View.tab3, teaserEditModel.GetCategory, teaserEditModel.chosenCategory)); }
+                    if (_teaserEditModel.chosenCategory == _teaserEditModel.GetCategory) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Категория ({1}) и введенное при редактировании ({2})", Goods_View.tab3, _teaserEditModel.GetCategory, _teaserEditModel.chosenCategory)); }
                     else
                     {
-                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Категория ({0}) и введенное при редактировании ({1})", teaserEditModel.GetCategory, teaserEditModel.chosenCategory));
-                        wasMismatch = true;
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Категория ({0}) и введенное при редактировании ({1})", _teaserEditModel.GetCategory, _teaserEditModel.chosenCategory));
+                        WasMismatch = true;
                     }
 
-                    if (advertText == teaserEditModel.GetAdvertText) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Рекламный текст ({1}) и введенное при редактировании ({2})", Goods_View.tab3, teaserEditModel.GetAdvertText, advertText)); }
+                    if (AdvertText == _teaserEditModel.GetAdvertText) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Рекламный текст ({1}) и введенное при редактировании ({2})", Goods_View.tab3, _teaserEditModel.GetAdvertText, AdvertText)); }
                     else
                     {
-                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Рекламный текст ({0}) и введенное при редактировании ({1})", teaserEditModel.GetAdvertText, advertText));
-                        wasMismatch = true;
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Рекламный текст ({0}) и введенное при редактировании ({1})", _teaserEditModel.GetAdvertText, AdvertText));
+                        WasMismatch = true;
                     }
 
                     //if (attachFile == teaserEditModel.GetAttachFile) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Фото ({1}) и введенное при редактировании ({2})", Goods_View.tab3, teaserEditModel.GetAttachFile, attachFile)); }
@@ -175,37 +186,33 @@ namespace Task.Controller
                 #region Проверить необязательные поля
                     LogTrace.WriteInLog(Goods_View.tab3 + "...Проверка: Необязательные поля...");
 
-                    if (teaserEditModel.chosenCurrency == teaserEditModel.GetCurrency) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Валюта ({1}) и введенное при редактировании ({2})", Goods_View.tab3, teaserEditModel.GetCurrency, teaserEditModel.chosenCurrency)); }
+                    if (_teaserEditModel.chosenCurrency == _teaserEditModel.GetCurrency) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Валюта ({1}) и введенное при редактировании ({2})", Goods_View.tab3, _teaserEditModel.GetCurrency, _teaserEditModel.chosenCurrency)); }
                     else
                     {
-                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Валюта ({0}) и введенное при редактировании ({1})", teaserEditModel.GetCurrency, teaserEditModel.chosenCurrency));
-                        wasMismatch = true;
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Валюта ({0}) и введенное при редактировании ({1})", _teaserEditModel.GetCurrency, _teaserEditModel.chosenCurrency));
+                        WasMismatch = true;
                     }
 
-                    if (priceForGoodsService == teaserEditModel.GetPriceForGoodsService) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Цена товара/услуги ({1}) и введенное при редактировании ({2})", Goods_View.tab3, teaserEditModel.GetPriceForGoodsService, priceForGoodsService)); }
+                    if (PriceForGoodsService == _teaserEditModel.GetPriceForGoodsService) { LogTrace.WriteInLog(string.Format("{0}Совпадают: содержимое поля Цена товара/услуги ({1}) и введенное при редактировании ({2})", Goods_View.tab3, _teaserEditModel.GetPriceForGoodsService, PriceForGoodsService)); }
                     else
                     {
-                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Цена товара/услуги ({0}) и введенное при редактировании ({1})", teaserEditModel.GetPriceForGoodsService, priceForGoodsService));
-                        wasMismatch = true;
+                        LogTrace.WriteInLog(string.Format("НЕ СОВПАДАЮТ: содержимое поля Цена товара/услуги ({0}) и введенное при редактировании ({1})", _teaserEditModel.GetPriceForGoodsService, PriceForGoodsService));
+                        WasMismatch = true;
                     }
                 #endregion
             #endregion
 
-            LogTrace.WriteInLog(Goods_View.tab3 + driver.Url);
+            LogTrace.WriteInLog(Goods_View.tab3 + _driver.Url);
             LogTrace.WriteInLog("");
-            if (!wasMismatch)
-            {
-                LogTrace.WriteInLog(Goods_View.tab3 + "ОК, всё ранее введенное совпадает с текущими значениями");
-                LogForClickers.WriteInLog(Goods_View.tab3 + "ОК, всё ранее введенное совпадает с текущими значениями");
-            }
+            return WasMismatch;
         }
 
         protected string GetAnyAllowedDomain() //функция, возвращающая 1 из разрешенных доменов для данного клиента
         {
             string domain;
-            driver.Navigate().GoToUrl(Paths.GetAnyAllowedDomain); //идем на страницу с сайтами для данного клиента
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
-            List<IWebElement> listDomains = driver.FindElements(By.CssSelector("td[nowrap='nowrap']>a")).ToList(); //получаем список элементов-доменов, из которых нужно извлечь ссылку
+            _driver.Navigate().GoToUrl(Paths.GetAnyAllowedDomain); //идем на страницу с сайтами для данного клиента
+            _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+            List<IWebElement> listDomains = _driver.FindElements(By.CssSelector("td[nowrap='nowrap']>a")).ToList(); //получаем список элементов-доменов, из которых нужно извлечь ссылку
 
             Random rnd = new Random();
             int randomIndex = rnd.Next(0, listDomains.Count); //генерируем индекс для списка элементов-доменов

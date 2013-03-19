@@ -544,7 +544,7 @@ namespace Task.View
 
             editTeaserController.EditTeaser();
 
-            List<string> errors = editTeaserController.errors;
+            List<string> errors = editTeaserController.Errors;
 
             if (errors.Count != 0) //список непустой -- ошибки есть
             {
@@ -588,7 +588,7 @@ namespace Task.View
                 
                 editTeaserController.CheckEditingTeaser();
 
-                if (editTeaserController.wasMismatch)
+                if (editTeaserController.WasMismatch)
                 {
                     listBox1.ForeColor = Color.Red;
                     listBox1.Items.Add("");
